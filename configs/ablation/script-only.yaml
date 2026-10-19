@@ -1,0 +1,63 @@
+# 默认配置：real 数据、全量、全模态全维度（字段与 movietaggen/config.py 的 schema 一一对应）
+exp_name: ablation/script-only
+mock: false
+
+data:
+  source: real
+  movie_limit: null           # null = 全量
+  seed: 42
+  raw_dir: "../genometag-mllm/data/raw"   # 仅 source: real 生效，相对仓库根解析
+
+model:
+  base_url_env: OPENAI_BASE_URL
+  api_key_env: OPENAI_API_KEY
+  model: qwen3.7-plus
+  temperature: 0.7
+  max_frames: 12
+  script_token_budget: 4000
+  dialogue_token_budget: 3000
+  request_interval: 0.5       # 两次请求间隔秒数（简单限速）
+  extra_body: {}              # 端点专有参数透传（如 DashScope {enable_thinking: false}）
+
+generate:
+  n_runs: 3
+  modalities: [script]
+  dimensions: [style, mood, theme, narrative, character]
+  few_shot_examples: 0
+  workers: 1                  # 并行线程数（1=串行）
+
+align:
+  embed_model: intfloat/multilingual-e5-base
+  embed_device: cpu
+  top_k: 3
+  threshold: 0.5
+  agg: max                    # max | mean
+  input_exp: null             # null = 用本配置的 generate 产物；字符串 = 复用其它实验
+  calib_method: isotonic      # isotonic | linear
+
+audit:
+  input_exp: null
+  judge_tasks: [mapping, gen_quality]
+  judge_model: qwen3.7-plus
+  judge_temperature: 0.0
+  judge_context: pair+title   # pair | pair+title | pair+full
+  sample_rate: 1.0
+  apply_filter: true
+  calibration_sample: 500
+  seed: 42
+
+eval:
+  embed_model: intfloat/multilingual-e5-base
+  coverage_top_k: 10
+  coverage_tau: 0.7
+
+baselines:
+  run: [direct_score, genre_map, random, bert]
+  n_runs: 3
+  few_shot_examples: 2
+
+protocol:
+  temporal_split_year: 2015   # 数据止于 2018：≥2015 测试视图非空，<2015 为训练参考池
+  relevance_threshold: 0.5
+  top_k: 10
+  cold_start_max_tags: 0
