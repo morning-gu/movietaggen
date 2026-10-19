@@ -8,3 +8,8 @@ data:
 generate:
   n_runs: 2
   workers: 1
+
+# 合成电影年份 2018-2023 全 ≥ schema 默认 2015 → 训练分割会恒空、校准必炸；
+# 显式钉 2019（2018 的 Crimson Horizon 为训练侧）。default.yaml 维持 2015 供真实数据。
+protocol:
+  temporal_split_year: 2019
