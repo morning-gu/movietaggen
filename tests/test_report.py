@@ -14,7 +14,7 @@ from movietaggen.data.align import build_dataset
 from movietaggen.data.grouping import load_tag_groups
 from movietaggen.data.movielens import load_user_tags
 from movietaggen.data.sample import make_synthetic_dataset
-from movietaggen.eval.report import metrics_table, write_report
+from movietaggen.eval.report import gen_quality_summary, metrics_table, write_report
 from movietaggen.generate.mock import MockGenClient
 from movietaggen.generate.pipeline import run_generation
 
@@ -153,6 +153,35 @@ def test_gen_quality_json(fake_exp_tree, tmp_path):
     # judge 口径（06 已跑 gen_quality 任务）：mock 哈希分 1-5 的均值
     assert 1.0 <= gq["judge_relevance"] <= 5.0
     assert 1.0 <= gq["judge_coverage"] <= 5.0
+    # 逐电影口径元数据：5 部合成电影全部有用户标签、全部进入平均
+    assert gq["n_movies"] == 5
+    assert gq["n_movies_no_user_tags"] == 0
+
+
+def test_gen_quality_per_movie_no_cross_movie_credit(tmp_path):
+    """跨电影污染必须不可得（spec §7.1 逐电影口径）：m1 用户 [alpha, gamma]、
+    生成 [alpha]；m2 用户 [beta]、生成 [gamma]。池级口径下 m2 的生成 gamma
+    会替 m1 的用户 gamma 记账（coverage = 2/3）；逐电影口径 m2 的 coverage=0
+    → 均值恰 0.25，且各电影生成侧仅 1 条 → redundancy 恒 0（池级 > 0）。"""
+    exp = tmp_path / "exp"
+    (exp / "stage-gen").mkdir(parents=True)
+    pd.DataFrame({
+        "movie_id": [1, 2],
+        "tag": ["alpha one", "gamma three"],
+        "n_runs": [1, 1],
+    }).to_parquet(exp / "stage-gen" / "tags.parquet", index=False)
+    user_tags = pd.DataFrame({
+        "user_id": [1, 1, 2],
+        "movie_id": [1, 1, 2],
+        "tag": ["alpha one", "gamma three", "beta two"],
+        "timestamp": [0, 0, 0],
+    })
+    cfg = AppConfig(mock=True)
+    gq = gen_quality_summary(exp, user_tags, cfg, cache_root=None)
+    assert gq["coverage"] == pytest.approx(0.25)     # m1: 1/2、m2: 0 → 均值
+    assert gq["redundancy"] == pytest.approx(0.0)    # 逐电影无跨电影对可数
+    assert gq["n_movies"] == 2
+    assert gq["n_movies_no_user_tags"] == 0
 
 
 def test_gen_quality_without_user_tags(fake_exp_tree, tmp_path):

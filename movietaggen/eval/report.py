@@ -15,8 +15,12 @@ metrics.csv 行 = method × subset；subset 五视图（spec §7.3：描述性�
 （冷启动是方法属性不是子集行）。多实验对比：第一个实验保持裸方法名，其余
 实验以 `two-stage[raw|<实验目录名>]` 后缀消歧。
 
-嵌入口径的池级约定：生成侧 = stage-gen tags.parquet 全部行（跨电影并集，
-不去重）；用户侧 = 按出现电影数取 top-K（K = eval.coverage_top_k）。
+嵌入口径的逐电影约定（spec §7.1「生成标签 ↔ 该电影真实用户标签」）：
+按 movie_id 分组 stage-gen tags.parquet，对每部有用户标签的电影取**该电影
+自己的** top-K 用户标签（K = eval.coverage_top_k，频次为该电影内的出现次数，
+并列按字典序稳定），逐电影嵌入并计算三件套后对电影取均值；无用户标签的
+生成电影不入嵌入口径，以 n_movies_no_user_tags 计数。跨电影记账（一部电影
+的生成标签替另一部电影的用户标签得分）因此不可得。
 """
 from __future__ import annotations
 
@@ -100,11 +104,13 @@ def metrics_table(predictions: dict[str, pd.DataFrame], truth: pd.DataFrame,
     return pd.DataFrame(rows)
 
 
-def _top_user_tags(user_tags: pd.DataFrame, k: int) -> list[str]:
-    """top-K 用户标签：按出现电影数（per-movie frequency）降序；groupby 键序
-    + 稳定排序使并列标签按字典序，跨进程确定。"""
-    counts = user_tags.groupby("tag")["movie_id"].nunique()
-    return counts.sort_values(ascending=False, kind="mergesort").index.tolist()[:k]
+def _movie_top_user_tags(movie_tags: pd.Series, k: int) -> list[str]:
+    """单部电影的 top-K 用户标签：按该电影内的出现次数（多用户同标签重复
+    计频）降序；先按标签名字典序再稳定降序，使并列标签次序跨进程确定。"""
+    counts = movie_tags.value_counts()
+    return (counts.sort_index()
+                  .sort_values(ascending=False, kind="mergesort")
+                  .index.tolist()[:k])
 
 
 def _embed(embedder, texts: list[str], cache_root: Path | None) -> np.ndarray:
@@ -130,29 +136,47 @@ def _judge_means(exp_dir: Path) -> dict[str, float]:
 def gen_quality_summary(exp_dir: Path, user_tags: pd.DataFrame | None,
                         cfg: AppConfig, cache_root: Path | None) -> dict:
     """生成质量双口径（对第一个实验目录）：
-    - 嵌入口径：relevance（双向 top-1 余弦均值）/ coverage（用户 top-K 标签
-      被生成近邻覆盖比例，τ = eval.coverage_tau）/ redundancy（生成侧两两
-      余弦绝对值均值），嵌入用 eval.embed_model（mock 配置 → MockEmbedder）；
+    - 嵌入口径（spec §7.1 逐电影语义）：按 movie_id 分组 stage-gen tags，每部
+      有用户标签的电影取**该电影自己的** top-K 用户标签（K = eval.coverage_top_k，
+      频次为该电影内出现次数、并列按字典序稳定），逐电影嵌入后计算 relevance
+      （双向 top-1 余弦均值）/ coverage（该电影用户 top-K 被该电影生成近邻覆盖
+      的比例，τ = eval.coverage_tau）/ redundancy（该电影生成侧两两余弦绝对值
+      均值），再对有非空双侧的电影取均值——跨电影记账不可得。嵌入用
+      eval.embed_model（mock 配置 → MockEmbedder）。无用户标签的生成电影不入
+      嵌入口径，计入 n_movies_no_user_tags；无可平均电影时三件套按 0.0 上报
+      （T17 空侧退化约定，n_movies=0 提示口径）。
     - judge 口径：judge_gen_quality.parquet 均值（键前缀 judge_）。
     user_tags 为 None → 嵌入口径以 note 占位，judge 口径照常（若可得）。"""
     out: dict = {}
-    if user_tags is not None:
+    if user_tags is None:
+        out["note"] = "无用户标签，嵌入口径跳过"
+    else:
         gen = pd.read_parquet(exp_dir / "stage-gen" / "tags.parquet")
-        user_top = _top_user_tags(user_tags, cfg.eval.coverage_top_k)
         embedder = make_embedder(cfg.eval.embed_model, mock=cfg.mock)
-        gen_vecs = _embed(embedder, gen["tag"].tolist(), cache_root)
-        user_vecs = _embed(embedder, user_top, cache_root)
+        user_by_movie = {m: s for m, s in user_tags.groupby("movie_id")["tag"]}
+        per: dict[str, list[float]] = {"relevance": [], "coverage": [], "redundancy": []}
+        n_no_user = 0
+        for movie, g in gen.groupby("movie_id"):
+            movie_tags = user_by_movie.get(movie)
+            if movie_tags is None or len(movie_tags) == 0:
+                n_no_user += 1          # 生成电影无用户标签：不入嵌入口径
+                continue
+            user_top = _movie_top_user_tags(movie_tags, cfg.eval.coverage_top_k)
+            gen_vecs = _embed(embedder, g["tag"].tolist(), cache_root)
+            user_vecs = _embed(embedder, user_top, cache_root)
+            per["relevance"].append(gen_relevance(gen_vecs, user_vecs))
+            per["coverage"].append(gen_coverage(user_vecs, gen_vecs, cfg.eval.coverage_tau))
+            per["redundancy"].append(gen_redundancy(gen_vecs))
         out.update({
-            "relevance": gen_relevance(gen_vecs, user_vecs),
-            "coverage": gen_coverage(user_vecs, gen_vecs, cfg.eval.coverage_tau),
-            "redundancy": gen_redundancy(gen_vecs),
+            "relevance": float(np.mean(per["relevance"])) if per["relevance"] else 0.0,
+            "coverage": float(np.mean(per["coverage"])) if per["coverage"] else 0.0,
+            "redundancy": float(np.mean(per["redundancy"])) if per["redundancy"] else 0.0,
             "embed_model": embedder.name,
             "tau": cfg.eval.coverage_tau,
-            "n_user_tags": len(user_top),
+            "n_movies": len(per["relevance"]),
+            "n_movies_no_user_tags": n_no_user,
             "n_gen_tags": int(len(gen)),
         })
-    else:
-        out["note"] = "无用户标签，嵌入口径跳过"
     out.update(_judge_means(exp_dir))
     return out
 
