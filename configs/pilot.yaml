@@ -1,0 +1,63 @@
+# 试点配置：default 的子集跑法（50 部电影），其余同 default.yaml
+exp_name: pilot
+mock: false
+
+data:
+  source: real
+  movie_limit: 50
+  seed: 42
+  raw_dir: "../genometag-mllm/data/raw"
+
+model:
+  base_url_env: OPENAI_BASE_URL
+  api_key_env: OPENAI_API_KEY
+  model: qwen3.7-plus
+  temperature: 0.7
+  max_frames: 12
+  script_token_budget: 4000
+  dialogue_token_budget: 3000
+  request_interval: 0.5
+  extra_body: {}
+
+generate:
+  n_runs: 3
+  modalities: [video, script, dialogue]
+  dimensions: [style, mood, theme, narrative, character]
+  few_shot_examples: 0
+  workers: 1
+
+align:
+  embed_model: intfloat/multilingual-e5-base
+  embed_device: cpu
+  top_k: 3
+  threshold: 0.5
+  agg: max
+  input_exp: null
+  calib_method: isotonic
+
+audit:
+  input_exp: null
+  judge_tasks: [mapping, gen_quality]
+  judge_model: qwen3.7-plus
+  judge_temperature: 0.0
+  judge_context: pair+title
+  sample_rate: 1.0
+  apply_filter: true
+  calibration_sample: 500
+  seed: 42
+
+eval:
+  embed_model: intfloat/multilingual-e5-base
+  coverage_top_k: 10
+  coverage_tau: 0.7
+
+baselines:
+  run: [direct_score, genre_map, random, bert]
+  n_runs: 3
+  few_shot_examples: 2
+
+protocol:
+  temporal_split_year: 2015
+  relevance_threshold: 0.5
+  top_k: 10
+  cold_start_max_tags: 0

@@ -1,0 +1,10 @@
+# 冒烟配置：mock 模式 + 合成数据，快速端到端跑通（其余字段用 schema 默认值）
+exp_name: smoke
+mock: true
+
+data:
+  source: synthetic
+
+generate:
+  n_runs: 2
+  workers: 1
