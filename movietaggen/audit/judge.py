@@ -187,13 +187,28 @@ def _read_excerpts(row, movienet_root: Path) -> tuple[str | None, str | None]:
     return script, subtitles
 
 
+def _sampling_params(temperature: float,
+                     extra_body: dict | None) -> dict:
+    """评审采样参数指纹：与 generate.client.sampling_params 输出同构
+    （temperature + extra_body（truthy 时）进缓存键，I3——换端点专有参数
+    即换键；未设置 extra_body 时与旧版 {"temperature": ...} 键逐字节一致，
+    存量缓存不失效）。不直接复用 sampling_params：评审的温度取 audit 配置、
+    extra_body 取 model 配置，无单一 model_cfg 承载二者，故按同构 dict 自建。"""
+    params: dict = {"temperature": temperature}
+    if extra_body:
+        params["extra_body"] = dict(extra_body)
+    return params
+
+
 def _judge_content(client, cache: ResponseCache | None, messages: list[dict],
-                   run_id: str, model: str, temperature: float) -> str:
+                   run_id: str, model: str, temperature: float,
+                   extra_body: dict | None = None) -> str:
     """缓存优先的单次评审调用；仅 ok 响应入缓存（失败信封入缓存会让续跑
     永久复播失败，与生成管道同规）。返回模型文本。"""
     key = None
     if cache is not None:
-        key = cache_key(messages, model, {"temperature": temperature}, run_id)
+        key = cache_key(messages, model, _sampling_params(temperature, extra_body),
+                        run_id)
         raw = cache.get(key)
         if raw is not None:
             return raw.get("choices", [{}])[0].get("message", {}).get("content", "")
@@ -297,7 +312,8 @@ def run_audit(config, paths, client, cache: ResponseCache | None,
                 cfg.judge_context, script=script, subtitles=subtitles)
             content = _judge_content(client, use_cache, messages,
                                      JUDGE_MAPPING_RUN_ID, cfg.judge_model,
-                                     cfg.judge_temperature)
+                                     cfg.judge_temperature,
+                                     config.model.extra_body)
             parsed = parse_mapping_verdict(content)
             if parsed is None:
                 verdict, reason = VERDICT_PARSE_FAILED, ""
@@ -341,7 +357,8 @@ def run_audit(config, paths, client, cache: ResponseCache | None,
                 user_by_movie[mid])
             content = _judge_content(client, use_cache, messages,
                                      JUDGE_GEN_RUN_ID, cfg.judge_model,
-                                     cfg.judge_temperature)
+                                     cfg.judge_temperature,
+                                     config.model.extra_body)
             parsed = parse_gen_quality(content)
             if parsed is None:
                 # gen_quality 无 verdict 列可记录，缺失行不进产物；计数可见

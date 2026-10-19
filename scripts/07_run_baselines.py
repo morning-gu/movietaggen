@@ -12,6 +12,10 @@ dispatch：
   bert_baseline 内部均以 assert_no_leakage 收尾自检。
 - random：dataset 全电影 × genome_tags 全 tag 的哈希均匀分（确定性）。
 - 未知方法名 → 中文 ValueError 点名合法值（配置拼错不静默）。
+- 电影集口径（I5）：data.movie_limit 设置时，全部方法在同一抽样电影集上
+  产出（与生成管道同代码路径：sorted ids + random.Random(seed).sample）；
+  direct_score 内部抽样即同一路径，无需传参自然对齐；拟合参考集（时序
+  训练侧）不受 movie_limit 限制——受限的是产出/评估的电影轴。
 
 bert 懒导入（torch/transformers 在训练函数内部导入）：模块自身缺 torch 也能
 导入，缺依赖在调用点抛 ImportError，被本脚本捕获后优雅跳过（照 A 的 05
@@ -25,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -90,6 +95,23 @@ def main(config_path: str = "configs/default.yaml") -> int:
                                "movie_id"].tolist())
     train_scores = genome_scores[genome_scores["movie_id"].isin(set(train_ids))]
 
+    # 【I5 · 试点规模可比性】genre_map / random / bert 与 direct_score 必须在
+    # 同一电影集上产出，方法对比才有意义：movie_limit 设置时按生成管道
+    # （generate/pipeline.py）完全相同的代码路径抽样——sorted id 列表 +
+    # random.Random(data.seed).sample，选定集合与 04/直接评分基线逐元素一致。
+    # 抽样后排序仅定行序、不改集合成员。direct_score 的内部抽样即这两行代码
+    # （movietaggen/baselines/direct_score.py run_direct_score），无需传参即
+    # 落在同一集合，此处不再重复传入。
+    all_movie_ids = sorted(dataset["movie_id"].tolist())
+    if (config.data.movie_limit is not None
+            and config.data.movie_limit < len(all_movie_ids)):
+        movie_ids = sorted(random.Random(config.data.seed).sample(
+            all_movie_ids, config.data.movie_limit))
+    else:
+        movie_ids = all_movie_ids
+    movie_set = set(movie_ids)
+    dataset_for_random = dataset[dataset["movie_id"].isin(movie_set)]
+
     frames = []
     methods = []
     for name in config.baselines.run:
@@ -98,18 +120,19 @@ def main(config_path: str = "configs/default.yaml") -> int:
             cache = None if config.mock else ResponseCache(paths.cache_llm)
             frames.append(run_direct_score(config, paths, client, cache))
         elif name == "genre_map":
-            frames.append(genre_map(train_scores, dataset,
-                                    sorted(dataset["movie_id"].tolist()),
+            frames.append(genre_map(train_scores, dataset, movie_ids,
                                     test_ids=test_ids))
         elif name == "random":
             frames.append(random_baseline(
-                dataset, sorted(int(t) for t in genome_tags["tag_id"]),
+                dataset_for_random,
+                sorted(int(t) for t in genome_tags["tag_id"]),
                 config.data.seed))
         elif name == "bert":
             try:
                 from movietaggen.baselines.bert_baseline import bert_baseline
                 frames.append(bert_baseline(config, paths, dataset, genome_scores,
-                                            train_ids, test_ids))
+                                            train_ids, test_ids,
+                                            predict_ids=movie_ids))
             except ImportError:
                 # 懒导入：模块自身无 torch 也能导入，缺依赖在调用点才抛出
                 print("[07] torch/transformers 未安装，跳过 bert 基线"

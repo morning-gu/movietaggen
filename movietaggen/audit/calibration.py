@@ -90,8 +90,12 @@ def refill_kappa(csv_path: Path) -> tuple[list[str], list[str]] | None:
     行入选条件：human_verdict 非空（去空白）且 judge_verdict ∈
     {accept, reject}（parse_failed 行不构成有效配对）。任一侧为空、或
     任一侧全同类 → None（kappa 无定义，调用方据此跳过）。
+
+    T15：encoding 用 utf-8-sig——Windows 记事本/Excel 重存 CSV 会带 BOM，
+    普通 utf-8 会把 BOM 并进首列表头（"movie_id" 变 "\\ufeffmovie_id"）而
+    KeyError；utf-8-sig 对无 BOM 的普通 UTF-8 逐字节等价。
     """
-    raw = pd.read_csv(csv_path, encoding="utf-8", dtype=str,
+    raw = pd.read_csv(csv_path, encoding="utf-8-sig", dtype=str,
                       keep_default_na=False).fillna("")
     judge_list: list[str] = []
     human_list: list[str] = []

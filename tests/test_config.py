@@ -188,3 +188,21 @@ def test_smoke_yaml_loads():
     assert cfg.mock is True
     assert cfg.data.source == "synthetic"
     assert cfg.generate.n_runs == 2
+
+
+def test_align_top_k_validated(tmp_path):
+    """M2：align.top_k 必须 ≥ 1（top_k=0 的映射没有候选可言）。"""
+    bad = {**MINIMAL, "align": {"top_k": 0}}
+    with pytest.raises(ValueError, match="top_k"):
+        load_config(_write(tmp_path, bad))
+
+
+def test_mock_quoted_string_rejected(tmp_path):
+    """M3：mock: "false"（带引号）是非空字符串，bool() 化会静默变 True——
+    必须大声报错并提示去掉引号；"true" 字符串同样拒绝。"""
+    for quoted in ('mock: "false"\n', 'mock: "true"\n', "mock: 'false'\n"):
+        p = tmp_path / "cfg.yaml"
+        p.write_text("exp_name: t\ndata:\n  source: synthetic\n" + quoted,
+                     encoding="utf-8")
+        with pytest.raises(ValueError, match="mock"):
+            load_config(p)

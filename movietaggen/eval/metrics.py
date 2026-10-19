@@ -39,13 +39,21 @@ def precision_at_k(pred: np.ndarray, truth: np.ndarray, k: int, threshold: float
     return float(hits / k)
 
 
-def ndcg_at_k(pred: np.ndarray, truth: np.ndarray, k: int, threshold: float) -> float:
+def ndcg_at_k(pred: np.ndarray, truth: np.ndarray, k: int, threshold: float,
+              n_relevant: int | None = None) -> float:
+    """NDCG@K：truth ≥ threshold 为相关集，按 pred 降序取 top-k。
+
+    n_relevant 可选覆盖相关集大小（IDCG 分母）：B 侧报告层用真实宇宙的相关
+    总数修正"预测对受限宇宙"的口径（I2——稀疏方法的 unretrieved relevant
+    必须计入 IDCG，否则 NDCG 结构性虚高）；缺省 None 时与 A 的逐字复制
+    语义逐位一致。
+    """
     pred, truth = np.asarray(pred), np.asarray(truth)
     relevant = truth >= threshold
     top = np.argsort(-pred)[:k]
     gains = relevant[top].astype(float)
     dcg = float(np.sum(gains / np.log2(np.arange(2, len(gains) + 2))))
-    n_rel = int(relevant.sum())
+    n_rel = int(relevant.sum()) if n_relevant is None else int(n_relevant)
     ideal = np.ones(min(k, n_rel))
     idcg = float(np.sum(ideal / np.log2(np.arange(2, len(ideal) + 2))))
     return dcg / idcg if idcg > 0 else 0.0

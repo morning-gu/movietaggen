@@ -510,3 +510,27 @@ def test_cache_roundtrip_and_mock_skips_cache(fake_stage_align, tmp_path):
     mock_cache = ResponseCache(tmp_path / "mock-cache")
     run_audit(cfg, paths, MockJudgeClient(), mock_cache)
     assert not list(mock_cache.root.glob("*.json"))
+
+
+def test_judge_cache_key_extra_body_sensitivity():
+    """I3：评审缓存键的采样参数指纹与 client.sampling_params 同构——extra_body
+    变化必须换键（开/关思考不得互相命中）；未设置时与旧版
+    {"temperature": ...} 键逐字节一致（存量缓存不失效）。"""
+    from movietaggen.audit.judge import _sampling_params
+    from movietaggen.generate.cache import cache_key
+
+    msgs = [{"role": "user", "content": "hi"}]
+    # 未设置 extra_body：与旧版手写 dict 的键完全一致
+    assert cache_key(msgs, "m", _sampling_params(0.0, None), "judge-mapping") == \
+        cache_key(msgs, "m", {"temperature": 0.0}, "judge-mapping")
+    assert cache_key(msgs, "m", _sampling_params(0.0, {}), "judge-gen") == \
+        cache_key(msgs, "m", {"temperature": 0.0}, "judge-gen")
+    # extra_body 进键：开/关思考不得互相命中
+    assert cache_key(msgs, "m", _sampling_params(0.0, {"enable_thinking": False}),
+                     "judge-mapping") != \
+        cache_key(msgs, "m", _sampling_params(0.0, None), "judge-mapping")
+    # run_id 仍参与键：mapping 与 gen 两任务互不命中
+    assert cache_key(msgs, "m", _sampling_params(0.0, {"enable_thinking": False}),
+                     "judge-mapping") != \
+        cache_key(msgs, "m", _sampling_params(0.0, {"enable_thinking": False}),
+                  "judge-gen")

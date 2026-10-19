@@ -158,3 +158,16 @@ def test_response_envelope_and_usage():
     assert resp.raw["choices"][0]["message"]["content"] == resp.content
     assert resp.raw["mock"] is True
     assert isinstance(json.loads(resp.content), list)
+
+
+def test_modality_gating_dialogue_only(tmp_path):
+    """T8：dialogue-only 门控——mood+theme+character 过门控产标签，
+    style/narrative 静默；精确计数 3n（mirror 既有 gating 测试）。"""
+    m = _movie(tmp_path, n_frames=3)
+    dims = list(VALID_DIMENSIONS)
+    n = MockGenClient().n_tags_per_dimension
+
+    dialogue_only = set(_complete(_msgs(m, dims, ["dialogue"])))
+    assert len(dialogue_only) == 3 * n                   # mood+theme+character
+    assert set(_canonical(dialogue_only)) <= _vocab("mood", "theme", "character")
+    assert not (set(_canonical(dialogue_only)) & _vocab("style", "narrative"))

@@ -83,7 +83,7 @@ def _train_predict(train_texts: dict[int, str], train_matrix: pd.DataFrame,
 
 
 def bert_baseline(config, paths, dataset: pd.DataFrame, scores: pd.DataFrame,
-                  train_ids, test_ids) -> pd.DataFrame:
+                  train_ids, test_ids, predict_ids=None) -> pd.DataFrame:
     from movietaggen.eval.protocol import assert_no_leakage
     assert_no_leakage(set(train_ids), set(test_ids))
 
@@ -92,6 +92,10 @@ def bert_baseline(config, paths, dataset: pd.DataFrame, scores: pd.DataFrame,
     # 电影级 tag 矩阵（训练参考集）
     train_matrix = train_scores[["movie_id", "tag_id", "relevance"]]
     train_texts = {m: t for m, t in texts.items() if m in set(train_ids)}
+    # I5：预测电影集可受限（07 传 movie_limit 抽样集对齐其余基线的电影集；
+    # 拟合参考集仍用全部训练侧电影，不受限），None = 全部电影（原语义）
+    if predict_ids is not None:
+        texts = {m: t for m, t in texts.items() if m in set(predict_ids)}
     preds = _train_predict(train_texts, train_matrix, texts)
     rows = [{"movie_id": m, "tag_id": t, "score": float(np.clip(v, 0.0, 1.0)),
              "method": "bert"}

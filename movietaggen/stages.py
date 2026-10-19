@@ -57,7 +57,11 @@ def load_stage(paths, stage: str, input_exp: str | None) -> Path:
                 f"先运行生成命令: {hint}，或在配置中设置该阶段的 input_exp 借用其它实验。")
         return local
 
-    if input_exp == paths.results.name:
+    # I4：自借用守卫必须比较解析后的路径而非实验名字符串——嵌套命名
+    # （如 exp_name="ablation/video-only"）下 paths.results.name 只是
+    # "video-only"，与 input_exp="ablation/video-only" 的字符串比较会漏判，
+    # 进而在 rmtree 清空本地后因复制源即目标而毁掉本实验的付费产物
+    if (paths.root / "results" / input_exp).resolve() == paths.results.resolve():
         raise ValueError(
             f"不能借用本实验自己的产物: input_exp={input_exp!r}（会导致复制源即目标）")
     source = paths.root / "results" / input_exp / stage
@@ -68,9 +72,17 @@ def load_stage(paths, stage: str, input_exp: str | None) -> Path:
     if local.exists():
         shutil.rmtree(local)   # 清空后复制：本地不残留与借用源不一致的旧文件
     shutil.copytree(source, local, dirs_exist_ok=True)
+    # M1a：PROVENANCE.json 自身不入逐文件校验清单——链式借用时源目录里带着
+    # 上一棒写的 PROVENANCE.json，其校验和随复制即失真（本目录会写入自己的
+    # 新 PROVENANCE.json），自我不一致的溯源比缺一条更糟
     files = [{"name": p.relative_to(source).as_posix(), "sha256": _sha256(p)}
-             for p in sorted(source.rglob("*")) if p.is_file()]
+             for p in sorted(source.rglob("*"))
+             if p.is_file() and p.name != "PROVENANCE.json"]
+    # M1b：溯源携带源实验配置快照的 sha256（spec §1.3——借用产物与源配置
+    # 版本可对账）；源无 config.yaml（如测试内手工构造）→ null
+    src_config = paths.root / "results" / input_exp / "config.yaml"
     provenance = {"source_exp": input_exp, "stage": stage, "files": files,
+                  "config_sha256": _sha256(src_config) if src_config.exists() else None,
                   "copied_at": datetime.now().isoformat(timespec="seconds")}
     (local / "PROVENANCE.json").write_text(
         json.dumps(provenance, ensure_ascii=False, indent=1), encoding="utf-8")

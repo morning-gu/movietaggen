@@ -22,9 +22,9 @@ from pathlib import Path
 import pandas as pd
 
 from movietaggen.config import AppConfig
-from movietaggen.data.movienet import MovieMultimodal
 from movietaggen.generate.cache import ResponseCache, cache_key
 from movietaggen.generate.client import sampling_params
+from movietaggen.generate.content import available_modalities, to_multimodal
 from movietaggen.generate.prompts import (
     FewShotTags,
     build_gen_messages,
@@ -76,8 +76,8 @@ def run_generation(config: AppConfig, paths, client, cache: ResponseCache | None
     if dry_run:
         # spec 的 --dry-run：打印前 3 个任务的 prompt 文本，不调用、不写文件
         for task in tasks[:3]:
-            mm = _to_multimodal(movie_rows[task.movie_id], paths.movienet)
-            available = _available_modalities(mm, config.generate.modalities)
+            mm = to_multimodal(movie_rows[task.movie_id], paths.movienet)
+            available = available_modalities(mm, config.generate.modalities)
             messages = build_gen_messages(
                 mm, config.generate.dimensions, available, few_shots, config.model)
             texts = []
@@ -112,8 +112,8 @@ def run_generation(config: AppConfig, paths, client, cache: ResponseCache | None
         def process(task: TaskSpec) -> None:
             """单任务：构建 prompt → 调用（缓存优先）→ 解析；落盘在锁内。"""
             task_key = f"{task.movie_id}|{task.run_id}"
-            mm = _to_multimodal(movie_rows[task.movie_id], paths.movienet)
-            available = _available_modalities(mm, config.generate.modalities)
+            mm = to_multimodal(movie_rows[task.movie_id], paths.movienet)
+            available = available_modalities(mm, config.generate.modalities)
             call_cost = {"total_calls": 0, "prompt_tokens": 0, "completion_tokens": 0}
             # 仅当"请求了内容模态但均不可得"才跳过；modalities=[] 是 title-only 探针的显式意图
             if not available and config.generate.modalities:
@@ -209,31 +209,3 @@ def _union_tags(records: list[dict]) -> list[dict]:
             entry["runs"].add(run_id)
     return [{"movie_id": m, "tag": e["tag"], "n_runs": len(e["runs"])}
             for (m, _), e in sorted(by_key.items())]
-
-
-def _available_modalities(mm: MovieMultimodal, wanted: list[str]) -> list[str]:
-    avail = []
-    if "video" in wanted and mm.keyframes:
-        avail.append("video")
-    if "script" in wanted and mm.script:
-        avail.append("script")
-    if "dialogue" in wanted and mm.subtitles:
-        avail.append("dialogue")
-    return avail
-
-
-def _to_multimodal(row, movienet_root: Path) -> MovieMultimodal:
-    # 注意：混合 str/缺失列经 pandas3 string dtype + parquet 往返后缺失为 NaN（float）
-    # —— NaN 为真值，必须用 pd.notna 守卫（真实数据 479/1035 有剧本的混合列实测触发）
-    frames = [movienet_root / k for k in row["keyframes"]]
-    script = None
-    if pd.notna(row["script_path"]) and row["script_path"]:
-        p = movienet_root / row["script_path"]
-        script = p.read_text(encoding="utf-8", errors="replace") if p.exists() else None
-    subtitles = None
-    if pd.notna(row["subtitles_path"]) and row["subtitles_path"]:
-        p = movienet_root / row["subtitles_path"]
-        subtitles = p.read_text(encoding="utf-8", errors="replace") if p.exists() else None
-    return MovieMultimodal(str(row["movienet_id"]), str(row["title"]),
-                           int(row["year"]) if pd.notna(row["year"]) else None,
-                           None, frames, script, subtitles)

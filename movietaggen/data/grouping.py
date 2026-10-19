@@ -116,7 +116,10 @@ def group_tags_via_llm(tags: list[str], client, cache, model: str,
         raw = cache.get(key) if cache else None
         if raw is None:
             resp = client.complete(messages, run_id=run_id)
-            if cache:
+            # 仅 ok 响应入缓存（M4，全仓既定裁定）：失败信封入缓存会让续跑
+            # 永久复播失败，违背缓存"断点自愈"的意图（同 pipeline/judge/
+            # direct_score）
+            if cache and resp.ok:
                 cache.put(key, resp.raw)
             return resp.content
         return raw.get("choices", [{}])[0].get("message", {}).get("content", "")

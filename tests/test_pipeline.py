@@ -15,9 +15,9 @@ import pytest
 from movietaggen.config import Paths, load_config
 from movietaggen.data.align import build_dataset
 from movietaggen.data.sample import make_synthetic_dataset
+from movietaggen.generate.content import to_multimodal
 from movietaggen.generate.mock import MockGenClient
 from movietaggen.generate.pipeline import (
-    _to_multimodal,
     build_task_matrix,
     run_generation,
 )
@@ -164,8 +164,8 @@ def test_nan_mixed_column_guard(fake_setup):
                               for i in range(len(dataset))]
     dataset.to_parquet(paths.dataset, index=False)
 
-    # 单元面：_to_multimodal 对 NaN 行 script=None（A 的 pd.notna 守卫）
-    mm = _to_multimodal(dataset.iloc[1], paths.movienet)
+    # 单元面：to_multimodal（content.py 共享版，M9a 消重）对 NaN 行 script=None（A 的 pd.notna 守卫）
+    mm = to_multimodal(dataset.iloc[1], paths.movienet)
     assert mm.script is None
 
     client = _counting_client()

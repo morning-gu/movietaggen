@@ -273,3 +273,36 @@ def test_smoke_config_baselines_run_offline_trio():
     含 bert，而 bert 需要 HF 模型下载，冒烟必须免下载，故显式排除。"""
     assert load_config("configs/smoke.yaml").baselines.run == \
         ["direct_score", "genre_map", "random"]
+
+
+def test_movie_limit_aligns_all_method_movie_sets(data_ready, tmp_path, monkeypatch):
+    """I5：data.movie_limit 设置时全部基线方法在同一抽样电影集上产出（与生成
+    管道完全相同的代码路径：sorted ids + random.Random(data.seed).sample）——
+    试点规模下方法对比才有共同的电影轴口径。direct_score 内部抽样即同一路径。"""
+    import random
+
+    paths = data_ready
+    cfg = tmp_path / "limit.yaml"
+    cfg.write_text(
+        "exp_name: smoke\n"
+        "mock: true\n"
+        "data:\n"
+        "  source: synthetic\n"
+        "  movie_limit: 2\n"
+        "protocol:\n"
+        "  temporal_split_year: 2019\n"
+        "baselines:\n"
+        "  run: [direct_score, genre_map, random]\n", encoding="utf-8")
+    monkeypatch.setattr("movietaggen.config.project_root", lambda: tmp_path)
+
+    assert run_baselines_script.main(str(cfg)) == 0
+
+    dataset = pd.read_parquet(paths.dataset)
+    expected = set(random.Random(42).sample(
+        sorted(dataset["movie_id"].astype(int).tolist()), 2))
+    df = pd.read_parquet(paths.baselines_dir / "baselines.parquet")
+    per_method = {m: set(s.astype(int))
+                  for m, s in df.groupby("method")["movie_id"]}
+    assert set(per_method) == {"direct_score", "genre_map", "random"}
+    for method, ids in per_method.items():
+        assert ids == expected, method                  # 三方法同一电影集

@@ -18,7 +18,6 @@
 from __future__ import annotations
 
 import random
-from pathlib import Path
 
 import pandas as pd
 
@@ -30,10 +29,10 @@ from movietaggen.baselines.scoring_prompts import (
 )
 from movietaggen.config import AppConfig
 from movietaggen.data.grouping import load_tag_groups
-from movietaggen.data.movienet import MovieMultimodal
 from movietaggen.eval.protocol import assert_no_leakage, temporal_split
 from movietaggen.generate.cache import ResponseCache, cache_key
 from movietaggen.generate.client import sampling_params
+from movietaggen.generate.content import available_modalities, to_multimodal
 
 # 直接评分基线固定全模态（A 的默认语义）；不受 generate.modalities 配置影响
 _BASELINE_MODALITIES = ["video", "script", "dialogue"]
@@ -82,34 +81,6 @@ def few_shot_movie_ids(dataset: pd.DataFrame, shots: list[FewShot]) -> set[int]:
     return {id_of[(s.title, int(s.year))] for s in shots}
 
 
-def _available_modalities(mm: MovieMultimodal, wanted: list[str]) -> list[str]:
-    avail = []
-    if "video" in wanted and mm.keyframes:
-        avail.append("video")
-    if "script" in wanted and mm.script:
-        avail.append("script")
-    if "dialogue" in wanted and mm.subtitles:
-        avail.append("dialogue")
-    return avail
-
-
-def _to_multimodal(row, movienet_root: Path) -> MovieMultimodal:
-    # 注意：混合 str/缺失列经 pandas3 string dtype + parquet 往返后缺失为 NaN（float）
-    # —— NaN 为真值，必须用 pd.notna 守卫（真实数据 479/1035 有剧本的混合列实测触发）
-    frames = [movienet_root / k for k in row["keyframes"]]
-    script = None
-    if pd.notna(row["script_path"]) and row["script_path"]:
-        p = movienet_root / row["script_path"]
-        script = p.read_text(encoding="utf-8", errors="replace") if p.exists() else None
-    subtitles = None
-    if pd.notna(row["subtitles_path"]) and row["subtitles_path"]:
-        p = movienet_root / row["subtitles_path"]
-        subtitles = p.read_text(encoding="utf-8", errors="replace") if p.exists() else None
-    return MovieMultimodal(str(row["movienet_id"]), str(row["title"]),
-                           int(row["year"]) if pd.notna(row["year"]) else None,
-                           None, frames, script, subtitles)
-
-
 def run_direct_score(config: AppConfig, paths, client,
                      cache: ResponseCache | None) -> pd.DataFrame:
     """跑完直接评分基线，返回稠密 (movie, tag) 分数表（列 movie_id, tag_id, score,
@@ -147,8 +118,8 @@ def run_direct_score(config: AppConfig, paths, client,
     acc: dict[tuple[int, int], list[float]] = {}
     processed = 0
     for movie_id in movie_ids:
-        mm = _to_multimodal(movie_rows[movie_id], paths.movienet)
-        available = _available_modalities(mm, _BASELINE_MODALITIES)
+        mm = to_multimodal(movie_rows[movie_id], paths.movienet)
+        available = available_modalities(mm, _BASELINE_MODALITIES)
         # 仅当内容模态均不可得才跳过调用（A 的 no_content 语义）——该电影全部
         # (tag) 无任何轮解析出分数 → 稠密表中记 NaN。基线固定全模态，无 title-only 探针语义
         for group in group_names:

@@ -3,9 +3,14 @@
 骨架镜像 genometag-mllm 的 genometag/eval/report.py（predictions dict →
 metrics_table → 子集切片 → concat），差异：
 - 预测来源：stage-align/scores_raw.parquet、scores_calibrated.parquet、
-  stage-audit/scores_filtered.parquet（存在时）+ baselines/baselines.parquet
-  （存在时，method 名透传）；
-- 指标集合换 Task 17：dual_rmse 双口径 + spearman + 逐电影 P@K/NDCG@K；
+  stage-audit/scores_filtered.parquet（存在时）+ two-stage[threshold-filtered]
+  （第一个实验的 mappings 剔除 low_conf 后重聚合校准，I6 阈值消融曲线）+
+  baselines/baselines.parquet（存在时，method 名透传）；
+- 指标集合换 Task 17：dual_rmse 双口径 + spearman + 逐电影 P@K/NDCG@K，
+  另附 n_pred（方法×子集实际参与评估的预测对数，空集以 NaN 指标行 +
+  n_pred=0 亮明，不以 0.0 伪装满分——I1）；direct_score 的合法 NaN 分数行
+  在 metrics_table 收口剔除（C1）；NDCG 的 IDCG 分母取完整 truth 行的相关
+  总数，稀疏方法的 unretrieved relevant 计入惩罚（I2）；
 - 生成质量 gen_quality.json：嵌入口径（stage-gen tags vs 用户 top-K 标签）
   + judge 口径（judge_gen_quality.parquet 均值）；
 - 不复制 A 的模态×标签热力图（B 无此需求，YAGNI）。
@@ -30,7 +35,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from movietaggen.align.calibrate import Calibrator
 from movietaggen.align.embedding import embed_texts, make_embedder
+from movietaggen.align.mapping import aggregate_scores
 from movietaggen.config import AppConfig, ProtocolConfig
 from movietaggen.eval.metrics import (
     dual_rmse, gen_coverage, gen_redundancy, gen_relevance, ndcg_at_k,
@@ -39,7 +46,11 @@ from movietaggen.eval.metrics import (
 from movietaggen.eval.protocol import tag_type_breakdown, temporal_split
 
 _METRIC_COLUMNS = ["method", "subset", "rmse_full", "rmse_pred_only",
-                   "spearman", "precision@k", "ndcg@k"]
+                   "spearman", "precision@k", "ndcg@k", "n_pred"]
+
+# I1：空预测集的方法×子集行——NaN 指标（0.0 会被误读为"完美"），n_pred=0 亮明空集
+_EMPTY_ROW_METRICS = {"rmse_full": np.nan, "rmse_pred_only": np.nan,
+                      "spearman": np.nan, "precision@k": np.nan, "ndcg@k": np.nan}
 
 
 def _wide(df: pd.DataFrame) -> pd.DataFrame:
@@ -54,7 +65,10 @@ def _evaluate_method(pred: pd.DataFrame, truth: pd.DataFrame,
     逐电影 P@K/NDCG@K（pred/truth 各自透视宽矩阵后逐电影计算，电影间取均值）。
 
     P@K/NDCG@K 沿用 A 的宽透视做法：相关集 = truth ≥ relevance_threshold，
-    top-k 按 pred 降序。"""
+    top-k 按 pred 降序。NDCG 的 IDCG 分母取该电影**完整 truth 行**的相关总数
+    （I2：只按 pred ⋈ truth 的受限宇宙计数会让稀疏方法的 unretrieved relevant
+    不扣分，NDCG 结构性虚高偏向稀疏方法）；P@K 两宇宙数学等价（分母恒 = k），
+    按受限宇宙照旧。"""
     dual = dual_rmse(pred, truth, all_tag_ids)
     # pred 的 score 先重命名为 score_p：truth 侧列名为 relevance，合并无列冲突时
     # pandas 不会追加后缀，直接引用 score_p 会 KeyError（同 A）
@@ -67,14 +81,20 @@ def _evaluate_method(pred: pd.DataFrame, truth: pd.DataFrame,
     if not joined.empty:
         pw = _wide(joined.rename(columns={"score_p": "score"}))
         tw = _wide(joined.rename(columns={"relevance": "score"}))
+        # 完整 truth 行（同一评估子集的标签宇宙）：I2 的相关总数来源
+        truth_full = _wide(truth.rename(columns={"relevance": "score"}))
         for movie in pw.index:
             if movie in tw.index:
                 pk.append(precision_at_k(
                     pw.loc[movie].to_numpy(), tw.loc[movie].to_numpy(),
                     cfg.top_k, cfg.relevance_threshold))
+                # movie 在 tw.index ⇒ 其 truth 行存在 ⇒ 必在 truth_full.index
+                n_rel_full = int(
+                    (truth_full.loc[movie].to_numpy()
+                     >= cfg.relevance_threshold).sum())
                 nk.append(ndcg_at_k(
                     pw.loc[movie].to_numpy(), tw.loc[movie].to_numpy(),
-                    cfg.top_k, cfg.relevance_threshold))
+                    cfg.top_k, cfg.relevance_threshold, n_relevant=n_rel_full))
     return {"rmse_full": dual["rmse_full"],
             "rmse_pred_only": dual["rmse_pred_only"],
             "spearman": rho,
@@ -87,7 +107,10 @@ def metrics_table(predictions: dict[str, pd.DataFrame], truth: pd.DataFrame,
                   movie_ids: list[int] | None = None) -> pd.DataFrame:
     """method × 指标表。tag_ids / movie_ids 给定时 pred 与 truth 同步过滤——
     子集的标签宇宙 all_tag_ids = 过滤后 truth 的 tag_id 集合（tag 类型子集的
-    rmse_full 只在该类型的标签宇宙上补 0 对齐，不掺入其它类型）。"""
+    rmse_full 只在该类型的标签宇宙上补 0 对齐，不掺入其它类型）。
+
+    每方法行附带 n_pred = 该方法×子集实际参与评估的预测对数（子集过滤 +
+    NaN 剔除后），空集在 metrics.csv 中可见而非伪装成满分。"""
     if tag_ids is not None:
         truth = truth[truth["tag_id"].isin(set(tag_ids))]
     if movie_ids is not None:
@@ -100,7 +123,20 @@ def metrics_table(predictions: dict[str, pd.DataFrame], truth: pd.DataFrame,
             p = p[p["tag_id"].isin(set(tag_ids))]
         if movie_ids is not None:
             p = p[p["movie_id"].isin(set(movie_ids))]
-        rows.append({"method": method, **_evaluate_method(p, truth, all_tag_ids, cfg)})
+        # C1：direct_score 合法产出 NaN 分数行（无内容电影 / 全轮解析失败——
+        # 其 docstring 明言"交由评估侧处理"），必须先剔除：NaN 入 dual_rmse
+        # 会令整个方法的 rmse_full/rmse_pred_only 变 NaN，spearman 的 NaN 守卫
+        # 还会静默返回 0.0 伪装成真实分（镜像 A 的 ann.dropna(subset=["score"])
+        # 模式，一处收口覆盖全部预测来源）。
+        p = p.dropna(subset=["score"])
+        if p.empty:
+            # I1：空预测集 ≠ 满分。dual_rmse 的全 0 退化返回是其纯函数契约，
+            # 报告层在此裁定上报口径：NaN 指标行 + n_pred=0（空集可见）。
+            rows.append({"method": method, **_EMPTY_ROW_METRICS, "n_pred": 0})
+        else:
+            rows.append({"method": method,
+                         **_evaluate_method(p, truth, all_tag_ids, cfg),
+                         "n_pred": int(len(p))})
     return pd.DataFrame(rows)
 
 
@@ -181,6 +217,35 @@ def gen_quality_summary(exp_dir: Path, user_tags: pd.DataFrame | None,
     return out
 
 
+def threshold_filtered_predictions(exp_dir: Path, agg: str) -> pd.DataFrame | None:
+    """阈值筛选变体（I6，spec §8 轴 6 的低置信过滤曲线；仅对第一个实验目录计算）：
+    stage-align/mappings.parquet 剔除 low_conf 行后按 cfg.align.agg 重聚合，
+    calibration.json 为真实 Calibrator 时再复用其换算（与 scores_calibrated
+    同量纲可比）。数据已在盘上，零重跑成本——使阈值 0.4/0.6 消融臂产出真实
+    不同的分数，而非同分假曲线。
+
+    - mappings.parquet 缺失 → None（变体不可得，调用方跳过）；
+    - calibration.json 为空实验哨兵（fitted=false，Task 13 产物）→ None +
+      打印说明（无拟合参数可复用，绝不静默以未校准分数混入对比）；
+    - 全部映射 low_conf → 空聚合返回（评估层按 I1 以 NaN 行上报空集）。"""
+    mappings_path = exp_dir / "stage-align" / "mappings.parquet"
+    if not mappings_path.exists():
+        return None
+    mappings = pd.read_parquet(mappings_path)
+    kept = mappings[~mappings["low_conf"].astype(bool)]
+    variant = aggregate_scores(kept, agg)
+    calib_path = exp_dir / "stage-align" / "calibration.json"
+    calib_dict = json.loads(calib_path.read_text(encoding="utf-8"))
+    if calib_dict.get("fitted") is False:
+        print(f"[report] 提示: {calib_path} 为空实验哨兵（fitted=false），"
+              "two-stage[threshold-filtered] 变体跳过（无拟合校准器可复用）")
+        return None
+    calibrator = Calibrator.from_dict(calib_dict)
+    variant["score"] = calibrator.transform(
+        variant["score"].to_numpy(dtype=float))
+    return variant
+
+
 def write_report(exp_dirs: list[Path], baseline_dir: Path | None, out_dir: Path,
                  cfg: AppConfig, dataset: pd.DataFrame,
                  truth: pd.DataFrame, tag_groups: pd.DataFrame | None,
@@ -213,6 +278,11 @@ def write_report(exp_dirs: list[Path], baseline_dir: Path | None, out_dir: Path,
         filtered = exp / "stage-audit" / "scores_filtered.parquet"
         if filtered.exists():
             predictions[f"two-stage[filtered{label}]"] = pd.read_parquet(filtered)
+    # I6：阈值筛选曲线仅对第一个实验目录计算（metrics.csv 新增
+    # two-stage[threshold-filtered] 方法行；变体不可得/哨兵时自然缺席）
+    tf = threshold_filtered_predictions(exp_dirs[0], cfg.align.agg)
+    if tf is not None:
+        predictions["two-stage[threshold-filtered]"] = tf
     if baseline_dir is not None and (baseline_dir / "baselines.parquet").exists():
         base = pd.read_parquet(baseline_dir / "baselines.parquet")
         for method, df in base.groupby("method"):

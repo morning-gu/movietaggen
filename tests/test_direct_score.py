@@ -27,7 +27,7 @@ from movietaggen.data.align import build_dataset
 from movietaggen.data.grouping import load_tag_groups
 from movietaggen.data.sample import make_synthetic_dataset
 from movietaggen.eval.protocol import assert_no_leakage, temporal_split
-from movietaggen.generate.pipeline import _to_multimodal
+from movietaggen.generate.content import to_multimodal
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -77,7 +77,7 @@ def test_prompt_mirrors_a_structure(fake_setup):
     tag_groups = load_tag_groups(paths.tag_groups)
 
     movie_rows = {int(r["movie_id"]): r for _, r in dataset.iterrows()}
-    mm = _to_multimodal(movie_rows[1], paths.movienet)
+    mm = to_multimodal(movie_rows[1], paths.movienet)
     group = sorted(tag_groups["group"].unique())[0]
     tag_defs = _group_tag_defs(tag_groups, group)
 

@@ -248,3 +248,20 @@ def test_refill_single_class_side_returns_none(tmp_path):
               "reject"]
     _hand_fill(csv_path2, dict(enumerate(humans)))
     assert refill_kappa(csv_path2) is None
+
+
+def test_refill_kappa_tolerates_bom(tmp_path):
+    """T15：Windows 记事本/Excel 重存 CSV 会前置 UTF-8 BOM——utf-8-sig 读取
+    正常配对（对无 BOM 的普通 UTF-8 逐字节等价，既有往返用例不回退）。"""
+    _, csv_path = _export_csv(tmp_path, "sample.csv", n=7, seed=42)
+    _hand_fill(csv_path, {
+        1: "reject",        # judge=accept → (accept, reject)
+        3: " accept ",      # judge=reject → (reject, accept)
+        5: "accept",        # judge=accept → (accept, accept)
+    })
+    csv_path.write_bytes(b"\xef\xbb\xbf" + csv_path.read_bytes())
+    result = refill_kappa(csv_path)
+    assert result is not None
+    judge_list, human_list = result
+    assert judge_list == ["accept", "reject", "accept"]
+    assert human_list == ["reject", "accept", "accept"]

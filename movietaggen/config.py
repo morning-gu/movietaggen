@@ -198,6 +198,8 @@ def validate_config(cfg: AppConfig) -> None:
         raise ValueError("generate.workers 必须 ≥ 1（1=串行）")
     if cfg.align.agg not in VALID_AGG:
         raise ValueError(f"align.agg 必须是 {VALID_AGG}，得到 {cfg.align.agg!r}")
+    if cfg.align.top_k < 1:
+        raise ValueError("align.top_k 必须 ≥ 1（每自由标签至少取 1 个候选）")
     if not 0.0 < cfg.align.threshold < 1.0:
         raise ValueError("align.threshold 必须在 (0,1) 开区间")
     if cfg.align.calib_method not in VALID_CALIB_METHODS:
@@ -229,9 +231,18 @@ def load_config(path: str | Path) -> AppConfig:
     if unknown:
         raise ValueError(
             f"配置含未知顶层键: {sorted(unknown)}（合法键: {sorted(KNOWN_TOP_LEVEL_KEYS)}）")
+    # M3：mock 只收布尔——YAML 的 mock: "false" 是非空字符串，bool() 化为
+    # True 会把想关 mock 的运行静默打成 mock（方向反转的静默失败比崩溃糟）。
+    # 引号包住的 false/true 一律大声报错，提示用户去掉引号。
+    mock_raw = raw.get("mock", False)
+    if not isinstance(mock_raw, bool):
+        raise ValueError(
+            f"mock 必须是布尔值（true/false），得到 {mock_raw!r}"
+            f"（{type(mock_raw).__name__}）——YAML 中请写 mock: false，"
+            "去掉引号（mock: \"false\" 是字符串，会被当作真值）")
     cfg = AppConfig(
         exp_name=raw.get("exp_name", "default"),
-        mock=bool(raw.get("mock", False)),
+        mock=mock_raw,
         data=DataConfig(**raw.get("data", {})),
         model=ModelConfig(**raw.get("model", {})),
         generate=GenerateConfig(**raw.get("generate", {})),
