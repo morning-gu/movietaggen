@@ -9,6 +9,11 @@ generate:
   n_runs: 2
   workers: 1
 
+# baselines.run 钉为离线三元组（控制器裁定 4）：schema 默认含 bert，而 bert
+# 需要 HF 模型下载——冒烟必须免下载，故显式排除（test_baselines.py 钉住）。
+baselines:
+  run: [direct_score, genre_map, random]
+
 # 合成电影年份 2018-2023 全 ≥ schema 默认 2015 → 训练分割会恒空、校准必炸；
 # 显式钉 2019（2018 的 Crimson Horizon 为训练侧）。default.yaml 维持 2015 供真实数据。
 protocol:
