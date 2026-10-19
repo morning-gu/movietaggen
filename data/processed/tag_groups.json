@@ -1,0 +1,7898 @@
+[
+ {
+  "tag_id": 1,
+  "tag": "007",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "与007詹姆斯·邦德间谍系列相关的电影。"
+ },
+ {
+  "tag_id": 2,
+  "tag": "007 (series)",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "明确属于007电影系列。"
+ },
+ {
+  "tag_id": 3,
+  "tag": "18th century",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "故事背景或历史氛围设定在18世纪。"
+ },
+ {
+  "tag_id": 4,
+  "tag": "1920s",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "故事背景或时代氛围设定在1920年代。"
+ },
+ {
+  "tag_id": 5,
+  "tag": "1930s",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "故事背景或时代氛围设定在1930年代。"
+ },
+ {
+  "tag_id": 6,
+  "tag": "1950s",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "故事背景或时代氛围设定在1950年代。"
+ },
+ {
+  "tag_id": 7,
+  "tag": "1960s",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "故事背景或时代氛围设定在1960年代。"
+ },
+ {
+  "tag_id": 8,
+  "tag": "1970s",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "故事背景或时代氛围设定在1970年代。"
+ },
+ {
+  "tag_id": 9,
+  "tag": "1980s",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "故事背景或时代氛围设定在1980年代。"
+ },
+ {
+  "tag_id": 10,
+  "tag": "19th century",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "故事背景或历史氛围设定在19世纪。"
+ },
+ {
+  "tag_id": 11,
+  "tag": "3d",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "采用3D立体影像技术呈现。"
+ },
+ {
+  "tag_id": 12,
+  "tag": "70mm",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "采用70毫米胶片或大画幅规格拍摄或放映。"
+ },
+ {
+  "tag_id": 13,
+  "tag": "80s",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "指具有1980年代背景、风格或怀旧元素。"
+ },
+ {
+  "tag_id": 14,
+  "tag": "9/11",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及九一一恐怖袭击及其后续影响。"
+ },
+ {
+  "tag_id": 15,
+  "tag": "aardman",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "与阿德曼动画公司或其标志性定格动画风格相关。"
+ },
+ {
+  "tag_id": 16,
+  "tag": "aardman studios",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "由阿德曼工作室制作或带有其品牌特征。"
+ },
+ {
+  "tag_id": 17,
+  "tag": "abortion",
+  "group": "社会议题、信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及堕胎议题、选择或相关情节。"
+ },
+ {
+  "tag_id": 18,
+  "tag": "absurd",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "呈现荒诞、反常或不合逻辑的风格。"
+ },
+ {
+  "tag_id": 19,
+  "tag": "action",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "以动作场面为核心类型特征。"
+ },
+ {
+  "tag_id": 20,
+  "tag": "action packed",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "包含密集且高强度的动作场面。"
+ },
+ {
+  "tag_id": 21,
+  "tag": "adaptation",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自既有作品或真实素材。"
+ },
+ {
+  "tag_id": 22,
+  "tag": "adapted from:book",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自书籍、小说或文字作品。"
+ },
+ {
+  "tag_id": 23,
+  "tag": "adapted from:comic",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自漫画或图像小说。"
+ },
+ {
+  "tag_id": 24,
+  "tag": "adapted from:game",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自电子游戏、桌游或其他游戏作品。"
+ },
+ {
+  "tag_id": 25,
+  "tag": "addiction",
+  "group": "社会议题、信仰与人生困境",
+  "tag_type": "content",
+  "definition": "描绘成瘾问题及其影响。"
+ },
+ {
+  "tag_id": 26,
+  "tag": "adolescence",
+  "group": "社会议题、信仰与人生困境",
+  "tag_type": "content",
+  "definition": "聚焦青春期成长经历。"
+ },
+ {
+  "tag_id": 27,
+  "tag": "adoption",
+  "group": "社会议题、信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及收养、领养关系或身世议题。"
+ },
+ {
+  "tag_id": 28,
+  "tag": "adultery",
+  "group": "社会议题、信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及婚外情或通奸关系。"
+ },
+ {
+  "tag_id": 29,
+  "tag": "adventure",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "以冒险旅程或探索经历为核心。"
+ },
+ {
+  "tag_id": 30,
+  "tag": "affectionate",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "整体语气温情、亲切或充满爱意。"
+ },
+ {
+  "tag_id": 31,
+  "tag": "afi 100",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与美国电影学会百年百大电影榜单相关。"
+ },
+ {
+  "tag_id": 32,
+  "tag": "afi 100 (laughs)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "入选美国电影学会百年百大喜剧电影榜单。"
+ },
+ {
+  "tag_id": 33,
+  "tag": "afi 100 (movie quotes)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "入选美国电影学会百年百大电影台词榜单。"
+ },
+ {
+  "tag_id": 34,
+  "tag": "africa",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事背景、题材或景观与非洲相关。"
+ },
+ {
+  "tag_id": 35,
+  "tag": "afterlife",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及死后世界、来世或灵魂归宿。"
+ },
+ {
+  "tag_id": 36,
+  "tag": "aging",
+  "group": "社会议题、信仰与人生困境",
+  "tag_type": "content",
+  "definition": "关注衰老、老龄化或年龄变化。"
+ },
+ {
+  "tag_id": 37,
+  "tag": "aids",
+  "group": "社会议题、信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及艾滋病疫情、患者或相关社会议题。"
+ },
+ {
+  "tag_id": 38,
+  "tag": "airplane",
+  "group": "交通与航空",
+  "tag_type": "content",
+  "definition": "包含飞机、飞行旅程或机舱场景。"
+ },
+ {
+  "tag_id": 39,
+  "tag": "airport",
+  "group": "交通与航空",
+  "tag_type": "content",
+  "definition": "包含机场场景或航空出行情节。"
+ },
+ {
+  "tag_id": 40,
+  "tag": "alaska",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事背景或拍摄地与阿拉斯加相关。"
+ },
+ {
+  "tag_id": 41,
+  "tag": "alcatraz",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "涉及恶魔岛监狱或其地标意象。"
+ },
+ {
+  "tag_id": 42,
+  "tag": "alcoholism",
+  "group": "社会议题、信仰与人生困境",
+  "tag_type": "content",
+  "definition": "描绘酗酒或酒精依赖问题。"
+ },
+ {
+  "tag_id": 43,
+  "tag": "alien",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及外星生命或外星存在。"
+ },
+ {
+  "tag_id": 44,
+  "tag": "alien invasion",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "以外星生物入侵地球为核心冲突。"
+ },
+ {
+  "tag_id": 45,
+  "tag": "aliens",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "包含外星人角色或外星文明。"
+ },
+ {
+  "tag_id": 46,
+  "tag": "allegory",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "通过象征或隐喻传达深层寓意。"
+ },
+ {
+  "tag_id": 47,
+  "tag": "almodovar",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与导演佩德罗·阿莫多瓦或其作品风格相关。"
+ },
+ {
+  "tag_id": 48,
+  "tag": "alone in the world",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色处于孤立无援或独自面对世界的状态。"
+ },
+ {
+  "tag_id": 49,
+  "tag": "alter ego",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "涉及第二自我、分身或人格替代。"
+ },
+ {
+  "tag_id": 50,
+  "tag": "alternate endings",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "包含不同结局版本或结局分支。"
+ },
+ {
+  "tag_id": 51,
+  "tag": "alternate history",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "重构历史走向的架空历史设定。"
+ },
+ {
+  "tag_id": 52,
+  "tag": "alternate reality",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "呈现与现实不同的平行现实。"
+ },
+ {
+  "tag_id": 53,
+  "tag": "alternate universe",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及平行宇宙或多重宇宙设定。"
+ },
+ {
+  "tag_id": 54,
+  "tag": "amazing cinematography",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众称赞影片摄影极为出色。"
+ },
+ {
+  "tag_id": 55,
+  "tag": "amazing photography",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众称赞影片画面或摄影非常惊艳。"
+ },
+ {
+  "tag_id": 56,
+  "tag": "american civil war",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "以美国南北战争为历史背景或主题。"
+ },
+ {
+  "tag_id": 57,
+  "tag": "amnesia",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色患有失忆症或剧情围绕记忆缺失展开。"
+ },
+ {
+  "tag_id": 58,
+  "tag": "amy smart",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "包含演员艾米·斯马特或与她相关。"
+ },
+ {
+  "tag_id": 59,
+  "tag": "android(s)/cyborg(s)",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "包含仿生人、机器人或赛博格角色。"
+ },
+ {
+  "tag_id": 60,
+  "tag": "androids",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及仿生人或人形机器人。"
+ },
+ {
+  "tag_id": 61,
+  "tag": "animal movie",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "以动物为核心题材或主要叙事对象。"
+ },
+ {
+  "tag_id": 62,
+  "tag": "animals",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "包含动物角色、动物主题或动物元素。"
+ },
+ {
+  "tag_id": 63,
+  "tag": "animated",
+  "group": "动画形式",
+  "tag_type": "content",
+  "definition": "影片以动画形式制作呈现。"
+ },
+ {
+  "tag_id": 64,
+  "tag": "animation",
+  "group": "动画形式",
+  "tag_type": "content",
+  "definition": "属于动画类型或突出动画技法。"
+ },
+ {
+  "tag_id": 65,
+  "tag": "anime",
+  "group": "动画形式",
+  "tag_type": "content",
+  "definition": "具有日本动漫风格或属于日本动画。"
+ },
+ {
+  "tag_id": 66,
+  "tag": "antarctica",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事背景或场景与南极相关。"
+ },
+ {
+  "tag_id": 67,
+  "tag": "anti-hero",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "主角或重要角色具有反英雄特质。"
+ },
+ {
+  "tag_id": 68,
+  "tag": "anti-semitism",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及反犹太主义或相关歧视迫害。"
+ },
+ {
+  "tag_id": 69,
+  "tag": "anti-war",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "表达反战立场或反思战争残酷。"
+ },
+ {
+  "tag_id": 70,
+  "tag": "apocalypse",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "描绘世界末日、灾难性毁灭或末世情境。"
+ },
+ {
+  "tag_id": 71,
+  "tag": "archaeology",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及考古发现、考古工作或考古学家。"
+ },
+ {
+  "tag_id": 72,
+  "tag": "argentina",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事背景、题材或文化与阿根廷相关。"
+ },
+ {
+  "tag_id": 73,
+  "tag": "arms dealer",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及军火商或武器交易角色。"
+ },
+ {
+  "tag_id": 74,
+  "tag": "arnold",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与阿诺德相关的演员、角色或动作明星形象。"
+ },
+ {
+  "tag_id": 75,
+  "tag": "art",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "以艺术、艺术作品或艺术创作为题材。"
+ },
+ {
+  "tag_id": 76,
+  "tag": "art house",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "具有艺术电影或小众文艺片气质。"
+ },
+ {
+  "tag_id": 77,
+  "tag": "artificial intelligence",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及人工智能、智能机器或相关伦理。"
+ },
+ {
+  "tag_id": 78,
+  "tag": "artist",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "包含艺术家角色或围绕艺术创作展开。"
+ },
+ {
+  "tag_id": 79,
+  "tag": "artistic",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "影片呈现较强艺术追求或审美表达。"
+ },
+ {
+  "tag_id": 80,
+  "tag": "artsy",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "风格文艺化、注重形式感或艺术气息。"
+ },
+ {
+  "tag_id": 81,
+  "tag": "assassin",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "包含刺客或职业杀手角色。"
+ },
+ {
+  "tag_id": 82,
+  "tag": "assassination",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及暗杀行动或政治刺杀事件。"
+ },
+ {
+  "tag_id": 83,
+  "tag": "assassins",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "包含多名刺客或杀手角色。"
+ },
+ {
+  "tag_id": 84,
+  "tag": "astronauts",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "包含宇航员角色或太空任务情节。"
+ },
+ {
+  "tag_id": 85,
+  "tag": "atheism",
+  "group": "社会议题、信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及无神论、信仰缺失或对宗教的质疑。"
+ },
+ {
+  "tag_id": 86,
+  "tag": "atmospheric",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "营造强烈氛围感或沉浸式环境情绪。"
+ },
+ {
+  "tag_id": 87,
+  "tag": "australia",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事背景、题材或景观与澳大利亚相关。"
+ },
+ {
+  "tag_id": 88,
+  "tag": "australian",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "具有澳大利亚电影、文化或地域属性。"
+ },
+ {
+  "tag_id": 89,
+  "tag": "author:alan moore",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "改编自或关联作者艾伦·摩尔的原著作品。"
+ },
+ {
+  "tag_id": 90,
+  "tag": "author:neil gaiman",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "改编自或关联作者尼尔·盖曼的原著作品。"
+ },
+ {
+  "tag_id": 91,
+  "tag": "autism",
+  "group": "社会议题、信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及自闭症谱系角色或相关议题。"
+ },
+ {
+  "tag_id": 92,
+  "tag": "aviation",
+  "group": "交通与航空",
+  "tag_type": "content",
+  "definition": "围绕航空、飞行器或飞行事业展开。"
+ },
+ {
+  "tag_id": 93,
+  "tag": "awesome",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片非常精彩或令人赞叹。"
+ },
+ {
+  "tag_id": 94,
+  "tag": "awesome soundtrack",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片配乐或原声非常出色。"
+ },
+ {
+  "tag_id": 95,
+  "tag": "awful",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片质量很差。"
+ },
+ {
+  "tag_id": 96,
+  "tag": "bad",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众给出负面评价，认为影片糟糕。"
+ },
+ {
+  "tag_id": 97,
+  "tag": "bad acting",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为表演或演技不佳。"
+ },
+ {
+  "tag_id": 98,
+  "tag": "bad cgi",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为CG特效质量差。"
+ },
+ {
+  "tag_id": 99,
+  "tag": "bad ending",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为结局处理糟糕。"
+ },
+ {
+  "tag_id": 100,
+  "tag": "bad plot",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为剧情薄弱或逻辑不佳。"
+ },
+ {
+  "tag_id": 101,
+  "tag": "bad science",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "认为影片的科学设定不可信或错误。"
+ },
+ {
+  "tag_id": 102,
+  "tag": "bad script",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "认为剧本质量差。"
+ },
+ {
+  "tag_id": 103,
+  "tag": "bad sequel",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "认为续集质量不佳。"
+ },
+ {
+  "tag_id": 104,
+  "tag": "ballet",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以芭蕾舞蹈为题材或重要元素。"
+ },
+ {
+  "tag_id": 105,
+  "tag": "bank robbery",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及银行抢劫情节。"
+ },
+ {
+  "tag_id": 106,
+  "tag": "baseball",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以棒球运动为题材。"
+ },
+ {
+  "tag_id": 107,
+  "tag": "based on a book",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自书籍。"
+ },
+ {
+  "tag_id": 108,
+  "tag": "based on a comic",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自漫画。"
+ },
+ {
+  "tag_id": 109,
+  "tag": "based on a play",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自戏剧。"
+ },
+ {
+  "tag_id": 110,
+  "tag": "based on a true story",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "基于真实事件改编。"
+ },
+ {
+  "tag_id": 111,
+  "tag": "based on a tv show",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自电视节目。"
+ },
+ {
+  "tag_id": 112,
+  "tag": "based on a video game",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自电子游戏。"
+ },
+ {
+  "tag_id": 113,
+  "tag": "based on book",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自书籍。"
+ },
+ {
+  "tag_id": 114,
+  "tag": "based on comic",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自漫画。"
+ },
+ {
+  "tag_id": 115,
+  "tag": "based on true story",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "基于真实事件改编。"
+ },
+ {
+  "tag_id": 116,
+  "tag": "basketball",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以篮球运动为题材。"
+ },
+ {
+  "tag_id": 117,
+  "tag": "batman",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "属于蝙蝠侠角色或系列。"
+ },
+ {
+  "tag_id": 118,
+  "tag": "bdsm",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及BDSM性关系或亚文化。"
+ },
+ {
+  "tag_id": 119,
+  "tag": "beatles",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与披头士乐队或其成员相关。"
+ },
+ {
+  "tag_id": 120,
+  "tag": "beautiful",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "称赞影片很美。"
+ },
+ {
+  "tag_id": 121,
+  "tag": "beautiful scenery",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "展现优美自然或景观画面。"
+ },
+ {
+  "tag_id": 122,
+  "tag": "beautifully filmed",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "称赞影片拍摄画面优美。"
+ },
+ {
+  "tag_id": 123,
+  "tag": "beauty pageant",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及选美比赛或选美文化。"
+ },
+ {
+  "tag_id": 124,
+  "tag": "beer",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及啤酒或饮酒文化。"
+ },
+ {
+  "tag_id": 125,
+  "tag": "berlin",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事发生地或制作地与柏林相关。"
+ },
+ {
+  "tag_id": 126,
+  "tag": "best of 2005",
+  "group": "榜单与荣誉",
+  "tag_type": "preference",
+  "definition": "被视为2005年佳作之一。"
+ },
+ {
+  "tag_id": 127,
+  "tag": "best war films",
+  "group": "榜单与荣誉",
+  "tag_type": "preference",
+  "definition": "被列为优秀战争片之一。"
+ },
+ {
+  "tag_id": 128,
+  "tag": "betrayal",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "涉及背叛或出卖关系。"
+ },
+ {
+  "tag_id": 129,
+  "tag": "better than expected",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观感超出预期。"
+ },
+ {
+  "tag_id": 130,
+  "tag": "better than the american version",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "认为优于美国版本。"
+ },
+ {
+  "tag_id": 131,
+  "tag": "biblical",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及圣经故事或宗教典故。"
+ },
+ {
+  "tag_id": 132,
+  "tag": "big budget",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "高预算大制作。"
+ },
+ {
+  "tag_id": 133,
+  "tag": "biographical",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "传记题材，基于真实人物。"
+ },
+ {
+  "tag_id": 134,
+  "tag": "biography",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "传记题材。"
+ },
+ {
+  "tag_id": 135,
+  "tag": "biopic",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "传记电影。"
+ },
+ {
+  "tag_id": 136,
+  "tag": "birds",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "涉及鸟类。"
+ },
+ {
+  "tag_id": 137,
+  "tag": "biting",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "风格尖锐讽刺。"
+ },
+ {
+  "tag_id": 138,
+  "tag": "bittersweet",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "情感基调苦乐参半。"
+ },
+ {
+  "tag_id": 139,
+  "tag": "bizarre",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "风格怪异奇特。"
+ },
+ {
+  "tag_id": 140,
+  "tag": "black and white",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "黑白影像。"
+ },
+ {
+  "tag_id": 141,
+  "tag": "black comedy",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "黑色喜剧风格。"
+ },
+ {
+  "tag_id": 142,
+  "tag": "blaxploitation",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "黑人剥削片类型风格。"
+ },
+ {
+  "tag_id": 143,
+  "tag": "bleak",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "氛围阴郁绝望。"
+ },
+ {
+  "tag_id": 144,
+  "tag": "blindness",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "涉及失明或视觉障碍。"
+ },
+ {
+  "tag_id": 145,
+  "tag": "blood",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "包含血腥画面。"
+ },
+ {
+  "tag_id": 146,
+  "tag": "bloody",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "血腥暴力程度较高。"
+ },
+ {
+  "tag_id": 147,
+  "tag": "boarding school",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "以寄宿学校为背景或教育环境。"
+ },
+ {
+  "tag_id": 148,
+  "tag": "boat",
+  "group": "交通与航空",
+  "tag_type": "content",
+  "definition": "涉及船只或水上交通。"
+ },
+ {
+  "tag_id": 149,
+  "tag": "bollywood",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "具有宝莱坞或印度电影文化特征。"
+ },
+ {
+  "tag_id": 150,
+  "tag": "bombs",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "涉及爆炸或炸弹场面。"
+ },
+ {
+  "tag_id": 151,
+  "tag": "bond",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "属于007或詹姆斯·邦德系列。"
+ },
+ {
+  "tag_id": 152,
+  "tag": "book",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "与书籍或文学文本相关。"
+ },
+ {
+  "tag_id": 153,
+  "tag": "book was better",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "认为原著优于电影。"
+ },
+ {
+  "tag_id": 154,
+  "tag": "books",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "与书籍或文学文本相关。"
+ },
+ {
+  "tag_id": 155,
+  "tag": "boring",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "认为影片无聊。"
+ },
+ {
+  "tag_id": 156,
+  "tag": "boring!",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "强烈认为影片无聊。"
+ },
+ {
+  "tag_id": 157,
+  "tag": "boston",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "与波士顿相关。"
+ },
+ {
+  "tag_id": 158,
+  "tag": "bowling",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以保龄球为题材。"
+ },
+ {
+  "tag_id": 159,
+  "tag": "boxing",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以拳击为题材。"
+ },
+ {
+  "tag_id": 160,
+  "tag": "brainwashing",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及洗脑或思想控制。"
+ },
+ {
+  "tag_id": 161,
+  "tag": "brazil",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "与巴西相关。"
+ },
+ {
+  "tag_id": 162,
+  "tag": "breathtaking",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "称赞影片令人惊叹。"
+ },
+ {
+  "tag_id": 163,
+  "tag": "brilliant",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "称赞影片出色。"
+ },
+ {
+  "tag_id": 164,
+  "tag": "british",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "具有英国属性。"
+ },
+ {
+  "tag_id": 165,
+  "tag": "british comedy",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "英式喜剧风格。"
+ },
+ {
+  "tag_id": 166,
+  "tag": "broadway",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "与百老汇或纽约戏剧文化相关。"
+ },
+ {
+  "tag_id": 167,
+  "tag": "brothers",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "涉及兄弟关系。"
+ },
+ {
+  "tag_id": 168,
+  "tag": "brutal",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "呈现残酷或暴力感。"
+ },
+ {
+  "tag_id": 169,
+  "tag": "brutality",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "展现暴力残酷。"
+ },
+ {
+  "tag_id": 170,
+  "tag": "buddy movie",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "以伙伴搭档互动为核心的类型。"
+ },
+ {
+  "tag_id": 171,
+  "tag": "bullshit history",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "认为历史呈现虚假或胡扯。"
+ },
+ {
+  "tag_id": 172,
+  "tag": "bullying",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及霸凌。"
+ },
+ {
+  "tag_id": 173,
+  "tag": "business",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以商业或企业经营为题材。"
+ },
+ {
+  "tag_id": 174,
+  "tag": "c.s. lewis",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与作家C.S.刘易斯相关。"
+ },
+ {
+  "tag_id": 175,
+  "tag": "california",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "与加州相关。"
+ },
+ {
+  "tag_id": 176,
+  "tag": "camp",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "夸张做作的坎普风格。"
+ },
+ {
+  "tag_id": 177,
+  "tag": "campy",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "具有坎普式夸张趣味。"
+ },
+ {
+  "tag_id": 178,
+  "tag": "canada",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "与加拿大相关。"
+ },
+ {
+  "tag_id": 179,
+  "tag": "cancer",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及癌症或重病困境。"
+ },
+ {
+  "tag_id": 180,
+  "tag": "cannibalism",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及食人题材。"
+ },
+ {
+  "tag_id": 181,
+  "tag": "caper",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "以盗窃或骗局为核心的情节。"
+ },
+ {
+  "tag_id": 182,
+  "tag": "capitalism",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "探讨资本主义制度或经济问题。"
+ },
+ {
+  "tag_id": 183,
+  "tag": "car chase",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "包含汽车追逐场面。"
+ },
+ {
+  "tag_id": 184,
+  "tag": "carrie-anne moss",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "涉及演员凯瑞-安·莫斯。"
+ },
+ {
+  "tag_id": 185,
+  "tag": "cars",
+  "group": "交通与航空",
+  "tag_type": "content",
+  "definition": "涉及汽车。"
+ },
+ {
+  "tag_id": 186,
+  "tag": "cartoon",
+  "group": "动画形式",
+  "tag_type": "content",
+  "definition": "卡通或动画形式。"
+ },
+ {
+  "tag_id": 187,
+  "tag": "casino",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以赌场或博彩业为背景。"
+ },
+ {
+  "tag_id": 188,
+  "tag": "catastrophe",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "涉及灾难事件。"
+ },
+ {
+  "tag_id": 189,
+  "tag": "cathartic",
+  "group": "风格语气与氛围",
+  "tag_type": "preference",
+  "definition": "带来情感宣泄体验。"
+ },
+ {
+  "tag_id": 190,
+  "tag": "catholicism",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及天主教信仰。"
+ },
+ {
+  "tag_id": 191,
+  "tag": "censorship",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及审查制度或言论管控。"
+ },
+ {
+  "tag_id": 192,
+  "tag": "cerebral",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "需要智力思考的烧脑风格。"
+ },
+ {
+  "tag_id": 193,
+  "tag": "cgi",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "使用电脑生成图像。"
+ },
+ {
+  "tag_id": 194,
+  "tag": "character study",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "聚焦人物心理与性格研究。"
+ },
+ {
+  "tag_id": 195,
+  "tag": "chase",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "包含追逐情节。"
+ },
+ {
+  "tag_id": 196,
+  "tag": "cheating",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "涉及欺骗或出轨。"
+ },
+ {
+  "tag_id": 197,
+  "tag": "cheerleading",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以啦啦队为题材。"
+ },
+ {
+  "tag_id": 198,
+  "tag": "cheesy",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "被认为俗气或做作。"
+ },
+ {
+  "tag_id": 199,
+  "tag": "chess",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以国际象棋为题材。"
+ },
+ {
+  "tag_id": 200,
+  "tag": "chicago",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "与芝加哥相关。"
+ },
+ {
+  "tag_id": 201,
+  "tag": "chick flick",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "面向女性观众、以情感关系为主的轻松爱情或剧情片类型。"
+ },
+ {
+  "tag_id": 202,
+  "tag": "child abuse",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及虐待儿童的社会议题。"
+ },
+ {
+  "tag_id": 203,
+  "tag": "childhood",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "描绘童年阶段的人物经历或记忆。"
+ },
+ {
+  "tag_id": 204,
+  "tag": "children",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "儿童作为主要角色或重要叙事对象。"
+ },
+ {
+  "tag_id": 205,
+  "tag": "china",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事背景、文化或角色与中国相关。"
+ },
+ {
+  "tag_id": 206,
+  "tag": "chocolate",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及巧克力、甜点或美食相关元素。"
+ },
+ {
+  "tag_id": 207,
+  "tag": "chris tucker",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与演员克里斯·塔克出演或其表演相关。"
+ },
+ {
+  "tag_id": 208,
+  "tag": "christian",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及基督徒身份或基督教信仰。"
+ },
+ {
+  "tag_id": 209,
+  "tag": "christianity",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及基督教信仰、文化或宗教议题。"
+ },
+ {
+  "tag_id": 210,
+  "tag": "christmas",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "以圣诞节或圣诞季为背景。"
+ },
+ {
+  "tag_id": 211,
+  "tag": "cia",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及中央情报局、间谍或情报活动。"
+ },
+ {
+  "tag_id": 212,
+  "tag": "cinematography",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "强调摄影、镜头语言或影像表现。"
+ },
+ {
+  "tag_id": 213,
+  "tag": "circus",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以马戏团、杂技表演或相关行业为题材。"
+ },
+ {
+  "tag_id": 214,
+  "tag": "civil war",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及内战背景、战争或政治分裂。"
+ },
+ {
+  "tag_id": 215,
+  "tag": "classic",
+  "group": "榜单与荣誉",
+  "tag_type": "preference",
+  "definition": "观众认为影片具有经典地位或长久价值。"
+ },
+ {
+  "tag_id": 216,
+  "tag": "classic car",
+  "group": "交通与航空",
+  "tag_type": "content",
+  "definition": "出现或聚焦经典汽车。"
+ },
+ {
+  "tag_id": 217,
+  "tag": "classical music",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及古典音乐、音乐家或相关艺术题材。"
+ },
+ {
+  "tag_id": 218,
+  "tag": "claustrophobic",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "营造幽闭、压抑或逼仄的空间氛围。"
+ },
+ {
+  "tag_id": 219,
+  "tag": "claymation",
+  "group": "动画形式",
+  "tag_type": "content",
+  "definition": "采用黏土定格动画形式。"
+ },
+ {
+  "tag_id": 220,
+  "tag": "clever",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片机智巧妙。"
+ },
+ {
+  "tag_id": 221,
+  "tag": "clones",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及克隆人角色或克隆体设定。"
+ },
+ {
+  "tag_id": 222,
+  "tag": "cloning",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "以克隆技术及其伦理问题为核心。"
+ },
+ {
+  "tag_id": 223,
+  "tag": "clowns",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "小丑角色或马戏团小丑形象重要。"
+ },
+ {
+  "tag_id": 224,
+  "tag": "coen bros",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与科恩兄弟的创作、导演或编剧相关。"
+ },
+ {
+  "tag_id": 225,
+  "tag": "coen brothers",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与科恩兄弟的创作、导演或编剧相关。"
+ },
+ {
+  "tag_id": 226,
+  "tag": "cold war",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "以冷战时期或冷战政治为背景。"
+ },
+ {
+  "tag_id": 227,
+  "tag": "college",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以大学校园、教育或学术生活为题材。"
+ },
+ {
+  "tag_id": 228,
+  "tag": "colonialism",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及殖民主义、殖民历史或后殖民议题。"
+ },
+ {
+  "tag_id": 229,
+  "tag": "colourful",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "色彩丰富或视觉色调鲜明。"
+ },
+ {
+  "tag_id": 230,
+  "tag": "comedy",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "具有喜剧类型或幽默基调。"
+ },
+ {
+  "tag_id": 231,
+  "tag": "comic",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "与漫画、漫画书或漫画式叙事相关。"
+ },
+ {
+  "tag_id": 232,
+  "tag": "comic book",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自漫画书或以漫画书为素材。"
+ },
+ {
+  "tag_id": 233,
+  "tag": "comic book adaption",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "明确标注为漫画书改编。"
+ },
+ {
+  "tag_id": 234,
+  "tag": "comics",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "与漫画、连环画或漫画文本相关。"
+ },
+ {
+  "tag_id": 235,
+  "tag": "coming of age",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "描绘人物从青少年走向成熟的成长过程。"
+ },
+ {
+  "tag_id": 236,
+  "tag": "coming-of-age",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "描绘人物从青少年走向成熟的成长过程。"
+ },
+ {
+  "tag_id": 237,
+  "tag": "communism",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及共产主义、社会主义阵营或相关政治语境。"
+ },
+ {
+  "tag_id": 238,
+  "tag": "compassionate",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "影片基调富有同情心与温情。"
+ },
+ {
+  "tag_id": 239,
+  "tag": "competition",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "围绕比赛、竞赛或挑战展开。"
+ },
+ {
+  "tag_id": 240,
+  "tag": "complex",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "叙事、结构或主题较为复杂。"
+ },
+ {
+  "tag_id": 241,
+  "tag": "complex characters",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色性格复杂、多面或立体。"
+ },
+ {
+  "tag_id": 242,
+  "tag": "complicated",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众觉得影片复杂难懂。"
+ },
+ {
+  "tag_id": 243,
+  "tag": "complicated plot",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为剧情复杂、难以理解。"
+ },
+ {
+  "tag_id": 244,
+  "tag": "computer animation",
+  "group": "动画形式",
+  "tag_type": "content",
+  "definition": "采用计算机生成动画形式。"
+ },
+ {
+  "tag_id": 245,
+  "tag": "computer game",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及电子游戏、游戏文化或游戏题材。"
+ },
+ {
+  "tag_id": 246,
+  "tag": "computers",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及计算机、程序员或信息技术题材。"
+ },
+ {
+  "tag_id": 247,
+  "tag": "con artists",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "以骗子或诈骗犯为主要角色。"
+ },
+ {
+  "tag_id": 248,
+  "tag": "con men",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "以男性骗子或诈骗团伙为主要角色。"
+ },
+ {
+  "tag_id": 249,
+  "tag": "confrontational",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "语气或叙事具有挑衅性、冲突感。"
+ },
+ {
+  "tag_id": 250,
+  "tag": "confusing",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片令人困惑。"
+ },
+ {
+  "tag_id": 251,
+  "tag": "conspiracy",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及阴谋、秘密组织或策划活动。"
+ },
+ {
+  "tag_id": 252,
+  "tag": "conspiracy theory",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及阴谋论或秘密解释框架。"
+ },
+ {
+  "tag_id": 253,
+  "tag": "controversial",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及具有公众争议性的话题。"
+ },
+ {
+  "tag_id": 254,
+  "tag": "cooking",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及烹饪、厨师或美食制作。"
+ },
+ {
+  "tag_id": 255,
+  "tag": "cool",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片很酷或有风格。"
+ },
+ {
+  "tag_id": 256,
+  "tag": "corny",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片俗气或老套。"
+ },
+ {
+  "tag_id": 257,
+  "tag": "corporate america",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "描绘美国企业体制或职场文化。"
+ },
+ {
+  "tag_id": 258,
+  "tag": "corruption",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "描绘权力、制度或道德腐败。"
+ },
+ {
+  "tag_id": 259,
+  "tag": "costume drama",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "以特定历史年代的服饰与场景为特色。"
+ },
+ {
+  "tag_id": 260,
+  "tag": "courage",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "人物在困境中展现勇气。"
+ },
+ {
+  "tag_id": 261,
+  "tag": "court",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及法庭、法官或司法场景。"
+ },
+ {
+  "tag_id": 262,
+  "tag": "courtroom",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以法庭空间或庭审过程为核心。"
+ },
+ {
+  "tag_id": 263,
+  "tag": "courtroom drama",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以法庭辩论和司法程序推动剧情。"
+ },
+ {
+  "tag_id": 264,
+  "tag": "crappy sequel",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为续集质量低劣。"
+ },
+ {
+  "tag_id": 265,
+  "tag": "crazy",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "风格疯狂、夸张或失控。"
+ },
+ {
+  "tag_id": 266,
+  "tag": "creativity",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众赞赏影片富有创造力。"
+ },
+ {
+  "tag_id": 267,
+  "tag": "creepy",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "营造令人毛骨悚然或不安的氛围。"
+ },
+ {
+  "tag_id": 268,
+  "tag": "crime",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "以犯罪行为或案件为核心。"
+ },
+ {
+  "tag_id": 269,
+  "tag": "crime gone awry",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "犯罪计划失控或走向意外后果。"
+ },
+ {
+  "tag_id": 270,
+  "tag": "criterion",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "与标准收藏版或 Criterion 品牌相关。"
+ },
+ {
+  "tag_id": 271,
+  "tag": "cross dressing",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色有异装或性别装扮表现。"
+ },
+ {
+  "tag_id": 272,
+  "tag": "crude humor",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "包含粗俗或重口味的幽默。"
+ },
+ {
+  "tag_id": 273,
+  "tag": "cuba",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事背景、文化或角色与古巴相关。"
+ },
+ {
+  "tag_id": 274,
+  "tag": "cult",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "具有邪典趣味、反主流或粉丝文化气质。"
+ },
+ {
+  "tag_id": 275,
+  "tag": "cult classic",
+  "group": "榜单与荣誉",
+  "tag_type": "preference",
+  "definition": "被观众视为具有邪典经典地位。"
+ },
+ {
+  "tag_id": 276,
+  "tag": "cult film",
+  "group": "榜单与荣誉",
+  "tag_type": "preference",
+  "definition": "被视为邪典电影或小众经典。"
+ },
+ {
+  "tag_id": 277,
+  "tag": "culture clash",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "描绘不同文化、价值观之间的冲突。"
+ },
+ {
+  "tag_id": 278,
+  "tag": "cute",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众觉得影片可爱讨喜。"
+ },
+ {
+  "tag_id": 279,
+  "tag": "cute!",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众强烈觉得影片可爱讨喜。"
+ },
+ {
+  "tag_id": 280,
+  "tag": "cyberpunk",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "具有赛博朋克风格或未来科技反乌托邦设定。"
+ },
+ {
+  "tag_id": 281,
+  "tag": "cyborgs",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及半机械人或人机融合角色。"
+ },
+ {
+  "tag_id": 282,
+  "tag": "cynical",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "基调愤世嫉俗或冷嘲。"
+ },
+ {
+  "tag_id": 283,
+  "tag": "dance",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及舞蹈、舞者或舞蹈表演。"
+ },
+ {
+  "tag_id": 284,
+  "tag": "dancing",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "包含舞蹈场面或以舞蹈为核心。"
+ },
+ {
+  "tag_id": 285,
+  "tag": "dark",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "整体基调黑暗、阴郁或沉重。"
+ },
+ {
+  "tag_id": 286,
+  "tag": "dark comedy",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "以黑暗主题呈现喜剧效果。"
+ },
+ {
+  "tag_id": 287,
+  "tag": "dark fantasy",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "具有黑暗奇幻或哥特幻想元素。"
+ },
+ {
+  "tag_id": 288,
+  "tag": "dark hero",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "主角具有黑暗、反英雄特质。"
+ },
+ {
+  "tag_id": 289,
+  "tag": "dark humor",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "以黑色幽默处理严肃或禁忌话题。"
+ },
+ {
+  "tag_id": 290,
+  "tag": "dc comics",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "与 DC 漫画品牌、角色或改编作品相关。"
+ },
+ {
+  "tag_id": 291,
+  "tag": "deadpan",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "以面无表情或冷静克制的方式制造幽默。"
+ },
+ {
+  "tag_id": 292,
+  "tag": "death",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及死亡、临终或生命终结议题。"
+ },
+ {
+  "tag_id": 293,
+  "tag": "death penalty",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及死刑制度或相关伦理争议。"
+ },
+ {
+  "tag_id": 294,
+  "tag": "demons",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "出现恶魔、邪灵或超自然反派。"
+ },
+ {
+  "tag_id": 295,
+  "tag": "depp & burton",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与约翰尼·德普和蒂姆·伯顿的合作相关。"
+ },
+ {
+  "tag_id": 296,
+  "tag": "depressing",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众觉得影片令人沮丧。"
+ },
+ {
+  "tag_id": 297,
+  "tag": "depression",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "描绘抑郁症、情绪低谷或心理困境。"
+ },
+ {
+  "tag_id": 298,
+  "tag": "desert",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "以沙漠或荒漠环境为背景。"
+ },
+ {
+  "tag_id": 299,
+  "tag": "destiny",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及命运、宿命或人生使命。"
+ },
+ {
+  "tag_id": 300,
+  "tag": "detective",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "以侦探破案或调查为核心。"
+ },
+ {
+  "tag_id": 301,
+  "tag": "devil",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及魔鬼、恶魔或邪恶超自然形象。"
+ },
+ {
+  "tag_id": 302,
+  "tag": "dialogue",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "对白是影片的重要表达方式。"
+ },
+ {
+  "tag_id": 303,
+  "tag": "dialogue driven",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "情节推进主要依靠人物对白。"
+ },
+ {
+  "tag_id": 304,
+  "tag": "dinosaurs",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "包含恐龙或史前生物题材。"
+ },
+ {
+  "tag_id": 305,
+  "tag": "directorial debut",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "这是导演的长片首作或首次执导作品。"
+ },
+ {
+  "tag_id": 306,
+  "tag": "disability",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及残障人士或残障相关社会议题。"
+ },
+ {
+  "tag_id": 307,
+  "tag": "disappointing",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片令人失望。"
+ },
+ {
+  "tag_id": 308,
+  "tag": "disaster",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以灾难事件为核心情节或类型。"
+ },
+ {
+  "tag_id": 309,
+  "tag": "disney",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "与迪士尼品牌或迪士尼作品相关。"
+ },
+ {
+  "tag_id": 310,
+  "tag": "disney animated feature",
+  "group": "动画形式",
+  "tag_type": "content",
+  "definition": "属于迪士尼动画长片。"
+ },
+ {
+  "tag_id": 311,
+  "tag": "distopia",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "描绘反乌托邦社会，是 dystopia 的变体拼写。"
+ },
+ {
+  "tag_id": 312,
+  "tag": "disturbing",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "影片内容或氛围令人不安。"
+ },
+ {
+  "tag_id": 313,
+  "tag": "divorce",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及离婚或婚姻解体议题。"
+ },
+ {
+  "tag_id": 314,
+  "tag": "doctors",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以医生或医疗行业为题材。"
+ },
+ {
+  "tag_id": 315,
+  "tag": "documentary",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "具有纪录片或纪实形式。"
+ },
+ {
+  "tag_id": 316,
+  "tag": "dog",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "包含狗作为重要动物角色或题材。"
+ },
+ {
+  "tag_id": 317,
+  "tag": "dogs",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "以多只狗或犬类题材为内容。"
+ },
+ {
+  "tag_id": 318,
+  "tag": "dolphins",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "包含海豚相关题材。"
+ },
+ {
+  "tag_id": 319,
+  "tag": "downbeat",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "整体基调低沉、阴郁或悲观。"
+ },
+ {
+  "tag_id": 320,
+  "tag": "dr. seuss",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自苏斯博士作品或与其创作密切相关。"
+ },
+ {
+  "tag_id": 321,
+  "tag": "dragon",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "包含龙或传说生物。"
+ },
+ {
+  "tag_id": 322,
+  "tag": "dragons",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "以多条龙或龙族奇幻设定为内容。"
+ },
+ {
+  "tag_id": 323,
+  "tag": "drama",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "属于剧情片类型。"
+ },
+ {
+  "tag_id": 324,
+  "tag": "dramatic",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "具有强烈戏剧性和冲突感。"
+ },
+ {
+  "tag_id": 325,
+  "tag": "dreamlike",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "呈现如梦似幻的视觉或叙事气质。"
+ },
+ {
+  "tag_id": 326,
+  "tag": "dreams",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "通过梦境探索内心、记忆或人生困惑。"
+ },
+ {
+  "tag_id": 327,
+  "tag": "dreamworks",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "与梦工厂品牌或梦工厂作品相关。"
+ },
+ {
+  "tag_id": 328,
+  "tag": "drinking",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及饮酒或酗酒问题。"
+ },
+ {
+  "tag_id": 329,
+  "tag": "drug abuse",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及药物滥用议题。"
+ },
+ {
+  "tag_id": 330,
+  "tag": "drug addiction",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及药物成瘾议题。"
+ },
+ {
+  "tag_id": 331,
+  "tag": "drugs",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及毒品或药物相关情节。"
+ },
+ {
+  "tag_id": 332,
+  "tag": "dumb",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片愚蠢或低智。"
+ },
+ {
+  "tag_id": 333,
+  "tag": "dumb but funny",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片虽显愚蠢但有趣。"
+ },
+ {
+  "tag_id": 334,
+  "tag": "dynamic cgi action",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "包含动感强烈的 CGI 动作场面。"
+ },
+ {
+  "tag_id": 335,
+  "tag": "dysfunctional family",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "描绘功能失调的家庭关系。"
+ },
+ {
+  "tag_id": 336,
+  "tag": "dystopia",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "描绘压迫性或崩坏的反乌托邦社会。"
+ },
+ {
+  "tag_id": 337,
+  "tag": "dystopic future",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "设定在未来的反乌托邦社会。"
+ },
+ {
+  "tag_id": 338,
+  "tag": "earnest",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "语气真诚、恳切。"
+ },
+ {
+  "tag_id": 339,
+  "tag": "easily confused with other movie(s) (title)",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "片名或身份容易与其他电影混淆。"
+ },
+ {
+  "tag_id": 340,
+  "tag": "east germany",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及东德或冷战时期德国政治历史背景。"
+ },
+ {
+  "tag_id": 341,
+  "tag": "eccentricity",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "人物行为或性格古怪离奇。"
+ },
+ {
+  "tag_id": 342,
+  "tag": "ecology",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及生态或环境保护议题。"
+ },
+ {
+  "tag_id": 343,
+  "tag": "educational",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "具有教育、科普或知识传播性质。"
+ },
+ {
+  "tag_id": 344,
+  "tag": "eerie",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "氛围怪异、阴森或令人不安。"
+ },
+ {
+  "tag_id": 345,
+  "tag": "effects",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "强调视觉特效或技术手段。"
+ },
+ {
+  "tag_id": 346,
+  "tag": "egypt",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "涉及埃及地理、文化或历史背景。"
+ },
+ {
+  "tag_id": 347,
+  "tag": "emma watson",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "演员艾玛·沃森参与演出。"
+ },
+ {
+  "tag_id": 348,
+  "tag": "emotional",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "情感表达浓烈或易引发共鸣。"
+ },
+ {
+  "tag_id": 349,
+  "tag": "end of the world",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及世界末日或末日危机。"
+ },
+ {
+  "tag_id": 350,
+  "tag": "england",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "涉及英格兰或英国文化背景。"
+ },
+ {
+  "tag_id": 351,
+  "tag": "enigmatic",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "影片气质神秘且难以捉摸。"
+ },
+ {
+  "tag_id": 352,
+  "tag": "ennio morricone",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "作曲家恩尼奥·莫里科内参与配乐。"
+ },
+ {
+  "tag_id": 353,
+  "tag": "enormously long battle scene",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "包含篇幅很长的战斗场面。"
+ },
+ {
+  "tag_id": 354,
+  "tag": "ensemble cast",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "采用群像演员阵容。"
+ },
+ {
+  "tag_id": 355,
+  "tag": "entertaining",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片具有娱乐性。"
+ },
+ {
+  "tag_id": 356,
+  "tag": "entirely dialogue",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "影片几乎完全由对白构成。"
+ },
+ {
+  "tag_id": 357,
+  "tag": "environment",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及自然环境或环境保护议题。"
+ },
+ {
+  "tag_id": 358,
+  "tag": "environmental",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "强调环境议题或生态关怀。"
+ },
+ {
+  "tag_id": 359,
+  "tag": "epic",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "具有宏大叙事和史诗气质。"
+ },
+ {
+  "tag_id": 360,
+  "tag": "erotic",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "包含情色或成人欲望题材。"
+ },
+ {
+  "tag_id": 361,
+  "tag": "espionage",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及间谍活动或情报战。"
+ },
+ {
+  "tag_id": 362,
+  "tag": "ethnic conflict",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及族群矛盾或民族冲突。"
+ },
+ {
+  "tag_id": 363,
+  "tag": "evolution",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "探讨生命演化、人类起源或存在意义。"
+ },
+ {
+  "tag_id": 364,
+  "tag": "excellent",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片非常出色。"
+ },
+ {
+  "tag_id": 365,
+  "tag": "excellent script",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众称赞剧本出色。"
+ },
+ {
+  "tag_id": 366,
+  "tag": "exceptional acting",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众称赞表演非常出色。"
+ },
+ {
+  "tag_id": 367,
+  "tag": "exciting",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片刺激好看。"
+ },
+ {
+  "tag_id": 368,
+  "tag": "existentialism",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "探讨存在主义或人生意义困境。"
+ },
+ {
+  "tag_id": 369,
+  "tag": "explosions",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "包含爆炸场面。"
+ },
+ {
+  "tag_id": 370,
+  "tag": "factual",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "强调事实性、真实信息或纪实内容。"
+ },
+ {
+  "tag_id": 371,
+  "tag": "fairy tale",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "借鉴或改编自童话故事。"
+ },
+ {
+  "tag_id": 372,
+  "tag": "fairy tales",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "涉及多个童话故事或童话母题。"
+ },
+ {
+  "tag_id": 373,
+  "tag": "fake documentary",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "采用伪纪录片形式。"
+ },
+ {
+  "tag_id": 374,
+  "tag": "family",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "属于家庭片或合家欢类型。"
+ },
+ {
+  "tag_id": 375,
+  "tag": "family bonds",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "强调家庭成员之间的情感纽带。"
+ },
+ {
+  "tag_id": 376,
+  "tag": "family drama",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以家庭关系为核心的剧情片。"
+ },
+ {
+  "tag_id": 377,
+  "tag": "fantasy",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "包含奇幻设定或超自然想象。"
+ },
+ {
+  "tag_id": 378,
+  "tag": "fantasy world",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "构建架空奇幻世界。"
+ },
+ {
+  "tag_id": 379,
+  "tag": "farce",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "采用夸张、荒诞的闹剧形式。"
+ },
+ {
+  "tag_id": 380,
+  "tag": "fascism",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及法西斯主义或极权政治议题。"
+ },
+ {
+  "tag_id": 381,
+  "tag": "fashion",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以时尚行业或服饰文化为主题。"
+ },
+ {
+  "tag_id": 382,
+  "tag": "fast paced",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "叙事节奏快速。"
+ },
+ {
+  "tag_id": 383,
+  "tag": "father daughter relationship",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "描绘父亲与女儿的关系。"
+ },
+ {
+  "tag_id": 384,
+  "tag": "father son relationship",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "描绘父亲与儿子的关系。"
+ },
+ {
+  "tag_id": 385,
+  "tag": "father-son relationship",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "描绘父亲与儿子的关系。"
+ },
+ {
+  "tag_id": 386,
+  "tag": "fbi",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及美国联邦调查局或相关调查题材。"
+ },
+ {
+  "tag_id": 387,
+  "tag": "feel good movie",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片让人感到温暖愉悦。"
+ },
+ {
+  "tag_id": 388,
+  "tag": "feel-good",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "影片令人心情愉快。"
+ },
+ {
+  "tag_id": 389,
+  "tag": "fight scenes",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "包含打斗场面。"
+ },
+ {
+  "tag_id": 390,
+  "tag": "fighting",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "包含搏斗或战斗情节。"
+ },
+ {
+  "tag_id": 391,
+  "tag": "fighting the system",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "人物对抗体制或权力结构。"
+ },
+ {
+  "tag_id": 392,
+  "tag": "figure skating",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以花样滑冰运动为主题。"
+ },
+ {
+  "tag_id": 393,
+  "tag": "film noir",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "具有黑色电影风格。"
+ },
+ {
+  "tag_id": 394,
+  "tag": "finnish",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "与芬兰文化、语言或地域相关。"
+ },
+ {
+  "tag_id": 395,
+  "tag": "firefly",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "涉及萤火虫或发光昆虫相关意象。"
+ },
+ {
+  "tag_id": 396,
+  "tag": "first contact",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及人类与外星文明首次接触。"
+ },
+ {
+  "tag_id": 397,
+  "tag": "fish",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "包含鱼类或水生生物题材。"
+ },
+ {
+  "tag_id": 398,
+  "tag": "flashbacks",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "使用闪回方式推进叙事。"
+ },
+ {
+  "tag_id": 399,
+  "tag": "food",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以食物、烹饪或餐饮为主题。"
+ },
+ {
+  "tag_id": 400,
+  "tag": "football",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以足球运动为主题。"
+ },
+ {
+  "tag_id": 401,
+  "tag": "forceful",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "影片风格或情绪强烈、有冲击力。"
+ },
+ {
+  "tag_id": 402,
+  "tag": "foreign",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "具有外国/外语电影特征。"
+ },
+ {
+  "tag_id": 403,
+  "tag": "foul language",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "包含粗口或脏话。"
+ },
+ {
+  "tag_id": 404,
+  "tag": "fountain of youth",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及不老泉或青春源泉等奇幻设定。"
+ },
+ {
+  "tag_id": 405,
+  "tag": "france",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "与法国地理、文化或制作相关。"
+ },
+ {
+  "tag_id": 406,
+  "tag": "franchise",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "属于系列电影或商业系列品牌。"
+ },
+ {
+  "tag_id": 407,
+  "tag": "francis ford copolla",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与弗朗西斯·福特·科波拉相关。"
+ },
+ {
+  "tag_id": 408,
+  "tag": "free speech",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及言论自由或表达权利议题。"
+ },
+ {
+  "tag_id": 409,
+  "tag": "free to download",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "影片可通过网络免费下载获取。"
+ },
+ {
+  "tag_id": 410,
+  "tag": "freedom",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "围绕自由、解放或个体权利展开。"
+ },
+ {
+  "tag_id": 411,
+  "tag": "french",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "与法语、法国人或法国文化相关。"
+ },
+ {
+  "tag_id": 412,
+  "tag": "friendship",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "以友谊或朋友关系为核心。"
+ },
+ {
+  "tag_id": 413,
+  "tag": "frightening",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "具有惊吓、恐怖或不安的氛围。"
+ },
+ {
+  "tag_id": 414,
+  "tag": "fun",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片有趣、娱乐性强。"
+ },
+ {
+  "tag_id": 415,
+  "tag": "fun movie",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为这是一部好玩或有趣的电影。"
+ },
+ {
+  "tag_id": 416,
+  "tag": "funniest movies",
+  "group": "榜单与荣誉",
+  "tag_type": "preference",
+  "definition": "被视为最搞笑电影之一或喜剧榜单标签。"
+ },
+ {
+  "tag_id": 417,
+  "tag": "funny",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "具有幽默、滑稽或喜剧效果。"
+ },
+ {
+  "tag_id": 418,
+  "tag": "funny as hell",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片非常好笑。"
+ },
+ {
+  "tag_id": 419,
+  "tag": "future",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "故事设定在未来时代。"
+ },
+ {
+  "tag_id": 420,
+  "tag": "futuristic",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "具有未来主义的时代设定或美学。"
+ },
+ {
+  "tag_id": 421,
+  "tag": "gambling",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及赌博活动或赌场题材。"
+ },
+ {
+  "tag_id": 422,
+  "tag": "gangs",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及帮派组织或帮派冲突。"
+ },
+ {
+  "tag_id": 423,
+  "tag": "gangster",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "以黑帮或匪徒为核心。"
+ },
+ {
+  "tag_id": 424,
+  "tag": "gangsters",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "包含多名黑帮或匪徒角色。"
+ },
+ {
+  "tag_id": 425,
+  "tag": "gay",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及同性恋主题或身份。"
+ },
+ {
+  "tag_id": 426,
+  "tag": "gay character",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "包含同性恋角色。"
+ },
+ {
+  "tag_id": 427,
+  "tag": "geek",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "包含极客或书呆子型角色。"
+ },
+ {
+  "tag_id": 428,
+  "tag": "geeks",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "包含多个极客或书呆子型角色。"
+ },
+ {
+  "tag_id": 429,
+  "tag": "genetics",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及遗传学、基因科学或相关技术。"
+ },
+ {
+  "tag_id": 430,
+  "tag": "genius",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "包含天才型角色或天才特质。"
+ },
+ {
+  "tag_id": 431,
+  "tag": "genocide",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及种族灭绝或大屠杀历史。"
+ },
+ {
+  "tag_id": 432,
+  "tag": "george orwell",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与作家乔治·奥威尔或其改编作品相关。"
+ },
+ {
+  "tag_id": 433,
+  "tag": "german",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "与德语、德国人或德国文化相关。"
+ },
+ {
+  "tag_id": 434,
+  "tag": "germany",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "与德国地理、历史或制作相关。"
+ },
+ {
+  "tag_id": 435,
+  "tag": "ghosts",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "包含鬼魂或亡灵元素。"
+ },
+ {
+  "tag_id": 436,
+  "tag": "ghosts/afterlife",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及鬼魂、死亡或来世设定。"
+ },
+ {
+  "tag_id": 437,
+  "tag": "giant robots",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "包含巨型机器人或机甲元素。"
+ },
+ {
+  "tag_id": 438,
+  "tag": "gilliam",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与导演或创作者特瑞·吉列姆相关。"
+ },
+ {
+  "tag_id": 439,
+  "tag": "girlie movie",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "被归类为女性向或女性化商业片。"
+ },
+ {
+  "tag_id": 440,
+  "tag": "glbt",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及同性恋、双性恋、跨性别等多元性别议题。"
+ },
+ {
+  "tag_id": 441,
+  "tag": "global warming",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及全球变暖或气候变化议题。"
+ },
+ {
+  "tag_id": 442,
+  "tag": "god",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及上帝、神性或宗教信仰。"
+ },
+ {
+  "tag_id": 443,
+  "tag": "golden palm",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与戛纳金棕榈奖相关。"
+ },
+ {
+  "tag_id": 444,
+  "tag": "golf",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以高尔夫运动为主题或重要元素。"
+ },
+ {
+  "tag_id": 445,
+  "tag": "good",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片整体好看。"
+ },
+ {
+  "tag_id": 446,
+  "tag": "good acting",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众称赞表演出色。"
+ },
+ {
+  "tag_id": 447,
+  "tag": "good action",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为动作场面精彩。"
+ },
+ {
+  "tag_id": 448,
+  "tag": "good dialogue",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众称赞对白精彩。"
+ },
+ {
+  "tag_id": 449,
+  "tag": "good music",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为音乐出色。"
+ },
+ {
+  "tag_id": 450,
+  "tag": "good romantic comedies",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为浪漫喜剧质量佳。"
+ },
+ {
+  "tag_id": 451,
+  "tag": "good sequel",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为续集拍得好。"
+ },
+ {
+  "tag_id": 452,
+  "tag": "good soundtrack",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众称赞原声或配乐出色。"
+ },
+ {
+  "tag_id": 453,
+  "tag": "good story",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为故事优秀。"
+ },
+ {
+  "tag_id": 454,
+  "tag": "good versus evil",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "围绕正义与邪恶的对抗展开。"
+ },
+ {
+  "tag_id": 455,
+  "tag": "goofy",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "风格傻气、滑稽或无厘头。"
+ },
+ {
+  "tag_id": 456,
+  "tag": "gore",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "包含血腥或血肉模糊的场面。"
+ },
+ {
+  "tag_id": 457,
+  "tag": "goretastic",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "血腥程度极高，带有强烈血浆片特征。"
+ },
+ {
+  "tag_id": 458,
+  "tag": "gory",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "画面血腥。"
+ },
+ {
+  "tag_id": 459,
+  "tag": "goth",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "包含哥特亚文化或哥特审美。"
+ },
+ {
+  "tag_id": 460,
+  "tag": "gothic",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "具有哥特式风格或氛围。"
+ },
+ {
+  "tag_id": 461,
+  "tag": "graphic design",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及平面设计或视觉设计专业。"
+ },
+ {
+  "tag_id": 462,
+  "tag": "graphic novel",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自图像小说或漫画小说。"
+ },
+ {
+  "tag_id": 463,
+  "tag": "gratuitous violence",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为暴力场面过度或缺乏必要。"
+ },
+ {
+  "tag_id": 464,
+  "tag": "great",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片非常出色。"
+ },
+ {
+  "tag_id": 465,
+  "tag": "great acting",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众高度认可表演。"
+ },
+ {
+  "tag_id": 466,
+  "tag": "great cinematography",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众称赞摄影出色。"
+ },
+ {
+  "tag_id": 467,
+  "tag": "great dialogue",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众高度认可对白。"
+ },
+ {
+  "tag_id": 468,
+  "tag": "great ending",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为结尾精彩。"
+ },
+ {
+  "tag_id": 469,
+  "tag": "great movie",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为这是一部优秀电影。"
+ },
+ {
+  "tag_id": 470,
+  "tag": "great music",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众高度认可音乐。"
+ },
+ {
+  "tag_id": 471,
+  "tag": "great soundtrack",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众高度认可原声或配乐。"
+ },
+ {
+  "tag_id": 472,
+  "tag": "greed",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "围绕贪婪、欲望或人性弱点展开。"
+ },
+ {
+  "tag_id": 473,
+  "tag": "grim",
+  "group": "风格语气与氛围",
+  "tag_type": "content",
+  "definition": "基调阴郁、残酷或沉重。"
+ },
+ {
+  "tag_id": 474,
+  "tag": "grindhouse",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "具有磨坊影院或剥削片风格。"
+ },
+ {
+  "tag_id": 475,
+  "tag": "gritty",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "风格粗粝、写实或硬核。"
+ },
+ {
+  "tag_id": 476,
+  "tag": "gross-out",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "以恶心、低俗或重口味笑料为特色。"
+ },
+ {
+  "tag_id": 477,
+  "tag": "gruesome",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "场面骇人、血腥或令人不适。"
+ },
+ {
+  "tag_id": 478,
+  "tag": "guilt",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "围绕内疚、罪责或道德负担展开。"
+ },
+ {
+  "tag_id": 479,
+  "tag": "guilty pleasure",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众虽觉品味不高但仍然喜欢。"
+ },
+ {
+  "tag_id": 480,
+  "tag": "gulf war",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及海湾战争背景或议题。"
+ },
+ {
+  "tag_id": 481,
+  "tag": "gunfight",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "包含枪战或交火场面。"
+ },
+ {
+  "tag_id": 482,
+  "tag": "guns",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "包含枪支或枪械元素。"
+ },
+ {
+  "tag_id": 483,
+  "tag": "gypsy accent",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色带有吉普赛或罗姆人风格口音。"
+ },
+ {
+  "tag_id": 484,
+  "tag": "hackers",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "包含黑客角色。"
+ },
+ {
+  "tag_id": 485,
+  "tag": "hacking",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及电脑入侵或网络攻击。"
+ },
+ {
+  "tag_id": 486,
+  "tag": "halloween",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "以万圣节为时间或节日背景。"
+ },
+ {
+  "tag_id": 487,
+  "tag": "hallucinatory",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "具有幻觉般、迷幻或超现实氛围。"
+ },
+ {
+  "tag_id": 488,
+  "tag": "handycam",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "使用手持摄像机或家用DV风格拍摄。"
+ },
+ {
+  "tag_id": 489,
+  "tag": "hannibal lecter",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "包含汉尼拔·莱克特这一角色。"
+ },
+ {
+  "tag_id": 490,
+  "tag": "happy ending",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "结局圆满或积极。"
+ },
+ {
+  "tag_id": 491,
+  "tag": "hard to watch",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片沉重、刺激或不适而难以观看。"
+ },
+ {
+  "tag_id": 492,
+  "tag": "harry potter",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "属于哈利·波特系列或相关品牌。"
+ },
+ {
+  "tag_id": 493,
+  "tag": "harsh",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "风格或情绪尖锐、残酷、严厉。"
+ },
+ {
+  "tag_id": 494,
+  "tag": "haunted house",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "包含闹鬼房屋或灵异空间。"
+ },
+ {
+  "tag_id": 495,
+  "tag": "hawaii",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "与夏威夷地理或文化相关。"
+ },
+ {
+  "tag_id": 496,
+  "tag": "heartbreaking",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "情感上令人心碎或悲伤。"
+ },
+ {
+  "tag_id": 497,
+  "tag": "heartwarming",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "情感上温暖、治愈。"
+ },
+ {
+  "tag_id": 498,
+  "tag": "heist",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及抢劫、盗窃或团伙作案。"
+ },
+ {
+  "tag_id": 499,
+  "tag": "heroin",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及海洛因毒品或毒品犯罪。"
+ },
+ {
+  "tag_id": 500,
+  "tag": "heroine",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "以女性英雄或女主角为核心。"
+ },
+ {
+  "tag_id": 501,
+  "tag": "heroine in tight suit",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "影片突出女主角穿着紧身服装的视觉造型。"
+ },
+ {
+  "tag_id": 502,
+  "tag": "high fantasy",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "影片属于宏大架空世界的高奇幻题材。"
+ },
+ {
+  "tag_id": 503,
+  "tag": "high school",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事主要发生在高中校园或围绕高中生活展开。"
+ },
+ {
+  "tag_id": 504,
+  "tag": "highly quotable",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片台词精彩且适合引用。"
+ },
+ {
+  "tag_id": 505,
+  "tag": "hilarious",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片非常搞笑。"
+ },
+ {
+  "tag_id": 506,
+  "tag": "hillarious",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片极其搞笑。"
+ },
+ {
+  "tag_id": 507,
+  "tag": "hip hop",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "影片涉及嘻哈音乐或嘻哈文化。"
+ },
+ {
+  "tag_id": 508,
+  "tag": "historical",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "影片以过去历史时期为背景或具有时代复原感。"
+ },
+ {
+  "tag_id": 509,
+  "tag": "history",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "影片聚焦历史事件、人物或历史叙述。"
+ },
+ {
+  "tag_id": 510,
+  "tag": "hit men",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "影片涉及多名职业杀手或受雇杀人者。"
+ },
+ {
+  "tag_id": 511,
+  "tag": "hitchcock",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "影片与导演阿尔弗雷德·希区柯克或其风格相关。"
+ },
+ {
+  "tag_id": 512,
+  "tag": "hitman",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "影片以职业杀手为主要角色或情节核心。"
+ },
+ {
+  "tag_id": 513,
+  "tag": "holiday",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "影片以节日或假日为背景、主题或氛围。"
+ },
+ {
+  "tag_id": 514,
+  "tag": "hollywood",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "影片涉及好莱坞电影工业、片厂体系或电影产业背景。"
+ },
+ {
+  "tag_id": 515,
+  "tag": "holocaust",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "影片表现纳粹大屠杀及相关历史创伤。"
+ },
+ {
+  "tag_id": 516,
+  "tag": "homeless",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片涉及无家可归者或流浪生活议题。"
+ },
+ {
+  "tag_id": 517,
+  "tag": "homophobia",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片表现对同性恋者的歧视、恐惧或压迫。"
+ },
+ {
+  "tag_id": 518,
+  "tag": "homosexuality",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片表现同性恋情感、关系或身份。"
+ },
+ {
+  "tag_id": 519,
+  "tag": "honest",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片表达真诚、真实或坦率。"
+ },
+ {
+  "tag_id": 520,
+  "tag": "hong kong",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片与香港地区、文化或电影风格相关。"
+ },
+ {
+  "tag_id": 521,
+  "tag": "horrible",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片质量很差或观感糟糕。"
+ },
+ {
+  "tag_id": 522,
+  "tag": "horror",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "影片属于恐怖片类型，以惊吓和恐惧体验为核心。"
+ },
+ {
+  "tag_id": 523,
+  "tag": "horses",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "影片以马匹或马术相关题材为重要内容。"
+ },
+ {
+  "tag_id": 524,
+  "tag": "hospital",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片以医院或医疗职业环境为主要背景。"
+ },
+ {
+  "tag_id": 525,
+  "tag": "hostage",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "影片包含人质劫持、营救或谈判情节。"
+ },
+ {
+  "tag_id": 526,
+  "tag": "hotel",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片主要场景发生在酒店或与酒店空间相关。"
+ },
+ {
+  "tag_id": 527,
+  "tag": "humanity",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片探讨人性、人类命运或普遍人文关怀。"
+ },
+ {
+  "tag_id": 528,
+  "tag": "humor",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片包含幽默元素或喜剧性表达。"
+ },
+ {
+  "tag_id": 529,
+  "tag": "humorous",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片整体风格诙谐有趣。"
+ },
+ {
+  "tag_id": 530,
+  "tag": "hunting",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "影片包含狩猎、追猎或野外捕猎情节。"
+ },
+ {
+  "tag_id": 531,
+  "tag": "idealism",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片表现理想主义信念或对理想的追求。"
+ },
+ {
+  "tag_id": 532,
+  "tag": "identity",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片探讨自我认同、身份归属或角色身份危机。"
+ },
+ {
+  "tag_id": 533,
+  "tag": "idiotic",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片愚蠢或不合理。"
+ },
+ {
+  "tag_id": 534,
+  "tag": "imaginary friend",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "影片出现幻想朋友或虚构伙伴设定。"
+ },
+ {
+  "tag_id": 535,
+  "tag": "imagination",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片强调奇想、想象力或创造性构思。"
+ },
+ {
+  "tag_id": 536,
+  "tag": "imdb top 250",
+  "group": "榜单与荣誉",
+  "tag_type": "preference",
+  "definition": "影片进入 IMDb Top 250 榜单。"
+ },
+ {
+  "tag_id": 537,
+  "tag": "immigrants",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片涉及移民经历、移民身份或移民社群。"
+ },
+ {
+  "tag_id": 538,
+  "tag": "immortality",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "影片涉及永生、长生不老或不死设定。"
+ },
+ {
+  "tag_id": 539,
+  "tag": "incest",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片涉及近亲乱伦关系或相关禁忌议题。"
+ },
+ {
+  "tag_id": 540,
+  "tag": "independent film",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "影片具有独立电影制作或发行属性。"
+ },
+ {
+  "tag_id": 541,
+  "tag": "india",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片与印度国家、文化或社会背景相关。"
+ },
+ {
+  "tag_id": 542,
+  "tag": "indiana jones",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "影片属于《夺宝奇兵》系列或与该品牌角色相关。"
+ },
+ {
+  "tag_id": 543,
+  "tag": "indians",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片涉及印第安人、原住民或相关族群形象。"
+ },
+ {
+  "tag_id": 544,
+  "tag": "indie",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "影片具有独立制作、独立审美或独立电影气质。"
+ },
+ {
+  "tag_id": 545,
+  "tag": "infidelity",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片表现婚外情、出轨或感情背叛。"
+ },
+ {
+  "tag_id": 546,
+  "tag": "innocence lost",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片表现天真丧失或成长中的纯真幻灭。"
+ },
+ {
+  "tag_id": 547,
+  "tag": "insanity",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片表现精神失常、疯狂状态或心理困境。"
+ },
+ {
+  "tag_id": 548,
+  "tag": "inspirational",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片具有鼓舞人心的力量。"
+ },
+ {
+  "tag_id": 549,
+  "tag": "inspiring",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片励志且能激发积极情绪。"
+ },
+ {
+  "tag_id": 550,
+  "tag": "intellectual",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片富有智性、思辨或知识趣味。"
+ },
+ {
+  "tag_id": 551,
+  "tag": "intelligent",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片聪明、机智或剧本有智力。"
+ },
+ {
+  "tag_id": 552,
+  "tag": "intelligent sci-fi",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "影片是具有思辨性和智力品质的科幻作品。"
+ },
+ {
+  "tag_id": 553,
+  "tag": "intense",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片节奏、情绪或冲突强烈紧张。"
+ },
+ {
+  "tag_id": 554,
+  "tag": "interesting",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片有趣且吸引人。"
+ },
+ {
+  "tag_id": 555,
+  "tag": "internet",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片涉及互联网、网络文化或线上生活。"
+ },
+ {
+  "tag_id": 556,
+  "tag": "interracial romance",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片表现不同种族或族裔之间的恋爱关系。"
+ },
+ {
+  "tag_id": 557,
+  "tag": "intimate",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片呈现亲密关系、私密情感或贴近人物的氛围。"
+ },
+ {
+  "tag_id": 558,
+  "tag": "investigation",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "影片围绕调查、侦查或追查真相展开。"
+ },
+ {
+  "tag_id": 559,
+  "tag": "iran",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片与伊朗国家、文化或社会背景相关。"
+ },
+ {
+  "tag_id": 560,
+  "tag": "iraq",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片与伊拉克国家、文化或战争背景相关。"
+ },
+ {
+  "tag_id": 561,
+  "tag": "iraq war",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "影片以伊拉克战争为背景或直接表现该战争。"
+ },
+ {
+  "tag_id": 562,
+  "tag": "ireland",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片与爱尔兰国家、文化或社会背景相关。"
+ },
+ {
+  "tag_id": 563,
+  "tag": "irish",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片涉及爱尔兰人、爱尔兰文化或身份。"
+ },
+ {
+  "tag_id": 564,
+  "tag": "irish accent",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片角色使用爱尔兰口音或突出该语言特征。"
+ },
+ {
+  "tag_id": 565,
+  "tag": "ironic",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片采用讽刺、反讽或出人意料的态度表达。"
+ },
+ {
+  "tag_id": 566,
+  "tag": "irreverent",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片风格不敬权威、颠覆传统或带有戏谑态度。"
+ },
+ {
+  "tag_id": 567,
+  "tag": "islam",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片涉及伊斯兰教、穆斯林文化或宗教信仰。"
+ },
+ {
+  "tag_id": 568,
+  "tag": "island",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片主要场景发生在岛屿或与孤岛环境相关。"
+ },
+ {
+  "tag_id": 569,
+  "tag": "isolation",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片表现人物孤立、隔绝或疏离的人生状态。"
+ },
+ {
+  "tag_id": 570,
+  "tag": "israel",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片与以色列国家、文化或社会背景相关。"
+ },
+ {
+  "tag_id": 571,
+  "tag": "italian",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片涉及意大利人、意大利文化或身份。"
+ },
+ {
+  "tag_id": 572,
+  "tag": "italy",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片与意大利国家、文化或社会背景相关。"
+ },
+ {
+  "tag_id": 573,
+  "tag": "james bond",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "影片属于007系列或与詹姆斯·邦德角色相关。"
+ },
+ {
+  "tag_id": 574,
+  "tag": "jane austen",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "影片改编自简·奥斯汀作品或与其文学传统相关。"
+ },
+ {
+  "tag_id": 575,
+  "tag": "japan",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片与日本国家、文化或社会背景相关。"
+ },
+ {
+  "tag_id": 576,
+  "tag": "japanese",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片涉及日本人、日本文化或身份。"
+ },
+ {
+  "tag_id": 577,
+  "tag": "jay and silent bob",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "影片与杰和沉默鲍勃角色或凯文·史密斯作品宇宙相关。"
+ },
+ {
+  "tag_id": 578,
+  "tag": "jazz",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "影片涉及爵士乐、爵士音乐人或爵士文化氛围。"
+ },
+ {
+  "tag_id": 579,
+  "tag": "jesus",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片表现耶稣形象、基督教叙事或相关宗教主题。"
+ },
+ {
+  "tag_id": 580,
+  "tag": "jewish",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片涉及犹太身份、犹太文化或宗教传统。"
+ },
+ {
+  "tag_id": 581,
+  "tag": "jews",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片表现犹太人群体、历史遭遇或文化身份。"
+ },
+ {
+  "tag_id": 582,
+  "tag": "journalism",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片涉及新闻业、记者职业或媒体报道。"
+ },
+ {
+  "tag_id": 583,
+  "tag": "judaism",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片涉及犹太教信仰、仪式或宗教文化。"
+ },
+ {
+  "tag_id": 584,
+  "tag": "jungle",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片主要场景发生在丛林或热带荒野环境。"
+ },
+ {
+  "tag_id": 585,
+  "tag": "justice",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片探讨正义、法律公正或道德审判。"
+ },
+ {
+  "tag_id": 586,
+  "tag": "kick-butt women",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "影片展现女性角色强势打斗或动作英雄形象。"
+ },
+ {
+  "tag_id": 587,
+  "tag": "kidnapping",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "影片包含绑架、拐骗或解救被绑架者情节。"
+ },
+ {
+  "tag_id": 588,
+  "tag": "kids",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "影片面向儿童观众或包含儿童题材。"
+ },
+ {
+  "tag_id": 589,
+  "tag": "kids and family",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "影片适合儿童与家庭共同观看。"
+ },
+ {
+  "tag_id": 590,
+  "tag": "king arthur",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "影片改编或借用亚瑟王传说及相关人物。"
+ },
+ {
+  "tag_id": 591,
+  "tag": "kubrick",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "影片与导演斯坦利·库布里克或其风格相关。"
+ },
+ {
+  "tag_id": 592,
+  "tag": "kung fu",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "影片包含功夫、武术打斗或武侠动作元素。"
+ },
+ {
+  "tag_id": 593,
+  "tag": "kurosawa",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "影片与导演黑泽明或其风格相关。"
+ },
+ {
+  "tag_id": 594,
+  "tag": "lame",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片乏味、拙劣或不吸引人。"
+ },
+ {
+  "tag_id": 595,
+  "tag": "las vegas",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片与拉斯维加斯城市、赌场或赌城文化相关。"
+ },
+ {
+  "tag_id": 596,
+  "tag": "latin america",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片与拉丁美洲地区、文化或社会背景相关。"
+ },
+ {
+  "tag_id": 597,
+  "tag": "lawyer",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片以律师为主要角色或围绕法律事务展开。"
+ },
+ {
+  "tag_id": 598,
+  "tag": "lawyers",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片涉及多名律师或法律职业群像。"
+ },
+ {
+  "tag_id": 599,
+  "tag": "lesbian",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片表现女同性恋情感、关系或身份。"
+ },
+ {
+  "tag_id": 600,
+  "tag": "life",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片探讨人生、生命意义或生活状态。"
+ },
+ {
+  "tag_id": 601,
+  "tag": "life & death",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片围绕生死议题或生命终结展开。"
+ },
+ {
+  "tag_id": 602,
+  "tag": "life philosophy",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片探讨人生哲理与价值选择。"
+ },
+ {
+  "tag_id": 603,
+  "tag": "light",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片呈现轻松明亮或轻盈的氛围。"
+ },
+ {
+  "tag_id": 604,
+  "tag": "lions",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "狮子是影片的重要动物元素。"
+ },
+ {
+  "tag_id": 605,
+  "tag": "literary adaptation",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "影片改编自文学作品。"
+ },
+ {
+  "tag_id": 606,
+  "tag": "literature",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "影片与文学创作或文学题材密切相关。"
+ },
+ {
+  "tag_id": 607,
+  "tag": "liv tyler",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "丽芙·泰勒参与出演影片。"
+ },
+ {
+  "tag_id": 608,
+  "tag": "london",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "伦敦是影片的故事地点或文化背景。"
+ },
+ {
+  "tag_id": 609,
+  "tag": "lone hero",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "影片塑造独自行动的英雄角色。"
+ },
+ {
+  "tag_id": 610,
+  "tag": "loneliness",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色经历孤独或疏离状态。"
+ },
+ {
+  "tag_id": 611,
+  "tag": "long",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "影片片长较长。"
+ },
+ {
+  "tag_id": 612,
+  "tag": "los angeles",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "洛杉矶是影片的故事地点或文化背景。"
+ },
+ {
+  "tag_id": 613,
+  "tag": "love",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "爱情是影片的核心主题。"
+ },
+ {
+  "tag_id": 614,
+  "tag": "love story",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "影片以爱情故事为主要叙事类型。"
+ },
+ {
+  "tag_id": 615,
+  "tag": "love triangles",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "三角恋关系推动剧情发展。"
+ },
+ {
+  "tag_id": 616,
+  "tag": "low budget",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "影片为低预算制作。"
+ },
+ {
+  "tag_id": 617,
+  "tag": "lynch",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与大卫·林奇或林奇式创作相关。"
+ },
+ {
+  "tag_id": 618,
+  "tag": "lyrical",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片具有抒情诗意的表达。"
+ },
+ {
+  "tag_id": 619,
+  "tag": "macabre",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片带有阴森怪诞的氛围。"
+ },
+ {
+  "tag_id": 620,
+  "tag": "mad scientist",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "影片包含疯狂科学家式角色。"
+ },
+ {
+  "tag_id": 621,
+  "tag": "made for tv",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "影片为电视制作或电视播出形式。"
+ },
+ {
+  "tag_id": 622,
+  "tag": "mafia",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "影片涉及黑手党组织或黑帮犯罪。"
+ },
+ {
+  "tag_id": 623,
+  "tag": "magic",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "影片包含魔法或超自然能力。"
+ },
+ {
+  "tag_id": 624,
+  "tag": "magic realism",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "影片以魔幻现实主义方式呈现现实世界。"
+ },
+ {
+  "tag_id": 625,
+  "tag": "male nudity",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "影片包含男性裸露画面。"
+ },
+ {
+  "tag_id": 626,
+  "tag": "man versus machine",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "影片表现人类与机器或人工智能的冲突。"
+ },
+ {
+  "tag_id": 627,
+  "tag": "manipulation",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "剧情围绕欺骗、操控或心理操纵展开。"
+ },
+ {
+  "tag_id": 628,
+  "tag": "marijuana",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片涉及大麻使用或相关社会话题。"
+ },
+ {
+  "tag_id": 629,
+  "tag": "marriage",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片探讨婚姻关系与亲密关系议题。"
+ },
+ {
+  "tag_id": 630,
+  "tag": "mars",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "火星是影片的科幻背景或地点。"
+ },
+ {
+  "tag_id": 631,
+  "tag": "martial arts",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "影片包含武术格斗或功夫动作。"
+ },
+ {
+  "tag_id": 632,
+  "tag": "marvel",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "影片属于漫威品牌或相关改编体系。"
+ },
+ {
+  "tag_id": 633,
+  "tag": "marx brothers",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与马克思兄弟喜剧团队相关。"
+ },
+ {
+  "tag_id": 634,
+  "tag": "masterpiece",
+  "group": "榜单与荣誉",
+  "tag_type": "preference",
+  "definition": "影片被观众视为杰出作品。"
+ },
+ {
+  "tag_id": 635,
+  "tag": "math",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片涉及数学主题或数学工作者。"
+ },
+ {
+  "tag_id": 636,
+  "tag": "mathematics",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片以数学知识或数学研究为内容。"
+ },
+ {
+  "tag_id": 637,
+  "tag": "maze",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "影片包含迷宫式空间或复杂叙事结构。"
+ },
+ {
+  "tag_id": 638,
+  "tag": "medieval",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "影片以中世纪为时代背景。"
+ },
+ {
+  "tag_id": 639,
+  "tag": "meditative",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片节奏沉静且具有冥想感。"
+ },
+ {
+  "tag_id": 640,
+  "tag": "melancholic",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片整体带有忧郁气质。"
+ },
+ {
+  "tag_id": 641,
+  "tag": "melancholy",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片营造忧伤或惆怅的情绪。"
+ },
+ {
+  "tag_id": 642,
+  "tag": "memory",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "记忆是推动叙事的重要线索。"
+ },
+ {
+  "tag_id": 643,
+  "tag": "memory loss",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色经历失忆或记忆缺失。"
+ },
+ {
+  "tag_id": 644,
+  "tag": "mental hospital",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片涉及精神病院或精神卫生机构。"
+ },
+ {
+  "tag_id": 645,
+  "tag": "mental illness",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片呈现精神疾病相关议题。"
+ },
+ {
+  "tag_id": 646,
+  "tag": "mentor",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "影片包含导师型角色或师徒关系。"
+ },
+ {
+  "tag_id": 647,
+  "tag": "metaphysics",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片探讨形而上学或存在本质问题。"
+ },
+ {
+  "tag_id": 648,
+  "tag": "mexico",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "墨西哥是影片的故事地点或文化背景。"
+ },
+ {
+  "tag_id": 649,
+  "tag": "middle east",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "中东是影片的故事地点或文化背景。"
+ },
+ {
+  "tag_id": 650,
+  "tag": "midlife crisis",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片表现中年危机与人生困惑。"
+ },
+ {
+  "tag_id": 651,
+  "tag": "military",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片涉及军队生活或军事职业。"
+ },
+ {
+  "tag_id": 652,
+  "tag": "mindfuck",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "影片以烧脑或颠覆认知的方式叙事。"
+ },
+ {
+  "tag_id": 653,
+  "tag": "mining",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片涉及采矿行业或矿工工作。"
+ },
+ {
+  "tag_id": 654,
+  "tag": "minnesota",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "明尼苏达是影片的故事地点或地域背景。"
+ },
+ {
+  "tag_id": 655,
+  "tag": "mission from god",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "角色承担来自神或宗教意义上的使命。"
+ },
+ {
+  "tag_id": 656,
+  "tag": "mistaken identity",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "身份误认是推动剧情的关键机制。"
+ },
+ {
+  "tag_id": 657,
+  "tag": "miyazaki",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与宫崎骏或其创作风格相关。"
+ },
+ {
+  "tag_id": 658,
+  "tag": "mob",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "影片涉及黑帮或有组织犯罪集团。"
+ },
+ {
+  "tag_id": 659,
+  "tag": "mockumentary",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "影片采用伪纪录片形式进行虚构表达。"
+ },
+ {
+  "tag_id": 660,
+  "tag": "modern fantasy",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "影片以现代背景呈现奇幻设定。"
+ },
+ {
+  "tag_id": 661,
+  "tag": "money",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "影片围绕金钱、财富或经济压力展开。"
+ },
+ {
+  "tag_id": 662,
+  "tag": "monkey",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "猴子是影片的重要动物元素。"
+ },
+ {
+  "tag_id": 663,
+  "tag": "monster",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "影片包含怪物或怪异生物。"
+ },
+ {
+  "tag_id": 664,
+  "tag": "monsters",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "影片以多个怪物或怪兽形象为特色。"
+ },
+ {
+  "tag_id": 665,
+  "tag": "monty python",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与蒙提·派森喜剧团队相关。"
+ },
+ {
+  "tag_id": 666,
+  "tag": "moody",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片情绪化或氛围感强烈。"
+ },
+ {
+  "tag_id": 667,
+  "tag": "moon",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "月球是影片的科幻背景或意象。"
+ },
+ {
+  "tag_id": 668,
+  "tag": "moral ambiguity",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片呈现道德模糊或伦理困境。"
+ },
+ {
+  "tag_id": 669,
+  "tag": "morality",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片探讨道德观念与价值判断。"
+ },
+ {
+  "tag_id": 670,
+  "tag": "mother daughter relationship",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "影片刻画母女关系。"
+ },
+ {
+  "tag_id": 671,
+  "tag": "mother-son relationship",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "影片刻画母子关系。"
+ },
+ {
+  "tag_id": 672,
+  "tag": "motorcycle",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "影片包含摩托车骑行或相关动作场面。"
+ },
+ {
+  "tag_id": 673,
+  "tag": "mountain climbing",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "影片涉及登山或攀岩冒险。"
+ },
+ {
+  "tag_id": 674,
+  "tag": "movie business",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片涉及电影行业或制片业务。"
+ },
+ {
+  "tag_id": 675,
+  "tag": "movielens top pick",
+  "group": "榜单与荣誉",
+  "tag_type": "preference",
+  "definition": "影片被MovieLens推荐为精选作品。"
+ },
+ {
+  "tag_id": 676,
+  "tag": "moving",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片感人至深。"
+ },
+ {
+  "tag_id": 677,
+  "tag": "mozart",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "影片与莫扎特或其音乐相关。"
+ },
+ {
+  "tag_id": 678,
+  "tag": "mtv",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "影片与MTV媒体渠道或电视音乐文化相关。"
+ },
+ {
+  "tag_id": 679,
+  "tag": "multiple storylines",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "影片采用多条故事线并行叙事。"
+ },
+ {
+  "tag_id": 680,
+  "tag": "mummy",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "影片包含木乃伊或相关超自然怪物。"
+ },
+ {
+  "tag_id": 681,
+  "tag": "muppets",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "影片属于布偶系列或相关品牌。"
+ },
+ {
+  "tag_id": 682,
+  "tag": "murder",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "影片涉及谋杀案件或杀人行为。"
+ },
+ {
+  "tag_id": 683,
+  "tag": "murder mystery",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "影片围绕谋杀谜案展开调查。"
+ },
+ {
+  "tag_id": 684,
+  "tag": "music",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片以音乐创作、表演或音乐人为题材。"
+ },
+ {
+  "tag_id": 685,
+  "tag": "music business",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片涉及音乐产业或唱片行业。"
+ },
+ {
+  "tag_id": 686,
+  "tag": "musical",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "影片为音乐剧或包含大量歌舞段落。"
+ },
+ {
+  "tag_id": 687,
+  "tag": "musicians",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片以音乐人角色或乐队生活为核心。"
+ },
+ {
+  "tag_id": 688,
+  "tag": "mutants",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "影片包含变异人或突变生物。"
+ },
+ {
+  "tag_id": 689,
+  "tag": "mystery",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "影片具有悬疑解谜类型特征。"
+ },
+ {
+  "tag_id": 690,
+  "tag": "mythology",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "影片取材于神话传说或神话体系。"
+ },
+ {
+  "tag_id": 691,
+  "tag": "narrated",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "影片使用旁白或叙述者推进故事。"
+ },
+ {
+  "tag_id": 692,
+  "tag": "nasa",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片涉及美国宇航局或航天专业工作。"
+ },
+ {
+  "tag_id": 693,
+  "tag": "native americans",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片涉及美洲原住民人群或文化。"
+ },
+ {
+  "tag_id": 694,
+  "tag": "natural disaster",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "影片以自然灾害为核心事件。"
+ },
+ {
+  "tag_id": 695,
+  "tag": "nature",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "影片表现自然环境或自然主题。"
+ },
+ {
+  "tag_id": 696,
+  "tag": "nazi",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "影片涉及纳粹或纳粹主义。"
+ },
+ {
+  "tag_id": 697,
+  "tag": "nazis",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "影片表现纳粹组织或纳粹人物。"
+ },
+ {
+  "tag_id": 698,
+  "tag": "neil gaiman",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与尼尔·盖曼或其作品相关。"
+ },
+ {
+  "tag_id": 699,
+  "tag": "neo-nazis",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "影片涉及新纳粹组织或相关意识形态。"
+ },
+ {
+  "tag_id": 700,
+  "tag": "neo-noir",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "影片具有新黑色电影的类型风格。"
+ },
+ {
+  "tag_id": 701,
+  "tag": "nerds",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色或人物具有书呆子、极客或技术宅特征。"
+ },
+ {
+  "tag_id": 702,
+  "tag": "new jersey",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事发生地或地域文化涉及新泽西。"
+ },
+ {
+  "tag_id": 703,
+  "tag": "new orleans",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事发生地或地域文化涉及新奥尔良。"
+ },
+ {
+  "tag_id": 704,
+  "tag": "new york",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事发生地或地域文化涉及纽约。"
+ },
+ {
+  "tag_id": 705,
+  "tag": "new york city",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事发生地或地域文化涉及纽约市。"
+ },
+ {
+  "tag_id": 706,
+  "tag": "new zealand",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事发生地、拍摄地或地域文化涉及新西兰。"
+ },
+ {
+  "tag_id": 707,
+  "tag": "ninja",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "包含忍者相关的动作、打斗或冒险元素。"
+ },
+ {
+  "tag_id": 708,
+  "tag": "no dialogue",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "影片基本没有对白或极少使用对白。"
+ },
+ {
+  "tag_id": 709,
+  "tag": "no plot",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片缺乏情节推进。"
+ },
+ {
+  "tag_id": 710,
+  "tag": "nocturnal",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片呈现明显的夜间、黑暗或夜晚活动氛围。"
+ },
+ {
+  "tag_id": 711,
+  "tag": "noir",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "具有黑色电影的风格特征。"
+ },
+ {
+  "tag_id": 712,
+  "tag": "noir thriller",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "属于黑色电影与惊悚类型结合。"
+ },
+ {
+  "tag_id": 713,
+  "tag": "non-hollywood ending",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "结局不同于传统好莱坞式收尾。"
+ },
+ {
+  "tag_id": 714,
+  "tag": "non-linear",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "采用非线性叙事结构。"
+ },
+ {
+  "tag_id": 715,
+  "tag": "nonlinear",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "采用非线性叙事结构。"
+ },
+ {
+  "tag_id": 716,
+  "tag": "nostalgia",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片带有怀旧情绪或回忆主题。"
+ },
+ {
+  "tag_id": 717,
+  "tag": "nostalgic",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片营造怀旧的情感氛围。"
+ },
+ {
+  "tag_id": 718,
+  "tag": "not as good as the first",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片不如系列第一部。"
+ },
+ {
+  "tag_id": 719,
+  "tag": "not funny",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片不搞笑。"
+ },
+ {
+  "tag_id": 720,
+  "tag": "notable nudity",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "包含较为显著的裸露画面。"
+ },
+ {
+  "tag_id": 721,
+  "tag": "notable soundtrack",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片原声音乐值得称道。"
+ },
+ {
+  "tag_id": 722,
+  "tag": "nuclear",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及核能、核武器或相关政治议题。"
+ },
+ {
+  "tag_id": 723,
+  "tag": "nuclear bomb",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及核炸弹或核武器威胁。"
+ },
+ {
+  "tag_id": 724,
+  "tag": "nuclear war",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及核战争或核冲突。"
+ },
+ {
+  "tag_id": 725,
+  "tag": "nudity",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "包含裸露画面。"
+ },
+ {
+  "tag_id": 726,
+  "tag": "nudity (full frontal - brief)",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "包含短暂的正面全裸画面。"
+ },
+ {
+  "tag_id": 727,
+  "tag": "nudity (full frontal - notable)",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "包含显著的正面全裸画面。"
+ },
+ {
+  "tag_id": 728,
+  "tag": "nudity (full frontal)",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "包含正面全裸画面。"
+ },
+ {
+  "tag_id": 729,
+  "tag": "nudity (rear)",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "包含背面裸露画面。"
+ },
+ {
+  "tag_id": 730,
+  "tag": "nudity (topless - brief)",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "包含短暂的上身裸露画面。"
+ },
+ {
+  "tag_id": 731,
+  "tag": "nudity (topless - notable)",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "包含显著的上身裸露画面。"
+ },
+ {
+  "tag_id": 732,
+  "tag": "nudity (topless)",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "包含上身裸露画面。"
+ },
+ {
+  "tag_id": 733,
+  "tag": "obsession",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色表现出强烈执念或痴迷状态。"
+ },
+ {
+  "tag_id": 734,
+  "tag": "ocean",
+  "group": "地理与地域文化",
+  "tag_type": "content",
+  "definition": "故事涉及海洋环境或海上场景。"
+ },
+ {
+  "tag_id": 735,
+  "tag": "off-beat comedy",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "属于非传统或怪诞风格的喜剧。"
+ },
+ {
+  "tag_id": 736,
+  "tag": "office",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "故事主要发生在办公室或涉及职场环境。"
+ },
+ {
+  "tag_id": 737,
+  "tag": "oil",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及石油资源、产业或相关议题。"
+ },
+ {
+  "tag_id": 738,
+  "tag": "olympics",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及奥运会或竞技体育题材。"
+ },
+ {
+  "tag_id": 739,
+  "tag": "ominous",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片营造不祥或紧张的氛围。"
+ },
+ {
+  "tag_id": 740,
+  "tag": "opera",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "涉及歌剧形式或歌剧题材。"
+ },
+ {
+  "tag_id": 741,
+  "tag": "organized crime",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及有组织犯罪活动。"
+ },
+ {
+  "tag_id": 742,
+  "tag": "original",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "故事或设定具有原创性，非明显改编。"
+ },
+ {
+  "tag_id": 743,
+  "tag": "original plot",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "剧情为原创而非改编自既有作品。"
+ },
+ {
+  "tag_id": 744,
+  "tag": "orphans",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色包含孤儿或孤儿身份设定。"
+ },
+ {
+  "tag_id": 745,
+  "tag": "oscar",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡奖相关。"
+ },
+ {
+  "tag_id": 746,
+  "tag": "oscar (best actor)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳男主角奖相关。"
+ },
+ {
+  "tag_id": 747,
+  "tag": "oscar (best actress)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳女主角奖相关。"
+ },
+ {
+  "tag_id": 748,
+  "tag": "oscar (best animated feature)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳动画长片奖相关。"
+ },
+ {
+  "tag_id": 749,
+  "tag": "oscar (best cinematography)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳摄影奖相关。"
+ },
+ {
+  "tag_id": 750,
+  "tag": "oscar (best directing)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳导演奖相关。"
+ },
+ {
+  "tag_id": 751,
+  "tag": "oscar (best editing)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳剪辑奖相关。"
+ },
+ {
+  "tag_id": 752,
+  "tag": "oscar (best effects - visual effects)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳视觉效果奖相关。"
+ },
+ {
+  "tag_id": 753,
+  "tag": "oscar (best foreign language film)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳外语片奖相关。"
+ },
+ {
+  "tag_id": 754,
+  "tag": "oscar (best music - original score)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳原创配乐奖相关。"
+ },
+ {
+  "tag_id": 755,
+  "tag": "oscar (best music - original song)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳原创歌曲奖相关。"
+ },
+ {
+  "tag_id": 756,
+  "tag": "oscar (best picture)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳影片奖相关。"
+ },
+ {
+  "tag_id": 757,
+  "tag": "oscar (best sound)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳音效奖相关。"
+ },
+ {
+  "tag_id": 758,
+  "tag": "oscar (best supporting actor)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳男配角奖相关。"
+ },
+ {
+  "tag_id": 759,
+  "tag": "oscar (best supporting actress)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳女配角奖相关。"
+ },
+ {
+  "tag_id": 760,
+  "tag": "oscar (best writing - screenplay written directly for the screen)",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "与奥斯卡最佳原创剧本奖相关。"
+ },
+ {
+  "tag_id": 761,
+  "tag": "oscar winner",
+  "group": "榜单与荣誉",
+  "tag_type": "content",
+  "definition": "影片为奥斯卡获奖作品。"
+ },
+ {
+  "tag_id": 762,
+  "tag": "over the top",
+  "group": "风格语气与氛围·2",
+  "tag_type": "preference",
+  "definition": "观众认为表现夸张或过火。"
+ },
+ {
+  "tag_id": 763,
+  "tag": "overrated",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片评价过高。"
+ },
+ {
+  "tag_id": 764,
+  "tag": "palestine",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事发生地或地域文化涉及巴勒斯坦。"
+ },
+ {
+  "tag_id": 765,
+  "tag": "parallel universe",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及平行宇宙设定。"
+ },
+ {
+  "tag_id": 766,
+  "tag": "paranoia",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色表现出偏执或多疑心理。"
+ },
+ {
+  "tag_id": 767,
+  "tag": "paranoid",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色处于偏执或疑神疑鬼状态。"
+ },
+ {
+  "tag_id": 768,
+  "tag": "parenthood",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "探讨育儿、亲子关系或家庭责任。"
+ },
+ {
+  "tag_id": 769,
+  "tag": "paris",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事发生地或地域文化涉及巴黎。"
+ },
+ {
+  "tag_id": 770,
+  "tag": "parody",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "采用戏仿或恶搞的表现形式。"
+ },
+ {
+  "tag_id": 771,
+  "tag": "passionate",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片情感表达热烈或强烈。"
+ },
+ {
+  "tag_id": 772,
+  "tag": "penguins",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "影片涉及企鹅或企鹅题材。"
+ },
+ {
+  "tag_id": 773,
+  "tag": "perfect",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片非常完美。"
+ },
+ {
+  "tag_id": 774,
+  "tag": "period piece",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "影片属于特定历史时期的时代剧。"
+ },
+ {
+  "tag_id": 775,
+  "tag": "peter pan",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "涉及彼得·潘角色或童话形象。"
+ },
+ {
+  "tag_id": 776,
+  "tag": "pg",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "影片为PG分级。"
+ },
+ {
+  "tag_id": 777,
+  "tag": "pg-13",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "影片为PG-13分级。"
+ },
+ {
+  "tag_id": 778,
+  "tag": "philip k. dick",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "影片与菲利普·K·迪克的作品改编或关联相关。"
+ },
+ {
+  "tag_id": 779,
+  "tag": "philosophical",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片探讨哲学命题或人生思考。"
+ },
+ {
+  "tag_id": 780,
+  "tag": "philosophy",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "影片涉及哲学主题。"
+ },
+ {
+  "tag_id": 781,
+  "tag": "photographer",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片涉及摄影师职业或摄影角色。"
+ },
+ {
+  "tag_id": 782,
+  "tag": "photography",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "影片摄影或影像表现突出。"
+ },
+ {
+  "tag_id": 783,
+  "tag": "pigs",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "影片涉及猪或猪题材。"
+ },
+ {
+  "tag_id": 784,
+  "tag": "pirates",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "影片涉及海盗或海上冒险题材。"
+ },
+ {
+  "tag_id": 785,
+  "tag": "pixar",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "影片与皮克斯品牌或工作室相关。"
+ },
+ {
+  "tag_id": 786,
+  "tag": "pixar animation",
+  "group": "动画形式",
+  "tag_type": "content",
+  "definition": "影片体现皮克斯动画风格或制作形式。"
+ },
+ {
+  "tag_id": 787,
+  "tag": "plot",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "影片强调情节推进。"
+ },
+ {
+  "tag_id": 788,
+  "tag": "plot holes",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片存在情节漏洞。"
+ },
+ {
+  "tag_id": 789,
+  "tag": "plot twist",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "影片包含剧情反转。"
+ },
+ {
+  "tag_id": 790,
+  "tag": "poetry",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "影片涉及诗歌元素或诗性表达。"
+ },
+ {
+  "tag_id": 791,
+  "tag": "poignant",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "观众觉得影片感人至深。"
+ },
+ {
+  "tag_id": 792,
+  "tag": "pointless",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片缺乏意义或目的。"
+ },
+ {
+  "tag_id": 793,
+  "tag": "poker",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片涉及扑克牌局或赌博题材。"
+ },
+ {
+  "tag_id": 794,
+  "tag": "poland",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事发生地或地域文化涉及波兰。"
+ },
+ {
+  "tag_id": 795,
+  "tag": "police",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "影片涉及警察职业或警方角色。"
+ },
+ {
+  "tag_id": 796,
+  "tag": "police corruption",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "影片涉及警察腐败或执法系统腐败。"
+ },
+ {
+  "tag_id": 797,
+  "tag": "police investigation",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "影片涉及警方调查过程。"
+ },
+ {
+  "tag_id": 798,
+  "tag": "political",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "影片具有政治主题或政治背景。"
+ },
+ {
+  "tag_id": 799,
+  "tag": "political corruption",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "影片涉及政治腐败或权力腐败。"
+ },
+ {
+  "tag_id": 800,
+  "tag": "politics",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "影片涉及政治活动或政治议题。"
+ },
+ {
+  "tag_id": 801,
+  "tag": "pornography",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以色情内容为主要表现形式的影片类型。"
+ },
+ {
+  "tag_id": 802,
+  "tag": "post apocalyptic",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "故事发生在灾难后文明崩塌的末世背景。"
+ },
+ {
+  "tag_id": 803,
+  "tag": "post-apocalyptic",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "以灾后末世为故事背景。"
+ },
+ {
+  "tag_id": 804,
+  "tag": "potential oscar nom",
+  "group": "榜单与荣誉",
+  "tag_type": "preference",
+  "definition": "被认为具有奥斯卡提名潜力。"
+ },
+ {
+  "tag_id": 805,
+  "tag": "poverty",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "表现贫困生活与经济困境。"
+ },
+ {
+  "tag_id": 806,
+  "tag": "powerful ending",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "结尾被认为震撼有力。"
+ },
+ {
+  "tag_id": 807,
+  "tag": "predictable",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "情节发展容易被提前猜出。"
+ },
+ {
+  "tag_id": 808,
+  "tag": "pregnancy",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "涉及怀孕的人物状态或情节。"
+ },
+ {
+  "tag_id": 809,
+  "tag": "prejudice",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "表现偏见与歧视现象。"
+ },
+ {
+  "tag_id": 810,
+  "tag": "prequel",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "作为系列前传补充此前故事。"
+ },
+ {
+  "tag_id": 811,
+  "tag": "president",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及总统或国家政治领袖。"
+ },
+ {
+  "tag_id": 812,
+  "tag": "pretentious",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "被认为故作深沉或卖弄。"
+ },
+ {
+  "tag_id": 813,
+  "tag": "prison",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "以监狱为主要场景或题材。"
+ },
+ {
+  "tag_id": 814,
+  "tag": "prison escape",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "包含越狱行动与计划。"
+ },
+ {
+  "tag_id": 815,
+  "tag": "private detective",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以私家侦探为职业主角。"
+ },
+ {
+  "tag_id": 816,
+  "tag": "product placement",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "影片中出现明显的广告植入。"
+ },
+ {
+  "tag_id": 817,
+  "tag": "prohibition",
+  "group": "时代背景",
+  "tag_type": "content",
+  "definition": "涉及禁酒令时期的历史背景。"
+ },
+ {
+  "tag_id": 818,
+  "tag": "propaganda",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "带有政治宣传或意识形态传播色彩。"
+ },
+ {
+  "tag_id": 819,
+  "tag": "prostitution",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及性交易与卖淫议题。"
+ },
+ {
+  "tag_id": 820,
+  "tag": "psychedelic",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "具有迷幻感与致幻视觉氛围。"
+ },
+ {
+  "tag_id": 821,
+  "tag": "psychiatrist",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "出现精神科医生角色。"
+ },
+ {
+  "tag_id": 822,
+  "tag": "psychiatry",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及精神病学或心理治疗领域。"
+ },
+ {
+  "tag_id": 823,
+  "tag": "psychological",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "强调心理层面或心理惊悚效果。"
+ },
+ {
+  "tag_id": 824,
+  "tag": "psychology",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及心理学主题或人物心理分析。"
+ },
+ {
+  "tag_id": 825,
+  "tag": "pulp",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "具有低俗杂志式夸张娱乐风格。"
+ },
+ {
+  "tag_id": 826,
+  "tag": "punk",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "体现朋克文化或反叛音乐气质。"
+ },
+ {
+  "tag_id": 827,
+  "tag": "puppets",
+  "group": "动画形式",
+  "tag_type": "content",
+  "definition": "使用木偶或偶戏形式。"
+ },
+ {
+  "tag_id": 828,
+  "tag": "queer",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及酷儿或LGBTQ主题。"
+ },
+ {
+  "tag_id": 829,
+  "tag": "quirky",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "风格古怪俏皮、带有独特趣味。"
+ },
+ {
+  "tag_id": 830,
+  "tag": "quotable",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "台词精彩、值得引用。"
+ },
+ {
+  "tag_id": 831,
+  "tag": "rabbits",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "兔子作为重要动物元素。"
+ },
+ {
+  "tag_id": 832,
+  "tag": "race",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及种族身份或族群关系。"
+ },
+ {
+  "tag_id": 833,
+  "tag": "race issues",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "直接表现种族问题与矛盾。"
+ },
+ {
+  "tag_id": 834,
+  "tag": "racing",
+  "group": "交通与航空",
+  "tag_type": "content",
+  "definition": "以赛车或竞速为核心内容。"
+ },
+ {
+  "tag_id": 835,
+  "tag": "racism",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "表现种族歧视与压迫。"
+ },
+ {
+  "tag_id": 836,
+  "tag": "radio",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "涉及广播媒介或电台题材。"
+ },
+ {
+  "tag_id": 837,
+  "tag": "rags to riches",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "讲述从贫穷到富有的逆袭历程。"
+ },
+ {
+  "tag_id": 838,
+  "tag": "rape",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及性侵暴力议题。"
+ },
+ {
+  "tag_id": 839,
+  "tag": "rats",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "老鼠作为重要动物元素。"
+ },
+ {
+  "tag_id": 840,
+  "tag": "realistic",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "呈现写实、贴近现实的质感。"
+ },
+ {
+  "tag_id": 841,
+  "tag": "realistic action",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "动作场面追求真实可信。"
+ },
+ {
+  "tag_id": 842,
+  "tag": "reality tv",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "涉及真人秀或电视纪实娱乐形式。"
+ },
+ {
+  "tag_id": 843,
+  "tag": "rebellion",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "表现反抗权威或叛乱。"
+ },
+ {
+  "tag_id": 844,
+  "tag": "redemption",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "围绕赎罪与自我救赎展开。"
+ },
+ {
+  "tag_id": 845,
+  "tag": "reflective",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片带有沉思、内省的气质。"
+ },
+ {
+  "tag_id": 846,
+  "tag": "relationships",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "聚焦人际关系与情感联结。"
+ },
+ {
+  "tag_id": 847,
+  "tag": "religion",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及宗教信仰与仪式。"
+ },
+ {
+  "tag_id": 848,
+  "tag": "remade",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "标记作品存在重拍版本或为重拍版本。"
+ },
+ {
+  "tag_id": 849,
+  "tag": "remake",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "对旧片的翻拍版本。"
+ },
+ {
+  "tag_id": 850,
+  "tag": "revenge",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "以复仇为核心情节动力。"
+ },
+ {
+  "tag_id": 851,
+  "tag": "revolution",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "表现革命或社会变革。"
+ },
+ {
+  "tag_id": 852,
+  "tag": "ridiculous",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "被认为荒唐可笑。"
+ },
+ {
+  "tag_id": 853,
+  "tag": "rio de janeiro",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事发生地或文化背景为里约热内卢。"
+ },
+ {
+  "tag_id": 854,
+  "tag": "road movie",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "公路片类型，以旅途为叙事框架。"
+ },
+ {
+  "tag_id": 855,
+  "tag": "road trip",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以公路旅行推动情节。"
+ },
+ {
+  "tag_id": 856,
+  "tag": "roald dahl",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与罗尔德·达尔创作或改编相关。"
+ },
+ {
+  "tag_id": 857,
+  "tag": "robbery",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及抢劫案件。"
+ },
+ {
+  "tag_id": 858,
+  "tag": "robert downey jr",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "涉及演员小罗伯特·唐尼。"
+ },
+ {
+  "tag_id": 859,
+  "tag": "robert ludlum",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与作家罗伯特·陆德伦相关。"
+ },
+ {
+  "tag_id": 860,
+  "tag": "robot",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "出现机器人角色或主题。"
+ },
+ {
+  "tag_id": 861,
+  "tag": "robots",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "以机器人群体或机器人世界为元素。"
+ },
+ {
+  "tag_id": 862,
+  "tag": "rock and roll",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "体现摇滚乐文化或音乐气质。"
+ },
+ {
+  "tag_id": 863,
+  "tag": "romance",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以爱情故事为核心。"
+ },
+ {
+  "tag_id": 864,
+  "tag": "romantic",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "具有浪漫情感氛围。"
+ },
+ {
+  "tag_id": 865,
+  "tag": "romantic comedy",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "浪漫喜剧类型。"
+ },
+ {
+  "tag_id": 866,
+  "tag": "rome",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事发生地或文化背景为罗马。"
+ },
+ {
+  "tag_id": 867,
+  "tag": "runaway",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "人物处于逃亡或出走状态。"
+ },
+ {
+  "tag_id": 868,
+  "tag": "russia",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "涉及俄罗斯地域背景。"
+ },
+ {
+  "tag_id": 869,
+  "tag": "russian",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "涉及俄罗斯人、语言或文化。"
+ },
+ {
+  "tag_id": 870,
+  "tag": "sacrifice",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "表现牺牲与奉献抉择。"
+ },
+ {
+  "tag_id": 871,
+  "tag": "sad",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片基调伤感或令人悲伤。"
+ },
+ {
+  "tag_id": 872,
+  "tag": "sad but good",
+  "group": "正面观众评价",
+  "tag_type": "preference",
+  "definition": "虽然悲伤但整体好看。"
+ },
+ {
+  "tag_id": 873,
+  "tag": "samurai",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以武士为角色或题材。"
+ },
+ {
+  "tag_id": 874,
+  "tag": "san francisco",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事发生地为旧金山。"
+ },
+ {
+  "tag_id": 875,
+  "tag": "sappy",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "被认为过于煽情或矫情。"
+ },
+ {
+  "tag_id": 876,
+  "tag": "sarcasm",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "语气带有讽刺挖苦。"
+ },
+ {
+  "tag_id": 877,
+  "tag": "satire",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "以讽刺手法批判社会或人性。"
+ },
+ {
+  "tag_id": 878,
+  "tag": "satirical",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "具有讽刺意味。"
+ },
+ {
+  "tag_id": 879,
+  "tag": "saturday night live",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "与《周六夜现场》品牌或衍生相关。"
+ },
+ {
+  "tag_id": 880,
+  "tag": "saturn award (best science fiction film)",
+  "group": "榜单与荣誉",
+  "tag_type": "preference",
+  "definition": "获得或提名土星奖最佳科幻片。"
+ },
+ {
+  "tag_id": 881,
+  "tag": "saturn award (best special effects)",
+  "group": "榜单与荣誉",
+  "tag_type": "preference",
+  "definition": "获得或提名土星奖最佳特效。"
+ },
+ {
+  "tag_id": 882,
+  "tag": "scary",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "具有恐怖惊悚的观感。"
+ },
+ {
+  "tag_id": 883,
+  "tag": "scenic",
+  "group": "视觉与技术规格",
+  "tag_type": "preference",
+  "definition": "画面或自然风景优美。"
+ },
+ {
+  "tag_id": 884,
+  "tag": "schizophrenia",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "表现精神分裂症相关状态。"
+ },
+ {
+  "tag_id": 885,
+  "tag": "school",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "以学校或教育环境为重要场景与议题。"
+ },
+ {
+  "tag_id": 886,
+  "tag": "sci fi",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "科幻类型标签。"
+ },
+ {
+  "tag_id": 887,
+  "tag": "sci-fi",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "科幻类型标签。"
+ },
+ {
+  "tag_id": 888,
+  "tag": "science",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "涉及科学主题或科研内容。"
+ },
+ {
+  "tag_id": 889,
+  "tag": "science fiction",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "科学幻想题材。"
+ },
+ {
+  "tag_id": 890,
+  "tag": "scifi",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "科幻类型标签。"
+ },
+ {
+  "tag_id": 891,
+  "tag": "scifi cult",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "具有邪典气质的科幻作品。"
+ },
+ {
+  "tag_id": 892,
+  "tag": "scotland",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事发生地或文化背景为苏格兰。"
+ },
+ {
+  "tag_id": 893,
+  "tag": "screwball",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "神经喜剧风格。"
+ },
+ {
+  "tag_id": 894,
+  "tag": "screwball comedy",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "神经喜剧类型。"
+ },
+ {
+  "tag_id": 895,
+  "tag": "script",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "关注剧本或编剧表现。"
+ },
+ {
+  "tag_id": 896,
+  "tag": "secret service",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及特勤或情报机构。"
+ },
+ {
+  "tag_id": 897,
+  "tag": "secrets",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "秘密构成情节悬念。"
+ },
+ {
+  "tag_id": 898,
+  "tag": "segregation",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "表现种族隔离或社会隔离。"
+ },
+ {
+  "tag_id": 899,
+  "tag": "self discovery",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "讲述自我发现与成长。"
+ },
+ {
+  "tag_id": 900,
+  "tag": "sentimental",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "情感表达偏感伤或煽情。"
+ },
+ {
+  "tag_id": 901,
+  "tag": "sequel",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "电影是续集作品。"
+ },
+ {
+  "tag_id": 902,
+  "tag": "sequels",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "电影属于多部续集序列。"
+ },
+ {
+  "tag_id": 903,
+  "tag": "serial killer",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "以连环杀手为核心犯罪元素。"
+ },
+ {
+  "tag_id": 904,
+  "tag": "series",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "电影属于系列作品或具有系列化特征。"
+ },
+ {
+  "tag_id": 905,
+  "tag": "sex",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及性行为或性主题。"
+ },
+ {
+  "tag_id": 906,
+  "tag": "sex comedy",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以性喜剧为主要类型。"
+ },
+ {
+  "tag_id": 907,
+  "tag": "sexual",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "包含性相关主题或氛围。"
+ },
+ {
+  "tag_id": 908,
+  "tag": "sexual abuse",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "描绘性虐待或性侵害问题。"
+ },
+ {
+  "tag_id": 909,
+  "tag": "sexuality",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "探讨性取向或性身份议题。"
+ },
+ {
+  "tag_id": 910,
+  "tag": "sexualized violence",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "呈现与性化相关的暴力内容。"
+ },
+ {
+  "tag_id": 911,
+  "tag": "sexy",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片呈现性感或诱惑的风格。"
+ },
+ {
+  "tag_id": 912,
+  "tag": "shakespeare",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "与莎士比亚作品改编或引用相关。"
+ },
+ {
+  "tag_id": 913,
+  "tag": "shallow",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片肤浅缺乏深度。"
+ },
+ {
+  "tag_id": 914,
+  "tag": "shark",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "以鲨鱼为重要动物或威胁元素。"
+ },
+ {
+  "tag_id": 915,
+  "tag": "shopping",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "涉及购物行为或消费文化。"
+ },
+ {
+  "tag_id": 916,
+  "tag": "short",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "片长较短或为短片形式。"
+ },
+ {
+  "tag_id": 917,
+  "tag": "short-term memory loss",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色患有短期记忆丧失。"
+ },
+ {
+  "tag_id": 918,
+  "tag": "silent",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "影片为无声或极少对白形式。"
+ },
+ {
+  "tag_id": 919,
+  "tag": "silly",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片风格滑稽傻气。"
+ },
+ {
+  "tag_id": 920,
+  "tag": "silly fun",
+  "group": "正面观众评价·2",
+  "tag_type": "preference",
+  "definition": "观众认为影片傻气但有趣。"
+ },
+ {
+  "tag_id": 921,
+  "tag": "simple",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "叙事或风格简单朴素。"
+ },
+ {
+  "tag_id": 922,
+  "tag": "single father",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "以单身父亲为主要角色。"
+ },
+ {
+  "tag_id": 923,
+  "tag": "sisters",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "以姐妹关系为角色核心。"
+ },
+ {
+  "tag_id": 924,
+  "tag": "skinhead",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "涉及光头党或相关亚文化角色。"
+ },
+ {
+  "tag_id": 925,
+  "tag": "slackers",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "以懒散无为的青年角色为主。"
+ },
+ {
+  "tag_id": 926,
+  "tag": "slapstick",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "采用夸张肢体搞笑的闹剧手法。"
+ },
+ {
+  "tag_id": 927,
+  "tag": "slasher",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "属于砍杀恐怖片类型。"
+ },
+ {
+  "tag_id": 928,
+  "tag": "slavery",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "描绘奴隶制及其历史社会影响。"
+ },
+ {
+  "tag_id": 929,
+  "tag": "slow",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片节奏缓慢。"
+ },
+ {
+  "tag_id": 930,
+  "tag": "slow paced",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "叙事节奏缓慢。"
+ },
+ {
+  "tag_id": 931,
+  "tag": "small town",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事发生在小镇环境。"
+ },
+ {
+  "tag_id": 932,
+  "tag": "snakes",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "以蛇为重要动物或威胁元素。"
+ },
+ {
+  "tag_id": 933,
+  "tag": "so bad it's funny",
+  "group": "正面观众评价·2",
+  "tag_type": "preference",
+  "definition": "观众认为影片烂得有趣。"
+ },
+ {
+  "tag_id": 934,
+  "tag": "so bad it's good",
+  "group": "正面观众评价·2",
+  "tag_type": "preference",
+  "definition": "观众认为影片因质量差反而好看。"
+ },
+ {
+  "tag_id": 935,
+  "tag": "soccer",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以足球运动为主题。"
+ },
+ {
+  "tag_id": 936,
+  "tag": "social commentary",
+  "group": "社会议题",
+  "tag_type": "content",
+  "definition": "包含对社会问题的评论或批判。"
+ },
+ {
+  "tag_id": 937,
+  "tag": "solitude",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "探讨孤独或独处的人生状态。"
+ },
+ {
+  "tag_id": 938,
+  "tag": "sophia coppola",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与索菲亚·科波拉相关。"
+ },
+ {
+  "tag_id": 939,
+  "tag": "south africa",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事背景或主题涉及南非。"
+ },
+ {
+  "tag_id": 940,
+  "tag": "south america",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事背景或主题涉及南美。"
+ },
+ {
+  "tag_id": 941,
+  "tag": "southern theme",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "具有南方地域文化主题。"
+ },
+ {
+  "tag_id": 942,
+  "tag": "space",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "以太空为重要场景或主题。"
+ },
+ {
+  "tag_id": 943,
+  "tag": "space opera",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "属于太空歌剧式科幻叙事。"
+ },
+ {
+  "tag_id": 944,
+  "tag": "space program",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "涉及航天计划或太空探索机构。"
+ },
+ {
+  "tag_id": 945,
+  "tag": "space travel",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "描绘太空旅行过程。"
+ },
+ {
+  "tag_id": 946,
+  "tag": "spaghetti western",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "具有意大利式西部片风格。"
+ },
+ {
+  "tag_id": 947,
+  "tag": "spain",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事背景或主题涉及西班牙。"
+ },
+ {
+  "tag_id": 948,
+  "tag": "spanish",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "涉及西班牙语或西班牙文化。"
+ },
+ {
+  "tag_id": 949,
+  "tag": "spanish civil war",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "以西班牙内战为历史背景。"
+ },
+ {
+  "tag_id": 950,
+  "tag": "special",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片具有特别或独特的气质。"
+ },
+ {
+  "tag_id": 951,
+  "tag": "special effects",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "使用特效或强调视觉效果。"
+ },
+ {
+  "tag_id": 952,
+  "tag": "spelling bee",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以拼字比赛为主题。"
+ },
+ {
+  "tag_id": 953,
+  "tag": "spiders",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "以蜘蛛为重要动物或威胁元素。"
+ },
+ {
+  "tag_id": 954,
+  "tag": "spielberg",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与史蒂文·斯皮尔伯格相关。"
+ },
+ {
+  "tag_id": 955,
+  "tag": "spies",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "以间谍角色或谍战情节为主。"
+ },
+ {
+  "tag_id": 956,
+  "tag": "splatter",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以血腥喷溅效果为卖点。"
+ },
+ {
+  "tag_id": 957,
+  "tag": "spock",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "包含或关联斯波克这一角色。"
+ },
+ {
+  "tag_id": 958,
+  "tag": "spoof",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以恶搞戏仿为喜剧形式。"
+ },
+ {
+  "tag_id": 959,
+  "tag": "sports",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以体育运动为题材。"
+ },
+ {
+  "tag_id": 960,
+  "tag": "spy",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "以间谍为核心角色或情节。"
+ },
+ {
+  "tag_id": 961,
+  "tag": "spying",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "描绘间谍活动或情报行动。"
+ },
+ {
+  "tag_id": 962,
+  "tag": "stage magic",
+  "group": "职业与专业题材",
+  "tag_type": "content",
+  "definition": "以舞台魔术为专业主题。"
+ },
+ {
+  "tag_id": 963,
+  "tag": "stand-up comedy",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以单口喜剧为表演形式。"
+ },
+ {
+  "tag_id": 964,
+  "tag": "star trek",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "属于或关联《星际迷航》系列。"
+ },
+ {
+  "tag_id": 965,
+  "tag": "star wars",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "属于或关联《星球大战》系列。"
+ },
+ {
+  "tag_id": 966,
+  "tag": "steampunk",
+  "group": "科幻与超自然",
+  "tag_type": "content",
+  "definition": "具有蒸汽朋克科幻设定。"
+ },
+ {
+  "tag_id": 967,
+  "tag": "stereotypes",
+  "group": "社会议题·2",
+  "tag_type": "content",
+  "definition": "涉及刻板印象或社会成见。"
+ },
+ {
+  "tag_id": 968,
+  "tag": "stoner movie",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以大麻文化或瘾君子为主角的喜剧。"
+ },
+ {
+  "tag_id": 969,
+  "tag": "stop motion",
+  "group": "动画形式",
+  "tag_type": "content",
+  "definition": "使用定格动画制作。"
+ },
+ {
+  "tag_id": 970,
+  "tag": "stop-motion",
+  "group": "动画形式",
+  "tag_type": "content",
+  "definition": "使用定格动画制作。"
+ },
+ {
+  "tag_id": 971,
+  "tag": "story",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "强调故事情节本身。"
+ },
+ {
+  "tag_id": 972,
+  "tag": "storytelling",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "强调叙事方式或讲故事过程。"
+ },
+ {
+  "tag_id": 973,
+  "tag": "stranded",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "角色被困于孤立环境。"
+ },
+ {
+  "tag_id": 974,
+  "tag": "strange",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片风格怪异奇特。"
+ },
+ {
+  "tag_id": 975,
+  "tag": "strippers",
+  "group": "职业与专业题材·2",
+  "tag_type": "content",
+  "definition": "以脱衣舞娘为角色或题材。"
+ },
+ {
+  "tag_id": 976,
+  "tag": "studio ghibli",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "与吉卜力工作室品牌相关。"
+ },
+ {
+  "tag_id": 977,
+  "tag": "stunning",
+  "group": "正面观众评价·2",
+  "tag_type": "preference",
+  "definition": "观众认为影片令人惊艳。"
+ },
+ {
+  "tag_id": 978,
+  "tag": "stupid",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众认为影片愚蠢低智。"
+ },
+ {
+  "tag_id": 979,
+  "tag": "stupid as hell",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众强烈认为影片极其愚蠢。"
+ },
+ {
+  "tag_id": 980,
+  "tag": "stupidity",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "观众批评影片充满愚蠢内容。"
+ },
+ {
+  "tag_id": 981,
+  "tag": "stylish",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片视觉或整体风格时尚有型。"
+ },
+ {
+  "tag_id": 982,
+  "tag": "stylized",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "采用程式化或风格化表现。"
+ },
+ {
+  "tag_id": 983,
+  "tag": "submarine",
+  "group": "交通与航空",
+  "tag_type": "content",
+  "definition": "以潜艇为重要场景或载具。"
+ },
+ {
+  "tag_id": 984,
+  "tag": "suburbia",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "以郊区生活为背景。"
+ },
+ {
+  "tag_id": 985,
+  "tag": "suicide",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "涉及自杀主题。"
+ },
+ {
+  "tag_id": 986,
+  "tag": "suicide attempt",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "描绘自杀未遂情节。"
+ },
+ {
+  "tag_id": 987,
+  "tag": "super hero",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以超级英雄为题材。"
+ },
+ {
+  "tag_id": 988,
+  "tag": "super-hero",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以超级英雄为题材。"
+ },
+ {
+  "tag_id": 989,
+  "tag": "superhero",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以超级英雄为题材。"
+ },
+ {
+  "tag_id": 990,
+  "tag": "superheroes",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以多位超级英雄为题材。"
+ },
+ {
+  "tag_id": 991,
+  "tag": "supernatural",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "包含超自然现象或力量。"
+ },
+ {
+  "tag_id": 992,
+  "tag": "suprisingly clever",
+  "group": "正面观众评价·2",
+  "tag_type": "preference",
+  "definition": "观众认为影片出乎意料地聪明。"
+ },
+ {
+  "tag_id": 993,
+  "tag": "surfing",
+  "group": "职业与专业题材·2",
+  "tag_type": "content",
+  "definition": "以冲浪运动为主题。"
+ },
+ {
+  "tag_id": 994,
+  "tag": "surprise ending",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "结局出人意料。"
+ },
+ {
+  "tag_id": 995,
+  "tag": "surreal",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "呈现超现实风格。"
+ },
+ {
+  "tag_id": 996,
+  "tag": "surrealism",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "采用超现实主义手法。"
+ },
+ {
+  "tag_id": 997,
+  "tag": "surveillance",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及监控或监视行为。"
+ },
+ {
+  "tag_id": 998,
+  "tag": "survival",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "以生存求生为核心情节。"
+ },
+ {
+  "tag_id": 999,
+  "tag": "suspense",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "营造悬念紧张感。"
+ },
+ {
+  "tag_id": 1000,
+  "tag": "suspenseful",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "影片充满悬念和紧张感。"
+ },
+ {
+  "tag_id": 1001,
+  "tag": "swashbuckler",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "以剑客冒险和华丽打斗为特征的影片。"
+ },
+ {
+  "tag_id": 1002,
+  "tag": "swedish",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "与瑞典国家、语言或文化相关。"
+ },
+ {
+  "tag_id": 1003,
+  "tag": "sweet",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "具有温柔、甜美或暖心的情绪基调。"
+ },
+ {
+  "tag_id": 1004,
+  "tag": "switching places",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "以身份互换或位置对调推动情节。"
+ },
+ {
+  "tag_id": 1005,
+  "tag": "sword fight",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "包含剑术打斗场面。"
+ },
+ {
+  "tag_id": 1006,
+  "tag": "sword fighting",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "以剑术打斗为主要动作元素。"
+ },
+ {
+  "tag_id": 1007,
+  "tag": "talking animals",
+  "group": "动物题材",
+  "tag_type": "content",
+  "definition": "出现会说话的动物角色。"
+ },
+ {
+  "tag_id": 1008,
+  "tag": "talky",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "对白密集、以谈话推进影片。"
+ },
+ {
+  "tag_id": 1009,
+  "tag": "tarantino",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与昆汀·塔伦蒂诺相关或具其创作风格。"
+ },
+ {
+  "tag_id": 1010,
+  "tag": "teacher",
+  "group": "职业与专业题材·2",
+  "tag_type": "content",
+  "definition": "以教师职业或教学环境为核心。"
+ },
+ {
+  "tag_id": 1011,
+  "tag": "tear jerker",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "具有催泪或煽情效果。"
+ },
+ {
+  "tag_id": 1012,
+  "tag": "technology",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "以科技、技术或未来科技为主题。"
+ },
+ {
+  "tag_id": 1013,
+  "tag": "teen",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "聚焦青少年角色或青少年状态。"
+ },
+ {
+  "tag_id": 1014,
+  "tag": "teen movie",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "面向或描绘青少年群体的影片类型。"
+ },
+ {
+  "tag_id": 1015,
+  "tag": "teenager",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "以青少年角色为核心。"
+ },
+ {
+  "tag_id": 1016,
+  "tag": "teenagers",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "描绘多组青少年角色。"
+ },
+ {
+  "tag_id": 1017,
+  "tag": "teens",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "以青少年群体为主要对象。"
+ },
+ {
+  "tag_id": 1018,
+  "tag": "teleportation",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "涉及瞬间移动或空间传输能力。"
+ },
+ {
+  "tag_id": 1019,
+  "tag": "television",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "涉及电视媒介或与电视相关。"
+ },
+ {
+  "tag_id": 1020,
+  "tag": "tense",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "营造紧张、压迫的情绪氛围。"
+ },
+ {
+  "tag_id": 1021,
+  "tag": "terminal illness",
+  "group": "信仰与人生困境",
+  "tag_type": "content",
+  "definition": "围绕绝症带来的生命困境。"
+ },
+ {
+  "tag_id": 1022,
+  "tag": "terrorism",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及恐怖主义或恐怖袭击议题。"
+ },
+ {
+  "tag_id": 1023,
+  "tag": "texas",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事发生地或文化背景在得克萨斯。"
+ },
+ {
+  "tag_id": 1024,
+  "tag": "thought-provoking",
+  "group": "正面观众评价·2",
+  "tag_type": "preference",
+  "definition": "被认为能引发思考。"
+ },
+ {
+  "tag_id": 1025,
+  "tag": "thriller",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以悬疑、紧张和刺激为主的惊悚类型。"
+ },
+ {
+  "tag_id": 1026,
+  "tag": "time",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "时间是影片的重要主题或叙事要素。"
+ },
+ {
+  "tag_id": 1027,
+  "tag": "time loop",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "采用时间循环的叙事结构。"
+ },
+ {
+  "tag_id": 1028,
+  "tag": "time travel",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "涉及穿越时间的设定或情节。"
+ },
+ {
+  "tag_id": 1029,
+  "tag": "tokyo",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事发生地或文化背景在东京。"
+ },
+ {
+  "tag_id": 1030,
+  "tag": "tolkien",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与J.R.R.托尔金及其创作相关。"
+ },
+ {
+  "tag_id": 1031,
+  "tag": "tom clancy",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与汤姆·克兰西及其作品相关。"
+ },
+ {
+  "tag_id": 1032,
+  "tag": "too long",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "被认为片长过长。"
+ },
+ {
+  "tag_id": 1033,
+  "tag": "too short",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "被认为片长过短。"
+ },
+ {
+  "tag_id": 1034,
+  "tag": "torture",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "包含酷刑或逼供等暴力情节。"
+ },
+ {
+  "tag_id": 1035,
+  "tag": "touching",
+  "group": "正面观众评价·2",
+  "tag_type": "preference",
+  "definition": "被认为感人或打动人心。"
+ },
+ {
+  "tag_id": 1036,
+  "tag": "toys",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以玩具为重要题材或视觉元素。"
+ },
+ {
+  "tag_id": 1037,
+  "tag": "tragedy",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "具有悲剧性结局或命运主题。"
+ },
+ {
+  "tag_id": 1038,
+  "tag": "train",
+  "group": "交通与航空",
+  "tag_type": "content",
+  "definition": "火车是重要场景或交通工具。"
+ },
+ {
+  "tag_id": 1039,
+  "tag": "trains",
+  "group": "交通与航空",
+  "tag_type": "content",
+  "definition": "出现多列火车或铁路元素。"
+ },
+ {
+  "tag_id": 1040,
+  "tag": "transformation",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "角色经历身体、身份或心理转变。"
+ },
+ {
+  "tag_id": 1041,
+  "tag": "transgender",
+  "group": "社会议题·2",
+  "tag_type": "content",
+  "definition": "涉及跨性别身份或相关议题。"
+ },
+ {
+  "tag_id": 1042,
+  "tag": "travel",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "以旅行或迁徙推动冒险与情节。"
+ },
+ {
+  "tag_id": 1043,
+  "tag": "treasure",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "宝藏是核心目标或动机。"
+ },
+ {
+  "tag_id": 1044,
+  "tag": "treasure hunt",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "以寻宝冒险为主要情节。"
+ },
+ {
+  "tag_id": 1045,
+  "tag": "tricky",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "情节或叙事方式巧妙、狡黠。"
+ },
+ {
+  "tag_id": 1046,
+  "tag": "trilogy",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "属于三部曲或具有三部曲结构。"
+ },
+ {
+  "tag_id": 1047,
+  "tag": "true story",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "根据真实事件或人物改编。"
+ },
+ {
+  "tag_id": 1048,
+  "tag": "truman capote",
+  "group": "创作者与演职人员",
+  "tag_type": "content",
+  "definition": "与杜鲁门·卡波特及其作品相关。"
+ },
+ {
+  "tag_id": 1049,
+  "tag": "twist",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "情节包含出人意料的发展。"
+ },
+ {
+  "tag_id": 1050,
+  "tag": "twist ending",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "结尾出现反转。"
+ },
+ {
+  "tag_id": 1051,
+  "tag": "twists & turns",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "情节多次反转或波折。"
+ },
+ {
+  "tag_id": 1052,
+  "tag": "undercover cop",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "涉及卧底警察或潜入犯罪组织。"
+ },
+ {
+  "tag_id": 1053,
+  "tag": "underdog",
+  "group": "角色与人物状态",
+  "tag_type": "content",
+  "definition": "聚焦处于劣势但奋力抗争的角色。"
+ },
+ {
+  "tag_id": 1054,
+  "tag": "underrated",
+  "group": "正面观众评价·2",
+  "tag_type": "preference",
+  "definition": "被认为被低估、值得更多认可。"
+ },
+ {
+  "tag_id": 1055,
+  "tag": "understated",
+  "group": "风格语气与氛围·2",
+  "tag_type": "content",
+  "definition": "表达克制、低调或不夸张。"
+ },
+ {
+  "tag_id": 1056,
+  "tag": "underwater",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "包含水下场景或水下摄影。"
+ },
+ {
+  "tag_id": 1057,
+  "tag": "unfunny",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "被认为不好笑或缺乏幽默效果。"
+ },
+ {
+  "tag_id": 1058,
+  "tag": "unintentionally funny",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "因非故意因素显得可笑。"
+ },
+ {
+  "tag_id": 1059,
+  "tag": "unique",
+  "group": "正面观众评价·2",
+  "tag_type": "preference",
+  "definition": "被认为风格独特、与众不同。"
+ },
+ {
+  "tag_id": 1060,
+  "tag": "united nations",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及联合国或国际政治事务。"
+ },
+ {
+  "tag_id": 1061,
+  "tag": "unlikeable characters",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "角色被认为难以令人喜欢。"
+ },
+ {
+  "tag_id": 1062,
+  "tag": "unlikely friendships",
+  "group": "角色与人物状态·2",
+  "tag_type": "content",
+  "definition": "描绘差异巨大者之间建立的友谊。"
+ },
+ {
+  "tag_id": 1063,
+  "tag": "unrealistic",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "被认为情节或表现不真实。"
+ },
+ {
+  "tag_id": 1064,
+  "tag": "unusual plot structure",
+  "group": "叙事与结构",
+  "tag_type": "content",
+  "definition": "采用非常规的情节结构。"
+ },
+ {
+  "tag_id": 1065,
+  "tag": "us history",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及美国历史事件或历史语境。"
+ },
+ {
+  "tag_id": 1066,
+  "tag": "utopia",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "描绘理想社会或乌托邦设定。"
+ },
+ {
+  "tag_id": 1067,
+  "tag": "vampire",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "包含吸血鬼角色或设定。"
+ },
+ {
+  "tag_id": 1068,
+  "tag": "vampire human love",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "描绘吸血鬼与人类的爱情关系。"
+ },
+ {
+  "tag_id": 1069,
+  "tag": "vampires",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "以吸血鬼群体为核心。"
+ },
+ {
+  "tag_id": 1070,
+  "tag": "vengeance",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "以复仇为动机或主线。"
+ },
+ {
+  "tag_id": 1071,
+  "tag": "very funny",
+  "group": "正面观众评价·2",
+  "tag_type": "preference",
+  "definition": "被认为非常好笑。"
+ },
+ {
+  "tag_id": 1072,
+  "tag": "very good",
+  "group": "正面观众评价·2",
+  "tag_type": "preference",
+  "definition": "被认为整体质量很高。"
+ },
+ {
+  "tag_id": 1073,
+  "tag": "very interesting",
+  "group": "正面观众评价·2",
+  "tag_type": "preference",
+  "definition": "被认为非常有趣或吸引人。"
+ },
+ {
+  "tag_id": 1074,
+  "tag": "video game",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "涉及电子游戏媒介或游戏文化。"
+ },
+ {
+  "tag_id": 1075,
+  "tag": "video game adaptation",
+  "group": "改编来源",
+  "tag_type": "content",
+  "definition": "改编自电子游戏作品。"
+ },
+ {
+  "tag_id": 1076,
+  "tag": "video games",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "涉及多款电子游戏或游戏文化。"
+ },
+ {
+  "tag_id": 1077,
+  "tag": "videogame",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "涉及电子游戏媒介或游戏元素。"
+ },
+ {
+  "tag_id": 1078,
+  "tag": "vienna",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "故事发生地或文化背景在维也纳。"
+ },
+ {
+  "tag_id": 1079,
+  "tag": "vietnam",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "涉及越南国家、地域或文化。"
+ },
+ {
+  "tag_id": 1080,
+  "tag": "vietnam war",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及越南战争及相关历史。"
+ },
+ {
+  "tag_id": 1081,
+  "tag": "view askew",
+  "group": "系列与品牌",
+  "tag_type": "content",
+  "definition": "与View Askew制片品牌或创作团队相关。"
+ },
+ {
+  "tag_id": 1082,
+  "tag": "vigilante",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "包含私刑正义或义警角色。"
+ },
+ {
+  "tag_id": 1083,
+  "tag": "vigilantism",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "描绘绕过法律的私刑正义行为。"
+ },
+ {
+  "tag_id": 1084,
+  "tag": "violence",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "包含暴力行为或暴力主题。"
+ },
+ {
+  "tag_id": 1085,
+  "tag": "violent",
+  "group": "犯罪与谍战",
+  "tag_type": "content",
+  "definition": "影片呈现强烈暴力内容。"
+ },
+ {
+  "tag_id": 1086,
+  "tag": "virginity",
+  "group": "社会议题·2",
+  "tag_type": "content",
+  "definition": "涉及童贞、性经验或成长议题。"
+ },
+ {
+  "tag_id": 1087,
+  "tag": "virtual reality",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "涉及虚拟现实或虚拟世界设定。"
+ },
+ {
+  "tag_id": 1088,
+  "tag": "virus",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "以病毒、感染或疫情为关键设定。"
+ },
+ {
+  "tag_id": 1089,
+  "tag": "visceral",
+  "group": "风格语气与氛围·3",
+  "tag_type": "content",
+  "definition": "具有强烈感官冲击或生猛质感。"
+ },
+ {
+  "tag_id": 1090,
+  "tag": "visual",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "强调视觉表达或视觉风格。"
+ },
+ {
+  "tag_id": 1091,
+  "tag": "visually appealing",
+  "group": "视觉与技术规格",
+  "tag_type": "preference",
+  "definition": "画面被认为美观悦目。"
+ },
+ {
+  "tag_id": 1092,
+  "tag": "visually stunning",
+  "group": "视觉与技术规格",
+  "tag_type": "preference",
+  "definition": "视觉效果被认为震撼出色。"
+ },
+ {
+  "tag_id": 1093,
+  "tag": "visuals",
+  "group": "视觉与技术规格",
+  "tag_type": "content",
+  "definition": "影片的视觉画面或影像表现。"
+ },
+ {
+  "tag_id": 1094,
+  "tag": "voodoo",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "涉及巫毒信仰或超自然仪式。"
+ },
+ {
+  "tag_id": 1095,
+  "tag": "voyeurism",
+  "group": "社会议题·2",
+  "tag_type": "content",
+  "definition": "涉及窥视行为或观看伦理。"
+ },
+ {
+  "tag_id": 1096,
+  "tag": "war",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "描绘战争事件或战争状态。"
+ },
+ {
+  "tag_id": 1097,
+  "tag": "war movie",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "以战争为背景或主题的影片类型。"
+ },
+ {
+  "tag_id": 1098,
+  "tag": "wartime",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "故事发生在战争时期或受战争影响。"
+ },
+ {
+  "tag_id": 1099,
+  "tag": "waste of time",
+  "group": "负面观众评价",
+  "tag_type": "preference",
+  "definition": "被认为不值得观看。"
+ },
+ {
+  "tag_id": 1100,
+  "tag": "watch the credits",
+  "group": "发行与媒介",
+  "tag_type": "content",
+  "definition": "提示片尾字幕后仍有内容或彩蛋。"
+ },
+ {
+  "tag_id": 1101,
+  "tag": "weapons",
+  "group": "动作与冒险",
+  "tag_type": "content",
+  "definition": "涉及枪械、刀剑等武器及暴力冲突元素。"
+ },
+ {
+  "tag_id": 1102,
+  "tag": "wedding",
+  "group": "社会议题·2",
+  "tag_type": "content",
+  "definition": "以婚礼、婚姻或相关人际关系为重要情节元素。"
+ },
+ {
+  "tag_id": 1103,
+  "tag": "weed",
+  "group": "社会议题·2",
+  "tag_type": "content",
+  "definition": "涉及大麻、毒品或相关亚文化与社会争议。"
+ },
+ {
+  "tag_id": 1104,
+  "tag": "weird",
+  "group": "风格语气与氛围·3",
+  "tag_type": "content",
+  "definition": "影片呈现怪异、奇异或反常的整体气质。"
+ },
+ {
+  "tag_id": 1105,
+  "tag": "werewolf",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "包含狼人等变形怪物或超自然生物。"
+ },
+ {
+  "tag_id": 1106,
+  "tag": "werewolves",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "包含狼人群体或狼人相关的超自然设定。"
+ },
+ {
+  "tag_id": 1107,
+  "tag": "western",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "具有西部片类型特征，常涉及边疆、牛仔或西部法则。"
+ },
+ {
+  "tag_id": 1108,
+  "tag": "whimsical",
+  "group": "风格语气与氛围·3",
+  "tag_type": "content",
+  "definition": "影片风格俏皮奇幻、充满异想天开的趣味。"
+ },
+ {
+  "tag_id": 1109,
+  "tag": "wilderness",
+  "group": "地理与地域文化·2",
+  "tag_type": "content",
+  "definition": "以荒野、丛林、山地等自然环境为主要场景。"
+ },
+ {
+  "tag_id": 1110,
+  "tag": "wine",
+  "group": "社会议题·2",
+  "tag_type": "content",
+  "definition": "涉及葡萄酒、饮酒或酒桌社交等生活文化元素。"
+ },
+ {
+  "tag_id": 1111,
+  "tag": "wistful",
+  "group": "风格语气与氛围·3",
+  "tag_type": "content",
+  "definition": "影片带有惆怅、怀旧或淡淡忧伤的情绪。"
+ },
+ {
+  "tag_id": 1112,
+  "tag": "witch",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "包含女巫、巫术或相关超自然力量。"
+ },
+ {
+  "tag_id": 1113,
+  "tag": "witches",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "包含女巫群体或巫术相关的超自然内容。"
+ },
+ {
+  "tag_id": 1114,
+  "tag": "witty",
+  "group": "正面观众评价·2",
+  "tag_type": "preference",
+  "definition": "观众认为影片机智巧妙、对白或情节有趣。"
+ },
+ {
+  "tag_id": 1115,
+  "tag": "wizards",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "包含巫师、法师或魔法角色。"
+ },
+ {
+  "tag_id": 1116,
+  "tag": "women",
+  "group": "角色与人物状态·2",
+  "tag_type": "content",
+  "definition": "以女性角色、女性关系或女性处境为重要内容。"
+ },
+ {
+  "tag_id": 1117,
+  "tag": "working class",
+  "group": "社会议题·2",
+  "tag_type": "content",
+  "definition": "表现工人阶级、劳动阶层及其生活处境。"
+ },
+ {
+  "tag_id": 1118,
+  "tag": "workplace",
+  "group": "职业与专业题材·2",
+  "tag_type": "content",
+  "definition": "以职场、办公室或职业环境为主要场景。"
+ },
+ {
+  "tag_id": 1119,
+  "tag": "world politics",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "涉及国际关系、全球政治或地缘权力议题。"
+ },
+ {
+  "tag_id": 1120,
+  "tag": "world war i",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "以第一次世界大战为背景或核心事件。"
+ },
+ {
+  "tag_id": 1121,
+  "tag": "world war ii",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "以第二次世界大战为背景或核心事件。"
+ },
+ {
+  "tag_id": 1122,
+  "tag": "writer's life",
+  "group": "职业与专业题材·2",
+  "tag_type": "content",
+  "definition": "聚焦作家或写作者的职业经历与人生状态。"
+ },
+ {
+  "tag_id": 1123,
+  "tag": "writers",
+  "group": "职业与专业题材·2",
+  "tag_type": "content",
+  "definition": "以作家、编剧等写作者为重要角色或题材。"
+ },
+ {
+  "tag_id": 1124,
+  "tag": "writing",
+  "group": "职业与专业题材·2",
+  "tag_type": "content",
+  "definition": "涉及写作、创作过程或文学表达。"
+ },
+ {
+  "tag_id": 1125,
+  "tag": "wuxia",
+  "group": "类型与形式",
+  "tag_type": "content",
+  "definition": "具有武侠类型特征，包含江湖、武功与侠义精神。"
+ },
+ {
+  "tag_id": 1126,
+  "tag": "wwii",
+  "group": "历史与政治议题",
+  "tag_type": "content",
+  "definition": "以第二次世界大战为背景或相关历史叙事。"
+ },
+ {
+  "tag_id": 1127,
+  "tag": "zombie",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "包含僵尸、丧尸或相关恐怖超自然设定。"
+ },
+ {
+  "tag_id": 1128,
+  "tag": "zombies",
+  "group": "科幻与超自然·2",
+  "tag_type": "content",
+  "definition": "包含僵尸群体或丧尸灾难相关的超自然内容。"
+ }
+]
