@@ -108,7 +108,7 @@ def _detect_json_format_error(e: Exception) -> bool:
 
 
 def make_client(config):
-    """工厂：mock 配置返回 MockClient（不联网、不碰缓存）。"""
+    """工厂：mock 配置返回 MockGenClient（不联网、不碰缓存）。"""
     # README 的文档化步骤是 cp .env.example .env——此处负责把 .env 装入进程环境，
     # 否则该步骤是空操作。放在工厂内（而非模块顶层）保持 import 无副作用。
     from dotenv import load_dotenv

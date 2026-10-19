@@ -115,3 +115,31 @@ def test_missing_env_raises():
     client = OpenAIClient(model="m", base_url_env="NO_SUCH_ENV_XYZ")
     with pytest.raises(RuntimeError, match="NO_SUCH_ENV_XYZ"):
         client._build_transport()  # 环境变量缺失时构建即失败（不静默）
+
+
+def test_make_client_mock_returns_mock_gen_client(monkeypatch):
+    """mock 配置 → MockGenClient 实例（Task 8 契约）。"""
+    from types import SimpleNamespace
+
+    import dotenv
+
+    from movietaggen.generate.client import make_client
+    from movietaggen.generate.mock import MockGenClient
+
+    monkeypatch.setattr(dotenv, "load_dotenv", lambda *a, **k: None)
+    client = make_client(SimpleNamespace(mock=True))
+    assert isinstance(client, MockGenClient)
+
+
+def test_make_client_loads_dotenv(monkeypatch):
+    """终审 C2 契约同 A：make_client 负责加载 .env——mock 分支也先加载。"""
+    from types import SimpleNamespace
+
+    import dotenv
+
+    from movietaggen.generate.client import make_client
+
+    calls = []
+    monkeypatch.setattr(dotenv, "load_dotenv", lambda *a, **k: calls.append(1))
+    make_client(SimpleNamespace(mock=True))   # mock 分支也先加载 .env，无需真实 env
+    assert calls == [1]
