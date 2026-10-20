@@ -92,8 +92,9 @@ def bert_baseline(config, paths, dataset: pd.DataFrame, scores: pd.DataFrame,
     # 电影级 tag 矩阵（训练参考集）
     train_matrix = train_scores[["movie_id", "tag_id", "relevance"]]
     train_texts = {m: t for m, t in texts.items() if m in set(train_ids)}
-    # I5：预测电影集可受限（07 传 movie_limit 抽样集对齐其余基线的电影集；
-    # 拟合参考集仍用全部训练侧电影，不受限），None = 全部电影（原语义）
+    # I5（440）：预测电影集可受限（07 传 sample_limited_movie_ids 的训练池抽样
+    # 集，对齐其余受限基线的电影集；拟合参考集仍用全部训练侧电影，不受限），
+    # None = 全部电影（原语义）
     if predict_ids is not None:
         texts = {m: t for m, t in texts.items() if m in set(predict_ids)}
     preds = _train_predict(train_texts, train_matrix, texts)

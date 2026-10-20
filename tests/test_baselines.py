@@ -9,6 +9,10 @@
 - 07 集成：合成 + mock（direct_score 走 MockScoringClient）→ baselines.parquet
   含三 method、manifest {"methods","rows"}、配置快照；smoke.yaml 的
   baselines.run 离线三元组钉（控制器裁定 4——bert 需模型下载，冒烟免下载）。
+- 07 接线（440 Task 7）：direct_score 按 direct_score_source 分流（a_borrow
+  端到端读迁移物、不建 client、不受 movie_limit）；拟合面固定分割（eval_test
+  清单电影不入 train_scores 的泄露探针）；movie_limit 时全部受限方法的电影集
+  == sample_limited_movie_ids 输出（统一断言，T6 过渡态钉并回）。
 """
 import importlib
 import json
@@ -25,6 +29,7 @@ from movietaggen.baselines.mock_scoring import MockScoringClient
 from movietaggen.config import AppConfig, Paths, load_config
 from movietaggen.data.align import build_dataset
 from movietaggen.data.sample import _hash_unit, make_synthetic_dataset
+from movietaggen.eval.protocol import sample_limited_movie_ids
 from movietaggen.generate.client import OpenAIClient
 
 # 数字开头的模块名不能用 import 语句，importlib 按字符串装载（同 test_audit_script）
@@ -278,18 +283,13 @@ def test_smoke_config_baselines_run_offline_trio():
         ["direct_score", "genre_map", "random"]
 
 
-def test_movie_limit_direct_score_train_side_sampling(data_ready, tmp_path, monkeypatch):
-    """440 Task 6 过渡态钉：movie_limit 时 direct_score 走 sample_limited_movie_ids
-    （固定分割训练侧抽样，eval_test 清单电影不入样），genre_map / random 仍走
-    07 侧全集抽样（sorted ids + random.Random(seed).sample，未接线不变）。
-
-    旧 I5"三方法同一电影集"被 440 协议有意打破（pilot 语义：受限跑不接触测试
-    清单电影）；全方法统一到 sample_limited_movie_ids 的收拢在 Task 7（07
-    接线）完成，届时本测试并回单一 expected 的全方法对齐断言。"""
-    import random
-
-    from movietaggen.eval.protocol import sample_limited_movie_ids
-
+def test_movie_limit_all_methods_on_sample_limited_movie_ids(data_ready, tmp_path, monkeypatch):
+    """440 Task 7 统一抽样（T6 过渡态钉并回）：movie_limit 时全部受限方法
+    （own_run direct_score / genre_map / random）在同一 sample_limited_movie_ids
+    输出电影集上产出——抽样池 = fixed_split 训练侧，受限跑永不接触 eval_test
+    清单电影（440 对 I5 的裁定扩展）。旧 I5"07 侧全集抽样"与 Task 6 过渡态
+    （genre_map / random 暂走全集）就此废除。bert 需 HF 模型下载，不入断言
+    （离线约束，同冒烟三元组）。"""
     paths = data_ready
     cfg = tmp_path / "limit.yaml"
     cfg.write_text(
@@ -298,8 +298,6 @@ def test_movie_limit_direct_score_train_side_sampling(data_ready, tmp_path, monk
         "data:\n"
         "  source: synthetic\n"
         "  movie_limit: 2\n"
-        "protocol:\n"
-        "  temporal_split_year: 2019\n"
         "baselines:\n"
         "  run: [direct_score, genre_map, random]\n"
         "  direct_score_source: own_run\n", encoding="utf-8")
@@ -313,12 +311,110 @@ def test_movie_limit_direct_score_train_side_sampling(data_ready, tmp_path, monk
                   for m, s in df.groupby("method")["movie_id"]}
     assert set(per_method) == {"direct_score", "genre_map", "random"}
 
-    # direct_score（440）：训练池 = dataset − eval_test 清单，Random(seed) 抽样
-    assert per_method["direct_score"] == set(sample_limited_movie_ids(
-        dataset, 2, 42, paths.eval_test))
+    expected = set(sample_limited_movie_ids(dataset, 2, 42, paths.eval_test))
+    for method, got in per_method.items():
+        assert got == expected, method
 
-    # genre_map / random（07 侧现状，Task 7 前维持全集抽样）
-    old_expected = set(random.Random(42).sample(
-        sorted(dataset["movie_id"].astype(int).tolist()), 2))
-    for method in ("genre_map", "random"):
-        assert per_method[method] == old_expected, method
+
+def test_run_baselines_a_borrow_branch(tmp_path, monkeypatch):
+    """440 Task 7 dispatch：direct_score_source=a_borrow → load_direct_score_a
+    读 A 迁移评分——不建 client、不受 movie_limit（固定工件恒 88 部）。
+
+    a_borrow × synthetic 组合被 config 校验拦截，故走 real 分支：raw_dir 指
+    tmp fixture 目录、tmp processed 下自建小 parquet（不读仓库真实迁移物）。
+    movie_limit=1 而产出电影集仍是迁移物全体 3 部——钉住"不受 movie_limit"；
+    make_scoring_client 打桩为即炸——钉住"不建 client"。"""
+    raw_dir = tmp_path / "rawroot"
+    raw_dir.mkdir()
+    processed = tmp_path / "data" / "processed"    # real 分支的 processed 布局
+    processed.mkdir(parents=True)
+    pd.DataFrame({
+        "movie_id": [101, 102, 103, 104],
+        "title": ["Fixture One", "Fixture Two", "Fixture Three", "Fixture Four"],
+        "year": [2018, 2019, 2020, 2021],
+        "genres": [["Action"], ["Drama"], ["Comedy"], ["Drama"]],
+    }).to_parquet(processed / "dataset.parquet")
+    pd.DataFrame({"movie_id": [101, 102, 103], "tag_id": [11, 11, 11],
+                  "relevance": [0.5, 0.6, 0.7]}).to_parquet(
+        processed / "genome_scores.parquet")
+    pd.DataFrame({"tag_id": [11, 22]}).to_parquet(processed / "genome_tags.parquet")
+    (processed / "eval_test.txt").write_text("104\n", encoding="utf-8")
+
+    # 自建迁移物 fixture：3 电影 × 2 tag × 2 run；(101, 22) 两轮 0.2/0.6 →
+    # 逐对均值 0.4（均值口径经 07 落盘保持的探针）
+    rows = []
+    for m in (101, 102, 103):
+        for t in (11, 22):
+            for r, run_id in enumerate(("run-0", "run-1")):
+                rows.append({"movie_id": m, "tag_id": t, "group": "视觉风格",
+                             "modality_set": "video|script|dialogue",
+                             "run_id": run_id,
+                             "score": (0.2, 0.6)[r] if (m, t) == (101, 22) else 0.4})
+    a_raw = pd.DataFrame(rows, columns=["movie_id", "tag_id", "group",
+                                        "modality_set", "run_id", "score"])
+    a_raw.to_parquet(processed / "direct_score_a.parquet")
+
+    cfg = tmp_path / "a_borrow.yaml"
+    cfg.write_text(
+        "exp_name: smoke\n"
+        "mock: true\n"
+        "data:\n"
+        "  source: real\n"
+        f"  raw_dir: {raw_dir.as_posix()}\n"
+        "  movie_limit: 1\n"
+        "baselines:\n"
+        "  run: [direct_score]\n"
+        "  direct_score_source: a_borrow\n", encoding="utf-8")
+    monkeypatch.setattr("movietaggen.config.project_root", lambda: tmp_path)
+
+    def _no_client(config):
+        raise AssertionError("a_borrow 分支不应建 client")
+    monkeypatch.setattr(run_baselines_script, "make_scoring_client", _no_client)
+
+    assert run_baselines_script.main(str(cfg)) == 0
+
+    out_dir = tmp_path / "results" / "baselines"
+    df = pd.read_parquet(out_dir / "baselines.parquet")
+    assert list(df.columns) == ["movie_id", "tag_id", "score", "method"]
+    assert set(df["method"]) == {"direct_score"}
+    a_movies, a_tags = set(a_raw["movie_id"]), set(a_raw["tag_id"])
+    # 迁移物电影全体产出（movie_limit=1 未生效于 a_borrow——固定工件不抽样）
+    assert set(df["movie_id"].astype(int)) == a_movies
+    assert len(df) == len(a_movies) * len(a_tags)      # 稠密：电影数 × tag 数
+    got = {(int(m), int(t)): s for m, t, s
+           in zip(df["movie_id"], df["tag_id"], df["score"])}
+    assert got[(101, 22)] == pytest.approx(0.4)        # 逐对均值口径保持
+    manifest = json.loads(
+        (out_dir / "run_manifest.json").read_text(encoding="utf-8"))
+    assert manifest == {"methods": ["direct_score"], "rows": len(df)}
+
+
+def test_run_baselines_fit_set_excludes_eval_test_movie(data_ready, tmp_path, monkeypatch):
+    """07 侧防泄露契约（440 固定分割）：genre_map 的拟合参考集（train_scores）
+    只来自 fixed_split 训练侧——eval_test 清单电影的 genome 相关度不得进入
+    拟合集（否则基线"见过"测试电影真值，对比系统性虚高）。
+
+    探针：给清单电影单独追加专属 tag 999 的分数；07 跑完后 genre_map 输出
+    （其 tag 宇宙 = train_scores 的 tag 宇宙）不得出现 999，且原全 tag 覆盖
+    保持（正对照：train_scores 非空、来源为训练侧全体电影）。旧时序分割下
+    清单电影（合成清单命中 2018 年的电影 1）落入 year < 2019 训练侧、探针
+    tag 随之泄入——本测试在旧实现下红。"""
+    paths = data_ready
+    eval_movie = int(paths.eval_test.read_text(encoding="utf-8").split()[0])
+    probe_tag = 999
+    scores = pd.read_parquet(paths.genome_scores)
+    scores = pd.concat(
+        [scores, pd.DataFrame(
+            [{"movie_id": eval_movie, "tag_id": probe_tag, "relevance": 0.9}])],
+        ignore_index=True)
+    scores.to_parquet(paths.genome_scores)
+    monkeypatch.setattr("movietaggen.config.project_root", lambda: tmp_path)
+
+    assert run_baselines_script.main("configs/smoke.yaml") == 0
+
+    df = pd.read_parquet(paths.baselines_dir / "baselines.parquet")
+    gm = df[df["method"] == "genre_map"]
+    assert not gm.empty
+    assert probe_tag not in set(gm["tag_id"].astype(int))     # 泄露探针
+    genome_tags = pd.read_parquet(paths.genome_tags)          # 正对照：tag 全覆盖
+    assert set(gm["tag_id"].astype(int)) == set(genome_tags["tag_id"].astype(int))

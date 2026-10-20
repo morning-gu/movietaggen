@@ -3,19 +3,26 @@
 管线（按 config.baselines.run 顺序执行、逐方法拼接，接线模式照 05/06 脚本）：
 load_config → paths_for → 读 dataset / genome_scores / genome_tags → 逐方法
 dispatch：
-- direct_score：A 分组打分管道复刻（T19）。客户端工厂 mock 配置 →
+- direct_score 按 config.baselines.direct_score_source 分流：
+  a_borrow → load_direct_score_a 读 A 的评分迁移物（groupby 逐对均值聚合）——
+  固定工件恒 88 部，不建 client / cache、不受 movie_limit 限制；
+  own_run → A 分组打分管道复刻（T19）。客户端工厂 mock 配置 →
   MockScoringClient（零网络零缓存）；否则 OpenAIClient——取生成配置（model
   配置的模型/温度/限速/extra_body），非 judge 配置（direct_score 用主生成
   模型打分，同 A）；缓存 mock 不读不写，否则 ResponseCache(cache_llm)。
-- genre_map / bert：拟合参考集只允许 year < protocol.temporal_split_year 的
-  电影（内联过滤，防泄露契约见 main），测试集 = year ≥ split；genre_map 与
-  bert_baseline 内部均以 assert_no_leakage 收尾自检。
-- random：dataset 全电影 × genome_tags 全 tag 的哈希均匀分（确定性）。
+- 分割源（440 协议）：train / test 一律来自 fixed_split——test = eval_test
+  清单命中的电影，train = 全集 − 清单（替代时序分割，成为校准 / few-shot /
+  基线拟合的统一分割源；清单坏输入大声失败）。
+- genre_map / bert：拟合参考集只允许 fixed_split 训练侧电影，测试侧 = 清单
+  电影；genre_map 与 bert_baseline 内部均以 assert_no_leakage 收尾自检。
+- random：产出电影集 × genome_tags 全 tag 的哈希均匀分（确定性）。
 - 未知方法名 → 中文 ValueError 点名合法值（配置拼错不静默）。
-- 电影集口径（I5）：data.movie_limit 设置时，全部方法在同一抽样电影集上
-  产出（与生成管道同代码路径：sorted ids + random.Random(seed).sample）；
-  direct_score 内部抽样即同一路径，无需传参自然对齐；拟合参考集（时序
-  训练侧）不受 movie_limit 限制——受限的是产出/评估的电影轴。
+- 电影集口径（I5 · 440 裁定扩展）：data.movie_limit 设置时，全部受限方法
+  （own_run direct_score / genre_map / random / bert）在同一
+  sample_limited_movie_ids 输出电影集上产出——抽样池 = fixed_split 训练侧，
+  受限跑永不接触 eval_test 清单电影；movie_limit=None → 全量升序（不读
+  清单）。a_borrow 的 direct_score 不受 movie_limit 限制（固定工件恒 88 部）。
+  拟合参考集（训练侧全体）不受 movie_limit 限制——受限的是产出/评估的电影轴。
 
 bert 懒导入（torch/transformers 在训练函数内部导入）：模块自身缺 torch 也能
 导入，缺依赖在调用点抛 ImportError，被本脚本捕获后优雅跳过（照 A 的 05
@@ -29,7 +36,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import random
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -39,11 +45,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import pandas as pd  # noqa: E402
 
-from movietaggen.baselines.direct_score import run_direct_score  # noqa: E402
+from movietaggen.baselines.direct_score import (  # noqa: E402
+    load_direct_score_a,
+    run_direct_score,
+)
 from movietaggen.baselines.genre_map import genre_map  # noqa: E402
 from movietaggen.baselines.mock_scoring import MockScoringClient  # noqa: E402
 from movietaggen.baselines.random_baseline import random_baseline  # noqa: E402
 from movietaggen.config import AppConfig, load_config, paths_for  # noqa: E402
+from movietaggen.eval.protocol import (  # noqa: E402
+    fixed_split,
+    sample_limited_movie_ids,
+)
 from movietaggen.generate.cache import ResponseCache  # noqa: E402
 from movietaggen.generate.client import OpenAIClient  # noqa: E402
 from movietaggen.stages import save_config_snapshot  # noqa: E402
@@ -82,33 +95,25 @@ def main(config_path: str = "configs/default.yaml") -> int:
     genome_scores = pd.read_parquet(paths.genome_scores)
     genome_tags = pd.read_parquet(paths.genome_tags)
 
-    # 【防泄露契约】genre_map / bert 的拟合参考集只允许 year < temporal_split_year
-    # 的电影：测试分割（year ≥ split）的 genome 相关度一旦进入拟合集，基线等于
-    # "见过"测试电影的 ground truth，基线对比会系统性虚高。year 缺失/无法解析
-    # 的电影按不可信处理，绝不进拟合集。此处为内联过滤，与 T18
-    # protocol.temporal_split 语义一致（同 05 校准的内联模式），genre_map /
-    # bert_baseline 内部再以 assert_no_leakage 收尾自检。
-    year = pd.to_numeric(dataset["year"], errors="coerce")
-    train_ids = dataset.loc[year < config.protocol.temporal_split_year,
-                            "movie_id"].tolist()
-    test_ids = set(dataset.loc[year >= config.protocol.temporal_split_year,
-                               "movie_id"].tolist())
+    # 【防泄露契约】genre_map / bert 的拟合参考集只允许固定分割训练侧电影
+    # （dataset − eval_test 清单；440 协议）：测试清单电影的 genome 相关度一旦
+    # 进入拟合集，基线等于"见过"测试电影的 ground truth，基线对比会系统性
+    # 虚高。分割源统一为 fixed_split（eval_test 清单逐行整数，缺失/坏行/越界
+    # 大声失败），与 05 校准接线同款；genre_map / bert_baseline 内部再以
+    # assert_no_leakage 收尾自检。
+    train_ids, test_ids = fixed_split(dataset, paths.eval_test)
+    test_ids = set(test_ids)   # set 契约（genre_map / bert_baseline 的入参类型）
     train_scores = genome_scores[genome_scores["movie_id"].isin(set(train_ids))]
 
-    # 【I5 · 试点规模可比性】genre_map / random / bert 与 direct_score 必须在
-    # 同一电影集上产出，方法对比才有意义：movie_limit 设置时按生成管道
-    # （generate/pipeline.py）完全相同的代码路径抽样——sorted id 列表 +
-    # random.Random(data.seed).sample，选定集合与 04/直接评分基线逐元素一致。
-    # 抽样后排序仅定行序、不改集合成员。direct_score 的内部抽样即这两行代码
-    # （movietaggen/baselines/direct_score.py run_direct_score），无需传参即
-    # 落在同一集合，此处不再重复传入。
-    all_movie_ids = sorted(dataset["movie_id"].tolist())
-    if (config.data.movie_limit is not None
-            and config.data.movie_limit < len(all_movie_ids)):
-        movie_ids = sorted(random.Random(config.data.seed).sample(
-            all_movie_ids, config.data.movie_limit))
-    else:
-        movie_ids = all_movie_ids
+    # 【I5 · 受限跑训练池抽样（440 裁定扩展）】movie_limit 设置时，全部受限
+    # 方法（own_run direct_score / genre_map / random / bert）在同一抽样电影集
+    # 上产出：sample_limited_movie_ids 从 fixed_split 训练侧（dataset −
+    # eval_test 清单）抽 min(limit, 池) 部——受限跑永不接触测试清单电影。
+    # movie_limit=None → 全量升序（不读清单）。a_borrow 的 direct_score 是
+    # 固定工件（恒 88 部），不参与抽样、不受 movie_limit 限制。拟合参考集
+    # （训练侧全体）不受 movie_limit 限制——受限的是产出/评估的电影轴。
+    movie_ids = sample_limited_movie_ids(
+        dataset, config.data.movie_limit, config.data.seed, paths.eval_test)
     movie_set = set(movie_ids)
     dataset_for_random = dataset[dataset["movie_id"].isin(movie_set)]
 
@@ -116,9 +121,15 @@ def main(config_path: str = "configs/default.yaml") -> int:
     methods = []
     for name in config.baselines.run:
         if name == "direct_score":
-            client = make_scoring_client(config)
-            cache = None if config.mock else ResponseCache(paths.cache_llm)
-            frames.append(run_direct_score(config, paths, client, cache))
+            if config.baselines.direct_score_source == "a_borrow":
+                # a_borrow：读 A 的评分迁移物（固定工件恒 88 部）——不建
+                # client / cache、不受 movie_limit；电影宇宙与 modality_set
+                # 守门在 load_direct_score_a 内部
+                frames.append(load_direct_score_a(paths, dataset))
+            else:
+                client = make_scoring_client(config)
+                cache = None if config.mock else ResponseCache(paths.cache_llm)
+                frames.append(run_direct_score(config, paths, client, cache))
         elif name == "genre_map":
             frames.append(genre_map(train_scores, dataset, movie_ids,
                                     test_ids=test_ids))
