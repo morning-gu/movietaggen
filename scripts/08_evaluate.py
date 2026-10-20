@@ -4,8 +4,9 @@
 load_config → paths_for → 读 dataset / truth（genome_scores）/ tag_groups
 （文件可缺 → None，tag:* 子集随之跳过）/ user_tags（tags.csv 可缺 → None，
 嵌入口径随之跳过）→ fixed_split(dataset, paths.eval_test) 取固定测试侧恒传
-write_report（metrics.csv 另产固定测试/固定训练两行——论文主表口径，spec
-§2.4）→ 实验目录集合 = 本实验 results 目录 + --extra 指定的
+write_report（metrics.csv 另产固定测试(88)/固定训练(352) 两行——固定测试(88)
+= 论文主表口径（spec §2.4），n_pred 列诚实标注各方法实际预测数）→ 实验
+目录集合 = 本实验 results 目录 + --extra 指定的
 其它实验目录（保留含 stage-align/scores_raw.parquet 者）→ write_report 产出
 results/<exp_name>/evaluation/{metrics.csv, report.md, gen_quality.json}。
 
