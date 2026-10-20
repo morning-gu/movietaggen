@@ -1,161 +1,125 @@
-# 方向 B: MovieTagGen —— 两阶段生成式标签提取与 Genome 标签对齐
+# 方向 B: MovieTagGen — 两阶段生成式标签提取与 Genome 标签对齐
 
-> 研究计划（academic-paper plan 模式）| 2026-10-15
+> 研究计划（2026-10-20 整理版：2026-10-19 设计决策——对齐评估校准+双口径、direct_score 完整复刻、评估协议继承 A 修订版——与 2026-10-20 实验框架建成已并入正文；旧版见 git 历史）
+> 目标场所：WWW 2027 / SIGIR 2027 · Novel Method（IMRaD）· ACM 格式 · 正文 7,000-9,000 words
 
-## B-Step 0: 研究基础确认
+## 1. 研究问题与核心论点
 
-**已有材料**: 同方向 A，额外关注 tags.csv 的自由标签分布特征。
-**研究问题**: "MLLM 能否生成与 MovieLens 用户标签语义一致的自由形式标签，并通过映射层对齐到 genome tag 体系？"
-**研究就绪度**: 充分，但评估方案需更多设计（自由标签评估比固定分类更复杂）。
+**研究问题**：MLLM 能否生成与 MovieLens 用户标签（tags.csv）语义一致的自由形式标签，并通过映射层对齐到 genome tag 体系（1,128 个标准化标签 + 关联度评分）？
 
-## B-Step 1: 核心论点
+**核心论点**：通过"MLLM 自由生成 → 嵌入映射 → genome 对齐"的两阶段框架，可同时获得开放词表的生成式标签（对应 tags.csv）和标准化标签评分（对应 genome-scores），且管道质量通过 LLM-as-judge 审计机制量化保证。
 
-> **[INSIGHT: thesis_statement]**
-> 通过"MLLM 自由生成 → 嵌入映射 → genome 对齐"的两阶段框架，可以同时获得开放词表的生成式标签（对应 tags.csv）和标准化标签评分（对应 genome-scores），且两阶段管道的质量可通过 LLM-as-judge 审计机制量化保证。
+**反驳者视角**：两阶段误差累积——生成阶段漏掉的重要标签对齐阶段无法补救；自由标签到 genome tag 的语义鸿沟（"mind-bending" → "thought-provoking"）导致映射错误。
 
-**反驳者视角**: 两阶段管道的误差会累积——如果生成阶段漏掉了重要标签，对齐阶段无法补救。且自由标签到 genome tag 的语义鸿沟（如 "mind-bending" → "thought-provoking"）可能导致映射错误。
+**防御**：
+1. **五维度 prompt 引导**（风格/情绪/主题/叙事/角色）+ 3 轮生成取并集去重——降低遗漏；
+2. **top-3 候选 + 阈值标记低置信**——保留不确定性，阈值过滤曲线直接量化其价值；
+3. **LLM-as-judge 逐映射审计**（accept/reject）+ 500 条人工抽样校准 Cohen's kappa——质量可量化，审计开关消融直接证明过滤收益。
 
-**防御**: (1) 在生成阶段设计多维度 prompt 引导（风格/情绪/主题/叙事/角色五个维度），降低遗漏风险。(2) 对齐阶段保留 top-3 候选 genome tag 而非硬选 top-1，保留不确定性。(3) LLM-as-judge 审计每个映射的质量，低质量映射标记为"需人工复核"。
+**论证反转预案**：
+- 若端到端推荐不及人工标签 → 冷启动场景（无人工标签）"有 vs 无"压倒"好 vs 更好"；
+- 若方向 A（直接评分）在 RMSE 上优于两阶段 → 两阶段的独有价值 = **同时产出**开放词表与标准化评分（单阶段无法提供）；阶段产物隔离使误差可归因到具体阶段，这是"误差累积"质疑的实证回应路径。
 
-## B-Step 2: 章节计划
+## 2. 数据
 
-### B-Introduction (800-1000 words)
+| 数据 | 角色 | 关键事实 |
+|------|------|----------|
+| MovieLens ml-latest tags.csv | 生成质量参照 | 用户自由标签（开放词表、噪声、个性化）；分布与词汇重叠分析已入框架（03 脚本） |
+| MovieLens genome（tags + scores） | 对齐 ground truth | 1,128 tags；relevance 长尾 |
+| MovieNet movie1K | 多模态内容 | 关键帧/剧本/字幕；**尚未落地**（与方向 A 共同前置） |
+| 对齐实验集 | 评估全集 | 待真实数据；复用 A 的对齐管道（IMDb 优先 + 标题年份 fallback） |
 
-**紧迫感**: MovieLens 有两套标签系统——tags.csv（用户自由输入，开放词表，高度个性化但噪声大）和 genome tag（1,128 个标准化标签 + 关联度评分，由 SVD++ 训练，质量高但依赖用户行为）。理想方案是能同时获得开放词表的灵活性和标准化体系的一致性。MLLM 的生成能力恰好可以弥合两者：先自由生成，再对齐标准化。
+**设计事实**：
+- 评估协议继承 A 的 2026-10-16 修订结论（同一数据约束 B）：时序分割降级为按年代描述性分桶；冷启动转为方法属性 + limitation；
+- 原始数据经 `data.raw_dir` 默认共享 A 的 `data/raw`（ml-latest 1.5G 已在）；1,128-tag 语义分组产物（A 生成）已迁入本仓库供 direct_score 基线使用。
 
-**研究 Gap（一句话）**: 没有工作将 MLLM 的生成式标签输出与 MovieLens 既有标签体系（tags.csv + genome tags）同时对齐，且缺少对生成质量的可审计保证。
+## 3. 方法
 
-**预期贡献声明**:
-1. 首个"MLLM 自由生成 → genome 对齐"的两阶段标签生成框架
-2. LLM-as-judge 质量审计机制，为自动化标签提供可量化质量保证
-3. 在 tags.csv 和 genome-scores 两个层面同时评估，填补现有评估空白
+**3.1 两阶段管道**
+- **阶段一 · 自由生成**：五维度 prompt（visual style / emotional tone / narrative theme / storytelling technique / character traits），输入 12 关键帧 + 剧本 4,000 tok + 台词 3,000 tok，输出 15-20 个英文标签；3 轮取并集去重；零-shot 为主（few-shot 预留，参考池限训练侧防泄露）。
+- **阶段二 · genome 对齐**：嵌入（本地 E5 默认，SBERT / API 可配）→ 每标签 top-3 候选（余弦）→ 低于阈值标记低置信 → 多标签聚合（max/mean）→ **保序回归校准**（训练分割拟合，余弦量纲 → genome [0,1]，防泄露接线）。
+- **审计（LLMGenQC-adapted）**：双任务 judge——映射审计（语义对齐 + 该电影适用性，accept/reject）与生成质量评分（对照真实用户标签，相关性/覆盖度 1-5）；judge 模型可配置（DashScope 默认；原计划的 GPT-4 改为可配置项）。
+- **工程基础**：API 磁盘缓存（生成/双 judge/direct_score/嵌入四用户键隔离）+ 断点续跑 + **阶段产物隔离**（消融只重跑受影响阶段；跨实验借用 = 物理复制 + PROVENANCE 溯源）。
 
-### B-Related Work (1200-1500 words)
+**3.2 方法属性**：输入纯内容驱动，天然冷启动可用（同 A）；额外产出开放词表标签——genome 体系外维度（如 "mind-bending" 这类用户真实语汇）的载体。
 
-**讲故事数**: 3 个故事线
-1. **自由标签生成**: Folksonomication (2018) 从摘要预测标签 → NoteLLM (2024) 学习生成 hashtag → 本工作的 MLLM 多模态生成
-2. **标签映射与对齐**: MovieLens genome tag 的 SVD++ 训练方法 → 嵌入空间映射的技术路径
-3. **生成质量审计**: RAG-VisualRec (2025) 的 LLMGenQC 质量控制模块 → LLM-as-judge 在标注质量审计中的应用
+**方法防御**：
+- "为什么不直接让 MLLM 输出 genome 评分（方向 A）？" → 自由生成捕捉对电影的自然理解、不受固定词表约束、能发现 genome 未覆盖维度；映射层提供标准化保证。两阶段分离"理解"与"对齐"两个关注点。基线 1 = A 方法完整复刻（tag 分组评分 + few-shot + JSON 稠密输出），对比公平性由校准 + 双口径 RMSE 保证。
+- "嵌入相似度如何保证语义对齐？" → LLM-as-judge 审计 + 人工校准 kappa；嵌入模型对比（E5/SBERT/Ada）为消融轴。
+- 最大局限：两阶段误差累积 → 阶段产物隔离 + 阶段级指标使误差可归因（生成质量独立于对齐可测）。
 
-**文献综述结论**: 自由标签生成和标准化标签分类是两条平行线，缺少将两者统一的两阶段框架。
+## 4. 评估协议
 
-### B-Methodology (2500-3000 words)
+**对齐质量口径（核心对比公平性）**：预测评分经训练分割校准到 genome [0,1] 量纲；RMSE **双口径**（全谱补 0 / 仅已预测对，附 n_pred 列）+ Spearman（已预测对）+ Precision@10 / NDCG@10（IDCG 按该电影全量真值计，不偏袒稀疏方法）；空预测子集报 NaN 不报 0。
 
-**方法被挑战时的防御**:
-- 挑战: "为什么不直接让 MLLM 输出 genome tag 评分（方向 A），而要先自由生成再映射？" → 回应: 自由生成阶段捕捉 MLLM 对电影的自然理解，不受固定词表约束；映射阶段提供标准化保证。两阶段分离了"理解"和"对齐"两个关注点。
-- 挑战: "映射层用嵌入相似度，如何保证语义对齐？" → 回应: 用 LLM-as-judge 审计每个映射，低质量映射标记并人工复核；同时对比多种嵌入模型（Ada / Sentence-BERT / E5）的映射质量。
+**生成质量（vs tags.csv，双口径）**：相关性 / 覆盖度 / 冗余度（嵌入口径，逐电影计算取均值；评估嵌入独立配置，避免循环论证）+ LLM judge 评分（相关性/覆盖度 1-5）。
 
-**最大局限**: 两阶段误差累积。
+**审计质量**：judge vs 人工标注 Cohen's kappa——校准表导出（500 条抽样 CSV）→ 人工回填 → `08 --kappa` 直接计算。
 
-**方法描述结构**:
+**子集视图**：全部 · 时序训练/测试（描述性分桶）· tag:content · tag:preference。
 
-3.1 数据准备（同方向 A）
+**消融矩阵（九轴 + 候选臂，全部配置化——`configs/ablation/` 16 个配置即改即跑）**：模态（video/script/dialogue/title-only*）· 五维度子集 · 生成次数 1/2/3 · 嵌入模型 · top_k 1/3 · 阈值 0.4/0.5/0.6（threshold-filtered 变体直接产出过滤曲线）· 聚合 max/mean · 审计过滤 on/off · 两阶段 vs direct_score。
+（*title-only 兼作记忆排查臂——B 以 tags.csv 为生成真值，记忆风险高于 A；mismatch 探针已留 `probes/` 扩展位，真实数据阶段再建。）
 
-3.2 阶段一：MLLM 自由标签生成
-- Prompt 设计：五维度引导（风格/情绪/主题/叙事手法/角色特征）
-  - 示例 prompt: "Based on the movie keyframes, script, and dialogue provided, generate 15-20 natural language tags that describe this movie across five dimensions: visual style, emotional tone, narrative theme, storytelling technique, and character traits."
-- 输入: 关键帧 + 剧本片段 + 台词片段
-- 输出: 15-20 个自由形式标签（短语或单词）
-- 多次生成 (3 次) 取并集，去重
+**基线**：direct_score（A 方法完整复刻）/ genre_map（拟合池统计，未见 genre 回退全局均值）/ random / 剧本 + BERT 多标签。
 
-3.3 阶段二：Genome 标签对齐
-- 嵌入模型: 对每个自由标签和 1,128 个 genome tag 计算嵌入
-- 映射策略: 每个自由标签 → top-3 候选 genome tag（余弦相似度）
-- 关联度聚合: 多个自由标签映射到同一 genome tag → 取最大相似度作为关联度
-- 阈值过滤: 相似度低于阈值 (如 0.5) 的映射标记为"低置信度"
+**防泄露原则**：一切拟合面（校准、genre 统计、BERT、few-shot）仅用训练分割数据，逐组件 `assert_no_leakage` 接线。
 
-3.4 质量审计模块 (LLMGenQC-adapted)
-- 审计维度: 语义对齐度、一致性、覆盖度、安全性
-- 审计方式: 用强 LLM (GPT-4) 对每个自由标签 → genome tag 映射做 binary judgment (accept/reject)
-- 输出: 每个映射的 critic score + pass/fail 标签
-- 人工验证: 随机抽样 500 个映射，人工标注正确性，校准 LLM-as-judge
+**端到端推荐（接口预留）**：movie × genome 评分矩阵 + 开放词表标签表 schema 已定义；Recall@K / NDCG@K 评估 M5-M6 届时扩展。
 
-3.5 评估协议
-- 生成质量: 生成标签 vs tags.csv 的人工评估（相关性、覆盖度、冗余度）
-- 对齐质量: 映射后 genome scores vs genome-scores.csv 的 RMSE
-- 审计质量: LLM-as-judge 与人工标注的一致率 (Cohen's kappa)
-- 端到端: 用 MLLM 标签做推荐，对比人工标签推荐 (Recall@K, NDCG@K)
-- 时序分割 + 冷启动 (同方向 A)
+## 5. 预期结果与叙事
 
-3.6 对比基线
-- 基线 1: 方向 A 的直接评分方法（无自由生成阶段）
-- 基线 2: 仅用 genre → genome tag 映射表
-- 基线 3: 剧本文本 + BERT 多标签分类
-- 基线 4: 随机标签
+**最重要发现（预期）**：两阶段管道在自由标签生成上达到与用户标签高语义一致性；映射审计准确率超 85%；偏好驱动型标签存在语义鸿沟（与 A 的 content/preference 不对称发现互为呼应）。
 
-### B-Results (1800-2200 words)
+**结果结构**：生成质量（双口径）→ 对齐质量（双口径 RMSE）→ 审计质量（kappa）+ 审计开关消融 → 九轴消融 → vs direct_score（反转测试核心）→ 阈值过滤曲线 → 案例分析（映射成功/失败对 + 自由标签发现 genome 外维度的实例）。
 
-**最重要发现（一句话）**: 两阶段管道在自由标签生成阶段达到了与 MovieLens 用户标签高语义一致性的水平，对齐阶段的 LLM-as-judge 审计准确率超过 85%，但在偏好驱动型标签上仍有语义鸿沟。
+## 6. 章节计划
 
-**预期结果结构**:
-1. 生成质量: 自由标签 vs tags.csv 的相关性/覆盖度/冗余度指标
-2. 对齐质量: 映射后 genome scores 的 RMSE / Precision@K
-3. 审计质量: LLM-as-judge vs 人工标注的 kappa 一致率
-4. 端到端推荐: MLLM 标签推荐 vs 人工标签推荐的 Recall@K / NDCG@K
-5. 与方向 A 基线对比: 两阶段 vs 直接评分的质量差异
-6. 案例分析: 自由标签 → genome tag 映射的成功/失败案例
+- **Introduction (800-1,000w)**：双体系动机（tags.csv 自由但噪声大 / genome 标准化但依赖用户行为，Harper & Konstan 2015；Deldjoo 2017）→ MLLM 生成能力恰好弥合 → Gap：无工作将 MLLM 生成式输出与双标签体系同时对齐，且缺可审计保证 → 贡献三句：① 首个"自由生成 → genome 对齐"两阶段框架 ② LLM-as-judge 可量化质量保证 ③ tags.csv 与 genome 双层面评估。
+- **Related Work (1,200-1,500w)**：三故事线——自由标签生成（Folksonomication → NoteLLM → 本工作 MLLM 多模态）/ 标签映射与对齐（genome SVD++ 起源 → 嵌入空间映射路径）/ 生成质量审计（RAG-VisualRec LLMGenQC → LLM-as-judge 标注审计）。综述结论：自由生成与标准化分类是两条平行线，缺统一两者的框架。
+- **Methodology (2,500-3,000w)**：§3 + §4 内容。
+- **Results (1,800-2,200w)**：§5 结构。
+- **Discussion (800-1,000w)**：vs Folksonomication（多模态输入 vs 纯文本；MLLM vs 传统 NN）/ vs VLM4Rec（生成标签并对齐体系 vs 生成描述做推荐特征）/ vs RAG-VisualRec（LLMGenQC 的迁移与适配）。核心记忆点：两阶段比直接评分更能捕捉 MLLM 对电影的自然理解——开放词表不受固定词表约束。
+- **Conclusion (400-500w)**：框架同时产出开放词表与标准化评分；审计提供可量化保证；偏好型标签语义鸿沟为边界。
 
-### B-Discussion (800-1000 words)
+## 7. 论证压力测试
 
-**与文献对话**:
-- vs Folksonomication (2018): 多模态输入 vs 纯文本；MLLM vs 传统 NN
-- vs VLM4Rec (2026): 生成标签并对齐体系 vs 生成描述做推荐特征
-- vs RAG-VisualRec (2025): LLMGenQC 审计机制的迁移和适配
-
-**最想让读者记住的**: 两阶段"自由生成+对齐"框架比直接评分（方向 A）更能捕捉 MLLM 对电影的自然理解，因为自由生成不受固定词表约束，能发现 genome 体系未覆盖的维度。
-
-### B-Conclusion (400-500 words)
-
-**如果只能留一段话**: 两阶段"MLLM 自由生成 → genome 对齐"框架同时产出开放词表标签和标准化评分，LLM-as-judge 审计提供了可量化的质量保证。自由标签生成能捕捉 genome 体系外的维度，但偏好驱动型标签的语义鸿沟仍是挑战。
-
-## B-Step 2.5: 贡献锐化
-
-> **[INSIGHT: contribution_claim]**
-> 本文贡献在方法层面：提出两阶段标签生成框架（自由生成→对齐），首次将 MLLM 生成式标签输出与 MovieLens 双标签体系（tags.csv + genome tags）同时对齐，并引入 LLM-as-judge 审计机制为自动化标签提供可量化质量保证。
-
-## B-Step 3: 论证压力测试
-
-**核心论证链**:
-1. MovieLens 双标签体系（自由 tag + genome tag）各有优劣 → 引 Harper & Konstan (2015)
+1. MovieLens 双标签体系各有优劣 → Harper & Konstan (2015)
 2. MLLM 生成能力可产出自然语言标签 → Technology Cycle 探针
-3. 自由标签通过嵌入映射可对齐到 genome 体系 → 嵌入相似度机制论证
-4. LLM-as-judge 可审计映射质量 → 参考 RAG-VisualRec LLMGenQC
-5. 两阶段管道在推荐下游任务上不劣于人工标签 → 端到端评估（待数据确认）
+3. 自由标签经嵌入映射可对齐 genome 体系 → 嵌入相似度机制论证
+4. LLM-as-judge 可审计映射质量 → RAG-VisualRec LLMGenQC
+5. 两阶段管道在推荐下游不劣于人工标签 → 端到端评估（待数据；接口已预留）
 
-**最弱点**: 论证链第 5 步——如果 MLLM 标签推荐显著不如人工标签，端到端价值存疑。防御: 即使推荐质量略低，在冷启动场景下（无人工标签）MLLM 标签仍是唯一选择，"有 vs 无"比"好 vs 更好"更重要。
+**最弱点**：第 5 步——若 MLLM 标签推荐显著不及人工标签，端到端价值存疑 → 防御：冷启动"有 vs 无"论证（§1 反转预案）。
 
-**反转测试**: 如果方向 A（直接评分）在 RMSE 上优于两阶段管道，则两阶段的价值仅在于自由标签的生成。防御: 两阶段的价值是"同时获得开放词表和标准化评分"，这是单阶段方法无法提供的。
-
-## B-关键文献定位表
+## 8. 关键文献定位表
 
 | 位置 | 引用文献 | 角色 |
 |------|---------|------|
-| Intro 背景 | Harper & Konstan (2015) | MovieLens 数据集 |
-| Intro 动机 | Deldjoo et al. (2017) | 视觉特征替代标签 |
-| Related 故事1 | Folksonomication (2018) | 标签预测先驱 |
+| Intro 背景 | Harper & Konstan (2015) | MovieLens 数据集官方引用 |
+| Intro 动机 | Deldjoo et al. (2017) | 视觉特征替代人工标签的先驱 |
+| Related 故事1 | Folksonomication (2018) | 文本标签预测先驱 |
 | Related 故事1 | NoteLLM (2024) arXiv:2403.01744 | 生成 hashtag 增强嵌入 |
-| Related 故事2 | VLM4Rec (2026) | VLM 生成语义描述 |
-| Related 故事3 | RAG-VisualRec (2025) | LLMGenQC 质量审计 |
-| Method 对齐 | StoryMovie (2026) | 剧本-字幕对齐 |
-| Method 数据 | MovieNet (2019) | 多模态数据集 |
-| Eval 警示 | ML-1M Memorization (2026) | 数据泄露 |
-| Eval 基线 | TrUMAn (2021) | trope 分类基线 |
+| Related 故事2 | VLM4Rec (2026) | VLM 生成语义描述做推荐特征 |
+| Related 故事3 | RAG-VisualRec (2025) | LLMGenQC 质量审计机制来源 |
+| Method 数据 | MovieNet (2019) arXiv:1910.09368 | 电影多模态数据集 |
+| Method 对齐 | StoryMovie (2026) | 剧本-字幕-视频对齐 |
+| Eval 警示 | ML-1M Memorization (2026) | 数据泄露警示 |
+| Eval 基线 | TrUMAn (2021) | trope 分类最近邻基线 |
 
-## B-时间线
+## 9. 时间线
 
-| 阶段 | 内容 | 时长 | 产出 |
+| 阶段 | 内容 | 时点 | 产出 |
 |------|------|------|------|
-| M1-M2 | 数据准备 + 五维度 prompt 设计 + 预跑 | 2 月 | prompt 模板 + 标签样例 |
-| M2-M4 | 阶段一生成实验 + 阶段二对齐实验 | 2 月 | 两阶段结果 |
-| M4-M5 | LLM-as-judge 审计 + 人工标注校准 | 1 月 | 审计报告 + kappa |
-| M5-M6 | 端到端推荐实验 + 时序分割 + 冷启动 | 1 月 | 推荐评估结果 |
-| M6-M8 | 论文写作 | 2 月 | 完整初稿 |
-| M8-M9 | 内部评审 + 修改 | 1 月 | 终稿 |
-| **总计** | | **8 月** | |
+| ✅ 实验框架 | 六模块 + 16 消融配置 + 审计与校准回路；296 tests + 冒烟绿；终审修复波闭环 | 2026-10 | 框架（已推送 origin/main） |
+| 数据落地 | MovieNet 获取 + 转换 + 对齐建库 | **当前阻塞**（与 A 共同前置） | 真实实验数据集 |
+| pilot | 50 部五维度 prompt 预跑 + 校准验证 | 数据后 ~2 周 | prompt 模板定稿 + 首批标签样例 |
+| 生成 + 对齐实验 | 主实验 + 九轴消融 | ~2 月 | 两阶段结果 |
+| 审计 + 人工校准 | judge 全量 + 500 条人工标注 → kappa | ~1 月 | 审计报告 |
+| 端到端推荐 | 接口扩展 + Recall@K / NDCG@K | ~1 月 | 端到端结果 |
+| 论文写作 | 初稿 → 内审 → 终稿 | ~3 月 | 投稿 WWW / SIGIR 2027 |
 
-## B-目标场所
+## 10. 目标场所
 
-WWW 2027 (The Web Conference) 或 SIGIR 2027
-论文类型: Novel Method
-引用格式: ACM
-预估字数: 7000-9000 words
+WWW 2027（The Web Conference）或 SIGIR 2027
+论文类型：Novel Method（IMRaD 结构）· 引用格式：ACM 会议标准 · 预估字数：7,000-9,000 words（正文）
