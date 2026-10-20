@@ -1,10 +1,13 @@
-"""评估协议：时序分割、冷启动子集、tag 类型分解、防泄露断言。
+"""评估协议：固定分割、时序分桶视图、冷启动子集、tag 类型分解、防泄露断言。
 
 四个函数逐字复制自 genometag-mllm 项目的 genometag/eval/protocol.py
 （A/B 共用同一评估协议语义；assert_no_leakage 错误文案中提及的
-"movie_list 补集" 为 A 的拟合池语境，按逐字复制约定保留）。
-防泄露是全框架约束：校准拟合（05 的内联时序过滤）与基线 few-shot 选取
-（Task 19/20）以本协议的时序语义为准，并以 assert_no_leakage 收尾自检。
+"movie_list 补集" 为 A 的拟合池语境，按逐字复制约定保留）；
+fixed_split 与 sample_limited_movie_ids 为 440 协议新增（非 A 迁移物）。
+防泄露是全框架约束：校准/基线拟合面（校准、few-shot、genre 统计、BERT）
+以固定分割（processed/eval_test.txt 清单）为准，并以 assert_no_leakage
+收尾自检；temporal_split 降级为描述性分桶视图，不再作为任何拟合面的
+分割依据。
 """
 from __future__ import annotations
 

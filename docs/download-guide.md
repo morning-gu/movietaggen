@@ -18,7 +18,7 @@
      自由标签是阶段一生成的对照源（03 统计）与生成质量嵌入口径的参考集（08）
 3. 校验：`.venv/Scripts/python scripts/01_verify_data.py`
 
-## MovieNet（**尚未落地**，与方向 A 共享的前置条件）
+## MovieNet（已落地：服务器部署 + 与 A 共享转换产物）
 
 1. 访问 https://movienet.site/ ，按其流程申请/下载（通常含元数据 CSV 与各
    模态数据的分块下载；关键帧体量约数百 GB，建议在服务器磁盘上操作）
@@ -46,3 +46,15 @@
 4. 校验：`01_verify_data.py` 会报告**年份分布**——MovieNet 可能不含较新
    电影，届时需重新确定时序分割年份（改配置 `protocol.temporal_split_year`
    一行；`configs/default.yaml` 与消融配置按"数据止于 2018"钉了 2015）。
+
+## A 迁移物（已提交入 git，正常使用无需自行获取）
+
+两个跨仓库迁移物随代码提交入库，日常使用无需任何获取步骤；来源备查：
+
+- `data/processed/eval_test.txt`：固定测试清单（88 行 movieId），自方向 A
+  仓库 `data/processed/eval_test.txt` 复制迁入，sha256 与 A 侧核对一致
+  （钉在 `data/processed/direct_score_a.provenance.json`）。
+- `data/processed/direct_score_a.parquet`：方向 A `v3-full` 实跑预测
+  （297,792 行 = 88 × 1,128 × 3 轮），自 A 服务器
+  `results/v3-full/annotations.parquet` 迁入（随附
+  `direct_score_a.provenance.json` 溯源：源仓库/路径、sha256、行数校验值）。

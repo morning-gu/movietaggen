@@ -26,11 +26,12 @@
 |------|------|----------|
 | MovieLens ml-latest tags.csv | 生成质量参照 | 用户自由标签（开放词表、噪声、个性化）；分布与词汇重叠分析已入框架（03 脚本） |
 | MovieLens genome（tags + scores） | 对齐 ground truth | 1,128 tags；relevance 长尾 |
-| MovieNet movie1K | 多模态内容 | 关键帧/剧本/字幕；**尚未落地**（与方向 A 共同前置） |
-| 对齐实验集 | 评估全集 | 待真实数据；复用 A 的对齐管道（IMDb 优先 + 标题年份 fallback） |
+| MovieNet movie1K | 多模态内容 | 关键帧/剧本/字幕；**已落地**（服务器部署 + 与 A 共享转换产物） |
+| 对齐实验集 | 评估全集 | **440 部三模态宇宙**（评估宇宙与 A 协议 v3 同集）+ 88 部测试清单（A 迁入）；复用 A 的对齐管道（IMDb 优先 + 标题年份 fallback） |
 
 **设计事实**：
 - 评估协议继承 A 的 2026-10-16 修订结论（同一数据约束 B）：时序分割降级为按年代描述性分桶；冷启动转为方法属性 + limitation；
+- **440/88/352 口径**：评估宇宙 = 440 部三模态全有电影（与 A 协议 v3 同集）；固定测试 = A 迁入的 88 部清单（`data/processed/eval_test.txt`）；训练/拟合池 = 352 部（440 − 88）；
 - 原始数据经 `data.raw_dir` 默认共享 A 的 `data/raw`（ml-latest 1.5G 已在）；1,128-tag 语义分组产物（A 生成）已迁入本仓库供 direct_score 基线使用。
 
 ## 3. 方法
@@ -44,11 +45,13 @@
 **3.2 方法属性**：输入纯内容驱动，天然冷启动可用（同 A）；额外产出开放词表标签——genome 体系外维度（如 "mind-bending" 这类用户真实语汇）的载体。
 
 **方法防御**：
-- "为什么不直接让 MLLM 输出 genome 评分（方向 A）？" → 自由生成捕捉对电影的自然理解、不受固定词表约束、能发现 genome 未覆盖维度；映射层提供标准化保证。两阶段分离"理解"与"对齐"两个关注点。基线 1 = A 方法完整复刻（tag 分组评分 + few-shot + JSON 稠密输出），对比公平性由校准 + 双口径 RMSE 保证。
+- "为什么不直接让 MLLM 输出 genome 评分（方向 A）？" → 自由生成捕捉对电影的自然理解、不受固定词表约束、能发现 genome 未覆盖维度；映射层提供标准化保证。两阶段分离"理解"与"对齐"两个关注点。基线 1 = A v3-full 实跑预测迁移（a_borrow：tag 分组评分 + few-shot + JSON 稠密输出的实跑产物），对比公平性由校准 + 双口径 RMSE 保证。
 - "嵌入相似度如何保证语义对齐？" → LLM-as-judge 审计 + 人工校准 kappa；嵌入模型对比（E5/SBERT/Ada）为消融轴。
 - 最大局限：两阶段误差累积 → 阶段产物隔离 + 阶段级指标使误差可归因（生成质量独立于对齐可测）。
 
 ## 4. 评估协议
+
+**宇宙与划分**：评估宇宙 = 440 三模态全有（与 A 协议 v3 同集）；测试 = A 迁入的 88 部固定清单（`data/processed/eval_test.txt`）；训练/拟合池 = 352 部——校准、few-shot、genre 统计、BERT 全部限此，`assert_no_leakage` 逐接线收尾；时序分割仅为描述性分桶视图。
 
 **对齐质量口径（核心对比公平性）**：预测评分经训练分割校准到 genome [0,1] 量纲；RMSE **双口径**（全谱补 0 / 仅已预测对，附 n_pred 列）+ Spearman（已预测对）+ Precision@10 / NDCG@10（IDCG 按该电影全量真值计，不偏袒稀疏方法）；空预测子集报 NaN 不报 0。
 
@@ -56,14 +59,14 @@
 
 **审计质量**：judge vs 人工标注 Cohen's kappa——校准表导出（500 条抽样 CSV）→ 人工回填 → `08 --kappa` 直接计算。
 
-**子集视图**：全部 · 时序训练/测试（描述性分桶）· tag:content · tag:preference。
+**子集视图**：**固定测试(88) = 论文主表口径**（所有方法同集可比）+ 固定训练(352) 调试口径；全部 · 时序训练/测试（描述性分桶）· tag:content · tag:preference；n_pred 诚实标注各方法实际预测数（direct_score 在全部(440) 行 n_pred=88 属预期，非对比口径）。
 
 **消融矩阵（九轴 + 候选臂，全部配置化——`configs/ablation/` 16 个配置即改即跑）**：模态（video/script/dialogue/title-only*）· 五维度子集 · 生成次数 1/2/3 · 嵌入模型 · top_k 1/3 · 阈值 0.4/0.5/0.6（threshold-filtered 变体直接产出过滤曲线）· 聚合 max/mean · 审计过滤 on/off · 两阶段 vs direct_score。
 （*title-only 兼作记忆排查臂——B 以 tags.csv 为生成真值，记忆风险高于 A；mismatch 探针已留 `probes/` 扩展位，真实数据阶段再建。）
 
-**基线**：direct_score（A 方法完整复刻）/ genre_map（拟合池统计，未见 genre 回退全局均值）/ random / 剧本 + BERT 多标签。
+**基线**：direct_score（A v3-full 实跑预测迁移 a_borrow：`data/processed/direct_score_a.parquet`，297,792 行 = 88×1,128×3 轮，PROVENANCE 溯源；own_run 复刻管道保留为逃生口）/ genre_map（拟合池统计，未见 genre 回退全局均值）/ random / 剧本 + BERT 多标签。
 
-**防泄露原则**：一切拟合面（校准、genre 统计、BERT、few-shot）仅用训练分割数据，逐组件 `assert_no_leakage` 接线。
+**防泄露原则**：一切拟合面（校准、genre 统计、BERT、few-shot）仅用固定分割训练侧（352 部）数据，逐组件 `assert_no_leakage` 接线；生成层 few-shot（预留路径，`generate/prompts.py` 现无池选择逻辑故本计划不改其代码）将来接线时必须用固定分割训练侧。
 
 **端到端推荐（接口预留）**：movie × genome 评分矩阵 + 开放词表标签表 schema 已定义；Recall@K / NDCG@K 评估 M5-M6 届时扩展。
 
@@ -112,7 +115,7 @@
 | 阶段 | 内容 | 时点 | 产出 |
 |------|------|------|------|
 | ✅ 实验框架 | 六模块 + 16 消融配置 + 审计与校准回路；296 tests + 冒烟绿；终审修复波闭环 | 2026-10 | 框架（已推送 origin/main） |
-| 数据落地 | MovieNet 获取 + 转换 + 对齐建库 | **当前阻塞**（与 A 共同前置） | 真实实验数据集 |
+| 数据落地 | MovieNet 获取 + 转换 + 对齐建库 | ✅ 已完成（2026-10-21：服务器部署 + MovieNet 校验 + 440 宇宙数据集） | 真实实验数据集 |
 | pilot | 50 部五维度 prompt 预跑 + 校准验证 | 数据后 ~2 周 | prompt 模板定稿 + 首批标签样例 |
 | 生成 + 对齐实验 | 主实验 + 九轴消融 | ~2 月 | 两阶段结果 |
 | 审计 + 人工校准 | judge 全量 + 500 条人工标注 → kappa | ~1 月 | 审计报告 |

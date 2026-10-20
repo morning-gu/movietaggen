@@ -45,6 +45,36 @@ aligned 列去掉 match_method，加 `keyframes: list[str]`（相对 movienet �
 ### data/processed/tag_groups.json（入 git）
 `[{tag_id, tag, group, tag_type: content|preference, definition}]`。
 
+### data/processed/eval_test.txt（入 git，A 迁移物）
+固定测试清单：88 行、每行一个整数 movieId（年代分层，自 A 仓库
+`data/processed/eval_test.txt` 迁入；sha256 钉在
+`direct_score_a.provenance.json` 的 `eval_test_sha256` 备查）。
+`eval/protocol.py` 的 `fixed_split` 据此切分：test = 清单命中的全集行，
+train = 全集 − test（440 协议下各拟合面的统一分割源）；坏输入大声失败
+（文件缺失 / 非整数行 / 空清单 / 数据集外 id）。合成路径由
+`00_make_synthetic.py` 在 `data/synthetic/processed/` 生成同构清单
+（种子固定 20% 抽样），真实/合成统一走各自 processed 的同一路径规则。
+
+### data/processed/direct_score_a.parquet（入 git，A 迁移物）
+方向 A `v3-full` 实跑预测（88 部固定测试集 × 1,128 tags × 3 轮 = 297,792 行）：
+
+| 列 | 类型 | 说明 |
+|----|------|------|
+| movie_id | int64 | MovieLens movieId（88 部固定测试集） |
+| tag_id | int64 | genome tagId（1,128 个全覆盖） |
+| group | str | A 的 tag 语义分组名 |
+| modality_set | str | 评分输入模态集（恒 `video\|script\|dialogue`，加载器校验唯一值） |
+| run_id | str | 生成轮次（`run-0/1/2`） |
+| score | float64 | 逐轮原始关联度分 |
+
+由 `baselines.direct_score_source: a_borrow` 消费（07 直接落盘基线产物，
+零 API 调用）：按 `(movie_id, tag_id)` 对 `score` 取均值（pandas skipna——
+仅计已解析轮，全空记 NaN 交评估层收口），产出列 `movie_id, tag_id, score,
+method` 与 own_run 同构。加载器守门：文件缺失大声失败、迁移物 movie_id ⊆
+dataset（越界点名，提示清单/数据集版本错配）、modality_set 唯一值校验。
+配套 `direct_score_a.provenance.json`（源仓库/路径、sha256、行数校验值
+88 × 1,128 × 3、迁移日期）随迁入 git。
+
 ## results/<exp>/stage-gen/（阶段一：自由标签生成）
 
 ### responses.jsonl（append-only，续跑事实来源，看门狗以增长判活）
@@ -104,10 +134,25 @@ random / bert（按 config.baselines.run 子集）。配套 `run_manifest.json`
 ## results/<exp>/evaluation/（08 评估）
 
 - `metrics.csv`：行 = 预测方法 × 子集视图，列固定 `method, subset, rmse_full,
-  rmse_pred_only, spearman, precision@k, ndcg@k`（RMSE 双口径：内连接只评
+  rmse_pred_only, spearman, precision@k, ndcg@k, n_pred`（RMSE 双口径：内连接只评
   敢打分对 / 全叉积缺失补 0）。方法含 two-stage[raw / calibrated / filtered]
-  与各基线；subset 五视图 = 全部 / 时序训练(<y) / 时序测试(≥y) /
-  tag:content / tag:preference（后两个需 tag_groups）。`report.md` 为人读汇总。
+  与各基线；subset 视图 = **固定测试(88)**（论文主表口径，所有方法同集
+  严格可比）/ 固定训练(352)（调试口径）/ 全部 / 时序训练(<y) / 时序测试(≥y) /
+  tag:content / tag:preference（后两个需 tag_groups）；n_pred 诚实标注各方法
+  实际预测数。`report.md` 为人读汇总。
 - `gen_quality.json`：生成质量双口径——嵌入口径（relevance / coverage /
   redundancy，逐电影语义对用户 top-K 标签）+ judge 口径（judge_gen_quality
   均值，键前缀 `judge_`）。
+
+## 相关配置字段（440 协议）
+
+- `data.universe`：评测宇宙过滤，`three_modality`（默认）| `all`——
+  `three_modality` 时 `build_dataset` 在 genome 覆盖过滤之后追加三模态完整
+  过滤（keyframes 非空 且 script_path 非空 且 subtitles_path 非空，与输入
+  核查脚本的磁盘实测口径一致），真实数据即 440 部宇宙；合成样本逐部三模态
+  完整，过滤为 no-op。`01_verify_data` 的统计输出含宇宙口径行（过滤前后部数）。
+- `baselines.direct_score_source`：direct_score 基线的分数来源，
+  `a_borrow`（默认，读 `data/processed/direct_score_a.parquet` 迁移物）|
+  `own_run`（本仓库复刻管道自跑，few-shot 池限固定分割训练侧）；a_borrow
+  仅 `data.source: real` 合法——synthetic + a_borrow 由 `validate_config`
+  大声拒绝（迁移物是真实数据工件，合成路径没有对应物）。

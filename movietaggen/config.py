@@ -142,8 +142,8 @@ class Paths:
     genome_tags: Path
     aligned: Path
     baselines_dir: Path  # 固定 results/baselines，不随 exp_name
-    eval_test: Path      # 真实评测测试集（A 迁移物；synthetic 分支同路径规则但文件不存在）
-    direct_score_a: Path  # A 的 direct_score 评分迁移物（仅 source: real 有文件）
+    eval_test: Path      # 固定测试清单：real 为 A 迁入提交入库，synthetic 由 00 生成
+    direct_score_a: Path  # A 评分迁移物：仅 source: real 有文件，a_borrow 已被 config 校验拦在 synthetic 之外
 
 
 def project_root() -> Path:
@@ -184,8 +184,9 @@ def paths_for(config: AppConfig) -> Paths:
         genome_tags=processed / "genome_tags.parquet",
         aligned=interim / "aligned.parquet",
         baselines_dir=root / "results" / "baselines",
-        # 两个分支同规则：真实评测测试集与 A 评分迁移物都落在各自 processed 下
-        # （synthetic 分支文件不存在是合法状态——a_borrow 已被校验拦在 real 之外）
+        # 两个分支同路径规则：固定测试清单与 A 评分迁移物都落在各自 processed 下
+        # （eval_test：real 为 A 迁入提交入库、synthetic 由 00 生成；
+        #   direct_score_a：仅 real 有文件，a_borrow 已被校验拦在 synthetic 之外）
         eval_test=processed / "eval_test.txt",
         direct_score_a=processed / "direct_score_a.parquet",
     )
