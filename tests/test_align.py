@@ -1,4 +1,6 @@
 """对齐：IMDb 规范化、主键匹配、翻拍歧义、报告内容。"""
+import shutil
+
 import pandas as pd
 import pytest
 
@@ -91,8 +93,10 @@ def test_build_dataset_from_synthetic(tmp_path):
     from movietaggen.data.sample import make_synthetic_dataset
     make_synthetic_dataset(tmp_path)
     paths = _synthetic_paths(tmp_path)
-    stats = build_dataset(paths)
-    assert stats == {"movies": 5, "genome_rows": 180}   # B 样本 36 tags × 5 部（A 为 24 × 5）
+    stats = build_dataset(paths)   # 合成数据三模态齐全：默认宇宙不剔除
+    assert stats == {"movies": 5, "genome_rows": 180,
+                     "universe": "three_modality", "filtered_out": 0}
+    # B 样本 36 tags × 5 部（A 为 24 × 5）
     ds = pd.read_parquet(paths.dataset)
     assert len(ds) == 5
     assert ds.loc[0, "keyframes"][0].startswith("keyframes")   # 相对路径
@@ -110,7 +114,8 @@ def test_build_dataset_zero_matches(tmp_path):
         tmp_path / "raw" / "movienet" / "movies.csv", index=False)
     paths = _synthetic_paths(tmp_path)
     stats = build_dataset(paths)
-    assert stats == {"movies": 0, "genome_rows": 0}
+    assert stats == {"movies": 0, "genome_rows": 0,
+                     "universe": "three_modality", "filtered_out": 0}
     assert len(pd.read_parquet(paths.aligned)) == 0
     assert len(pd.read_parquet(paths.dataset)) == 0
     assert len(pd.read_parquet(paths.genome_scores)) == 0
@@ -138,3 +143,44 @@ def test_build_dataset_drops_movies_without_genome(tmp_path):
     assert stats["movies"] == 4                       # 无覆盖电影被剔除
     assert 5 not in set(ds["movie_id"])
     assert stats["genome_rows"] == 4 * 36             # B 样本 36 tags/部（A 为 4 × 24）
+
+
+def _missing_modality_fixture(tmp_path):
+    """三模态残缺场景（440 协议）：mn02 缺剧本、mn03 缺字幕、mn04 缺关键帧；
+    mn05 另无 genome 覆盖（同 drops_without_genome 的构造）——
+    mn01（movie_id 1）是唯一三模态齐全且有覆盖的电影。"""
+    from movietaggen.data.sample import make_synthetic_dataset
+    make_synthetic_dataset(tmp_path)
+    mn = tmp_path / "raw" / "movienet"
+    (mn / "scripts" / "mn02.txt").unlink()            # 缺剧本
+    (mn / "subtitles" / "mn03.srt").unlink()          # 缺字幕
+    shutil.rmtree(mn / "keyframes" / "mn04")          # 缺关键帧
+    scores_csv = tmp_path / "raw" / "movielens" / "genome-scores.csv"
+    df = pd.read_csv(scores_csv)
+    df[df["movieId"] != 5].to_csv(scores_csv, index=False)   # mn05 无 genome 覆盖
+
+
+def test_build_dataset_three_modality_universe(tmp_path):
+    """440 协议三模态宇宙：缺任一模态的电影不进 dataset（在 genome 覆盖过滤之后）。
+
+    filtered_out 只统计宇宙过滤剔除数（3 部缺模态），不含 genome 覆盖剔除
+    （mn05 先被覆盖过滤掉，不计入）。
+    """
+    from movietaggen.data.align import build_dataset
+    _missing_modality_fixture(tmp_path)
+    paths = _synthetic_paths(tmp_path)
+    stats = build_dataset(paths)                      # 默认 universe="three_modality"
+    assert stats == {"movies": 1, "genome_rows": 36,
+                     "universe": "three_modality", "filtered_out": 3}
+    assert list(pd.read_parquet(paths.dataset)["movie_id"]) == [1]
+
+
+def test_build_dataset_universe_all_keeps_incomplete(tmp_path):
+    """universe=all 不做三模态过滤：缺模态电影全保留（filtered_out=0）。"""
+    from movietaggen.data.align import build_dataset
+    _missing_modality_fixture(tmp_path)
+    paths = _synthetic_paths(tmp_path)
+    stats = build_dataset(paths, universe="all")
+    assert stats == {"movies": 4, "genome_rows": 4 * 36,
+                     "universe": "all", "filtered_out": 0}
+    assert set(pd.read_parquet(paths.dataset)["movie_id"]) == {1, 2, 3, 4}

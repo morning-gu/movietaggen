@@ -13,8 +13,10 @@ from movietaggen.data.align import build_dataset  # noqa: E402
 
 
 def main(config_path: str = "configs/default.yaml") -> int:
-    stats = build_dataset(paths_for(load_config(config_path)))
-    print(f"[02] 数据集构建完成: {stats['movies']} 部电影, "
+    config = load_config(config_path)
+    stats = build_dataset(paths_for(config), universe=config.data.universe)
+    print(f"[02] 数据集构建完成: {stats['movies']} 部电影 "
+          f"(universe={stats['universe']}, 剔除 {stats['filtered_out']} 部), "
           f"{stats['genome_rows']} 行 genome scores")
     return 0
 

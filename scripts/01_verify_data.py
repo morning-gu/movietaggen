@@ -45,12 +45,21 @@ def verify_data(paths) -> list[str]:
 
 def main(config_path: str = "configs/default.yaml") -> int:
     config = load_config(config_path)
-    problems = verify_data(paths_for(config))
+    paths = paths_for(config)
+    problems = verify_data(paths)
     if problems:
         print("[01] 数据校验失败：")
         for p in problems:
             print(f"  - {p}")
         return 1
+    # 宇宙口径（440 协议）：dataset 与对齐产物均在时报告三模态过滤后的规模
+    # （剔除 K = 对齐 M − dataset N，含 genome 覆盖与宇宙两层过滤）；
+    # 任一产物缺失（尚未跑 02）则跳过该行不报错。
+    if paths.dataset.exists() and paths.aligned.exists():
+        n_ds = len(pd.read_parquet(paths.dataset))
+        n_al = len(pd.read_parquet(paths.aligned))
+        print(f"[01] 宇宙: {config.data.universe} → dataset {n_ds} 部 / "
+              f"对齐 {n_al} 部（剔除 {n_al - n_ds} 部）")
     print("[01] 数据校验通过")
     return 0
 

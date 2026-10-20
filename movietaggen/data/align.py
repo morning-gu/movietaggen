@@ -113,8 +113,12 @@ def align(movies_ml: pd.DataFrame, links: pd.DataFrame,
     return AlignResult(aligned=pd.DataFrame(rows, columns=ALIGNED_COLUMNS), report=report)
 
 
-def build_dataset(paths: Paths) -> dict[str, int]:
-    """读 raw → 对齐 → 写 interim/processed，返回统计。02 脚本与测试 fixture 复用。"""
+def build_dataset(paths: Paths, universe: str = "three_modality") -> dict[str, int | str]:
+    """读 raw → 对齐 → 写 interim/processed，返回统计。02 脚本与测试 fixture 复用。
+
+    universe：评测宇宙（440 协议）——"three_modality" 仅保留三模态齐全的电影，
+    "all" 不过滤；合法性校验在 config 层（VALID_UNIVERSES）。
+    """
     movies_ml = load_movies(paths.movielens / "movies.csv")
     links = load_links(paths.movielens / "links.csv")
     mn_movies = load_movienet(paths.movienet)
@@ -146,10 +150,27 @@ def build_dataset(paths: Paths) -> dict[str, int]:
     # （真实数据 1,084 对齐中 49 部无覆盖，剔除省 ~4.5% 标注成本）
     covered = set(scores["movie_id"])
     dataset = dataset[dataset["movie_id"].isin(covered)]
+
+    # 三模态评测宇宙（440 协议）：universe=three_modality 时仅保留三模态齐全的
+    # 电影（keyframes 非空且剧本/字幕路径均非缺失），在 genome 覆盖过滤之后执行；
+    # universe=all 不过滤。缺失守卫用 pd.notna：缺失值经 pandas/parquet 往返后
+    # 为 NaN（float，布尔判断为真值），同 generate/content.py:to_multimodal 的
+    # 既有模式；keyframes 为列表列，空列表/NaN 均不算齐备。
+    if universe == "three_modality":
+        keep = (
+            dataset["keyframes"].map(lambda kf: isinstance(kf, list) and len(kf) > 0)
+            & dataset["script_path"].notna() & dataset["script_path"].astype(bool)
+            & dataset["subtitles_path"].notna() & dataset["subtitles_path"].astype(bool)
+        ).astype(bool)
+        filtered_out = int(len(dataset) - keep.sum())
+        dataset = dataset[keep]
+    else:
+        filtered_out = 0
     dataset.to_parquet(paths.dataset, index=False)
 
     scores = scores[scores["movie_id"].isin(set(dataset["movie_id"]))]
     scores.to_parquet(paths.genome_scores, index=False)
     load_genome_tags(paths.movielens / "genome-tags.csv").to_parquet(
         paths.genome_tags, index=False)
-    return {"movies": len(dataset), "genome_rows": len(scores)}
+    return {"movies": len(dataset), "genome_rows": len(scores),
+            "universe": universe, "filtered_out": filtered_out}
