@@ -13,7 +13,6 @@ few-shot 不在本任务接线（默认 []），参数已贯通（后续任务�
 from __future__ import annotations
 
 import json
-import random
 import threading
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
@@ -22,6 +21,7 @@ from pathlib import Path
 import pandas as pd
 
 from movietaggen.config import AppConfig
+from movietaggen.eval.protocol import sample_limited_movie_ids
 from movietaggen.generate.cache import ResponseCache, cache_key
 from movietaggen.generate.client import sampling_params
 from movietaggen.generate.content import available_modalities, to_multimodal
@@ -65,9 +65,10 @@ def run_generation(config: AppConfig, paths, client, cache: ResponseCache | None
     """跑完阶段一生成，返回 tags.parquet 路径（dry-run 返回 None 且不写文件）。"""
     dataset = pd.read_parquet(paths.dataset)
 
-    movie_ids = sorted(dataset["movie_id"].tolist())
-    if config.data.movie_limit is not None and config.data.movie_limit < len(movie_ids):
-        movie_ids = random.Random(config.data.seed).sample(movie_ids, config.data.movie_limit)
+    # movie_limit 抽样限训练池：pilot 是 prompt 迭代预跑，不接触 88 测试集
+    # （spec §2.2）；None → 全量升序（不读清单）
+    movie_ids = sample_limited_movie_ids(dataset, config.data.movie_limit,
+                                         config.data.seed, paths.eval_test)
 
     tasks = build_task_matrix(movie_ids, config.generate.n_runs)
     movie_rows = {int(row["movie_id"]): row for _, row in dataset.iterrows()}

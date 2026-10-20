@@ -15,6 +15,7 @@ import pytest
 from movietaggen.config import Paths, load_config
 from movietaggen.data.align import build_dataset
 from movietaggen.data.sample import make_synthetic_dataset
+from movietaggen.eval.protocol import fixed_split
 from movietaggen.generate.content import to_multimodal
 from movietaggen.generate.mock import MockGenClient
 from movietaggen.generate.pipeline import (
@@ -74,6 +75,22 @@ def _counting_client():
 def _manifest(paths):
     return json.loads(
         (paths.stage_gen / "run_manifest.json").read_text(encoding="utf-8"))
+
+
+def _extend_to_ten_movies(paths, test_ids):
+    """数据集复制扩展到 10 部（id 6-10 复用前 5 部的模态文件）+ 重写 eval_test 清单。
+
+    make_synthetic 只产 5 部，不够"10 部 + 清单 3 部 + limit 5"的训练池
+    判别结构（440 协议 movie_limit 抽样限训练池）。build_dataset 不读清单，
+    故 dataset 产出后再覆盖 eval_test.txt 即可。
+    """
+    dataset = pd.read_parquet(paths.dataset)
+    extra = dataset.head(5).copy()
+    extra["movie_id"] = [6, 7, 8, 9, 10]
+    pd.concat([dataset, extra], ignore_index=True).to_parquet(
+        paths.dataset, index=False)
+    paths.eval_test.write_text(
+        "".join(f"{m}\n" for m in sorted(test_ids)), encoding="utf-8")
 
 
 def test_build_task_matrix():
@@ -254,15 +271,66 @@ def test_cache_roundtrip_all_hits(fake_setup):
 
 
 def test_movie_limit_sampled_deterministically(fake_setup):
-    """movie_limit 抽样：同 seed 同样本（A 的 random.Random 模式）。"""
+    """movie_limit 抽样：同 seed 同样本；池 = 固定分割训练侧（440 协议，
+    测试清单电影不入样）。"""
     cfg, paths = fake_setup
     cfg.data.movie_limit = 3
     run_generation(cfg, paths, MockGenClient(), cache=None)
     df = pd.read_parquet(paths.stage_gen / "tags.parquet")
     assert len(set(df["movie_id"])) == 3
-    expected = random.Random(cfg.data.seed).sample(
-        sorted(pd.read_parquet(paths.dataset)["movie_id"].tolist()), 3)
-    assert set(df["movie_id"]) == set(expected)
+    train_ids, test_ids = fixed_split(pd.read_parquet(paths.dataset), paths.eval_test)
+    expected = set(random.Random(cfg.data.seed).sample(
+        sorted(train_ids.tolist()), 3))
+    assert set(df["movie_id"]) == expected
+    assert not (set(df["movie_id"]) & set(test_ids.tolist()))
+
+
+def test_movie_limit_samples_from_train_pool_only(fake_setup):
+    """440 协议：movie_limit 抽样限训练池——测试清单电影不入任务矩阵。
+
+    10 部数据集 + 清单 3 部 + limit 5：旧接线从全集抽样（seed=42 会抽中
+    1/2），新接线生成电影集 ⊆ train 7 部，本测试据此判别新旧接线。
+    """
+    cfg, paths = fake_setup
+    test_ids = {1, 2, 3}
+    _extend_to_ten_movies(paths, test_ids)
+    cfg.data.movie_limit = 5
+
+    run_generation(cfg, paths, MockGenClient(), cache=None)
+    df = pd.read_parquet(paths.stage_gen / "tags.parquet")
+
+    generated = set(df["movie_id"])
+    assert len(generated) == 5                    # 受限跑确实限量
+    assert generated <= {4, 5, 6, 7, 8, 9, 10}    # ⊆ train 7 部
+    assert not (generated & test_ids)             # 测试电影不入池
+
+
+def test_movie_limit_train_pool_same_seed_deterministic(fake_setup):
+    """同 seed 两次跑：抽样限训练池后确定性保持（两次生成的电影集相同）。"""
+    cfg, paths = fake_setup
+    _extend_to_ten_movies(paths, {1, 2, 3})
+    cfg.data.movie_limit = 5
+
+    run_generation(cfg, paths, MockGenClient(), cache=None)
+    ids_first = set(pd.read_parquet(paths.stage_gen / "tags.parquet")["movie_id"])
+
+    paths.results = paths.results.with_name("smoke-limit2")
+    paths.stage_gen = paths.results / "stage-gen"
+    run_generation(cfg, paths, MockGenClient(), cache=None)
+    ids_second = set(pd.read_parquet(paths.stage_gen / "tags.parquet")["movie_id"])
+
+    assert ids_first == ids_second
+    assert len(ids_first) == 5
+
+
+def test_movie_limit_none_full_dataset(fake_setup):
+    """movie_limit=None → 全量 10 部（不读清单，语义与协议单测一致）。"""
+    cfg, paths = fake_setup
+    _extend_to_ten_movies(paths, {1, 2, 3})
+    cfg.data.movie_limit = None
+
+    out = run_generation(cfg, paths, MockGenClient(), cache=None)
+    assert set(pd.read_parquet(out)["movie_id"]) == set(range(1, 11))
 
 
 def test_dry_run_prints_prompts_without_calls(fake_setup, capsys):
