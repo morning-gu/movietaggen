@@ -3,6 +3,12 @@ __pycache__/
 .cache/
 data/interim/
 data/synthetic/
+# 440 宇宙：processed 目录默认忽略，仅白名单四份入库物被跟踪
+data/processed/*
+!data/processed/tag_groups.json
+!data/processed/eval_test.txt
+!data/processed/direct_score_a.parquet
+!data/processed/direct_score_a.provenance.json
 results/
 .env
 *.pyc

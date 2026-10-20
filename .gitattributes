@@ -1,0 +1,5 @@
+# sha256 钉住的迁移物必须按字节原样存取，禁止 EOL 归一化
+# （core.autocrlf=true 下 fresh clone 若转 CRLF，provenance 的 sha 校验会失败）
+data/processed/eval_test.txt -text
+data/processed/direct_score_a.parquet -text
+data/processed/direct_score_a.provenance.json -text

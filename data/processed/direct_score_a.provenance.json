@@ -1,0 +1,16 @@
+{
+ "source_repo": "genometag-mllm 服务器 results/v3-full/",
+ "copied_date": "2026-10-20",
+ "eval_test_sha256": "fc88102f3c32146901e51404a36feb744ed331073e933225088f2501a99083fb",
+ "direct_score_a_sha256": "aee74528dbbc5238d52173323a631d8ba3cb227e97184cefd38c3cddd1a7dff4",
+ "expected": {
+  "rows": 297792,
+  "movies": 88,
+  "tags": 1128,
+  "runs": 3
+ },
+ "raw_jsonl_sha256": "2ccae7ff02ff2e72d280a15c07ce7324d282cc5ff952df12a86de8c99e668ae1",
+ "v3full_config": "exp_name: v3-full\ndata: {source: real, seed: 42, movie_list: data/processed/eval_test.txt}\nmodel:\n  model: qwen3.7-plus\n  temperature: 0.7\n  max_frames: 12\n  script_token_budget: 4000\n  dialogue_token_budget: 3000\nannotation:\n  n_runs: 3\n  modalities: [video, script, dialogue]\n  few_shot_examples: 2\n  workers: 8\nprotocol: {temporal_split_year: 2015, relevance_threshold: 0.5, top_k: 10}\nmock: false\n",
+ "v3full_run_manifest": "{\n \"tasks\": {\n  \"done\": 8656,\n  \"parse_failed\": 56,\n  \"no_content\": 0,\n  \"null_scores\": 5298\n },\n \"total_calls\": 8485,\n \"prompt_tokens\": 111257488,\n \"completion_tokens\": 12913594\n}",
+ "v3full_cost_report": "{\n \"total_calls\": 8485,\n \"prompt_tokens\": 111257488,\n \"completion_tokens\": 12913594\n}"
+}
