@@ -4,6 +4,7 @@ mock: false
 
 data:
   source: real
+  universe: three_modality    # 440 协议评测宇宙：three_modality | all
   movie_limit: null           # null = 全量
   seed: 42
   raw_dir: "../genometag-mllm/data/raw"   # 仅 source: real 生效，相对仓库根解析
@@ -55,6 +56,7 @@ baselines:
   run: [direct_score, genre_map, random, bert]
   n_runs: 3
   few_shot_examples: 2
+  direct_score_source: a_borrow   # direct_score 基线读 A 迁移评分（真实数据工件，仅 real）
 
 protocol:
   temporal_split_year: 2015   # 数据止于 2018：≥2015 测试视图非空，<2015 为训练参考池

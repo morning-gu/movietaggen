@@ -13,8 +13,9 @@ generate:
 # 需要 HF 模型下载——冒烟必须免下载，故显式排除（test_baselines.py 钉住）。
 baselines:
   run: [direct_score, genre_map, random]
+  # synthetic 无 A 迁移物（a_borrow 仅限 real），direct_score 自跑
+  direct_score_source: own_run
 
-# 合成电影年份 2018-2023 全 ≥ schema 默认 2015 → 训练分割会恒空、校准必炸；
-# 显式钉 2019（2018 的 Crimson Horizon 为训练侧）。default.yaml 维持 2015 供真实数据。
+# 合成电影年份 2018-2023：temporal_split_year 仅描述性分桶视图用
 protocol:
   temporal_split_year: 2019

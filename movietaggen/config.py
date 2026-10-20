@@ -12,6 +12,8 @@ import yaml
 VALID_DIMENSIONS = ("style", "mood", "theme", "narrative", "character")
 VALID_MODALITIES = ("video", "script", "dialogue")
 VALID_SOURCES = ("real", "synthetic")
+VALID_UNIVERSES = ("three_modality", "all")   # 440 协议评测宇宙
+VALID_DS_SOURCES = ("a_borrow", "own_run")    # direct_score 基线的分数来源
 VALID_AGG = ("max", "mean")
 VALID_CALIB_METHODS = ("isotonic", "linear")
 VALID_JUDGE_TASKS = ("mapping", "gen_quality")
@@ -21,6 +23,7 @@ VALID_JUDGE_CONTEXTS = ("pair", "pair+title", "pair+full")
 @dataclass
 class DataConfig:
     source: str = "real"            # real | synthetic
+    universe: str = "three_modality"  # three_modality | all：评测宇宙（440 协议）
     movie_limit: int | None = None  # None = 全量
     seed: int = 42
     # 仅 source: real 生效；相对路径按仓库根解析；None = 仓库内 data/raw
@@ -86,6 +89,9 @@ class BaselinesConfig:
     run: list[str] = field(default_factory=lambda: ["direct_score", "genre_map", "random", "bert"])
     n_runs: int = 3
     few_shot_examples: int = 2
+    # direct_score 的分数来源：a_borrow 读 A 迁移评分（真实数据工件，仅 source: real
+    # 合法，validate_config 拦截）；own_run 用本仓库 direct_score 管道自跑
+    direct_score_source: str = "a_borrow"
 
 
 @dataclass
@@ -136,6 +142,8 @@ class Paths:
     genome_tags: Path
     aligned: Path
     baselines_dir: Path  # 固定 results/baselines，不随 exp_name
+    eval_test: Path      # 真实评测测试集（A 迁移物；synthetic 分支同路径规则但文件不存在）
+    direct_score_a: Path  # A 的 direct_score 评分迁移物（仅 source: real 有文件）
 
 
 def project_root() -> Path:
@@ -176,12 +184,18 @@ def paths_for(config: AppConfig) -> Paths:
         genome_tags=processed / "genome_tags.parquet",
         aligned=interim / "aligned.parquet",
         baselines_dir=root / "results" / "baselines",
+        # 两个分支同规则：真实评测测试集与 A 评分迁移物都落在各自 processed 下
+        # （synthetic 分支文件不存在是合法状态——a_borrow 已被校验拦在 real 之外）
+        eval_test=processed / "eval_test.txt",
+        direct_score_a=processed / "direct_score_a.parquet",
     )
 
 
 def validate_config(cfg: AppConfig) -> None:
     if cfg.data.source not in VALID_SOURCES:
         raise ValueError(f"data.source 必须是 {VALID_SOURCES}，得到 {cfg.data.source!r}")
+    if cfg.data.universe not in VALID_UNIVERSES:
+        raise ValueError(f"data.universe 必须是 {VALID_UNIVERSES}，得到 {cfg.data.universe!r}")
     bad = [m for m in cfg.generate.modalities if m not in VALID_MODALITIES]
     if bad:
         raise ValueError(f"generate.modalities 含未知模态 {bad}，可选 {VALID_MODALITIES}")
@@ -215,6 +229,15 @@ def validate_config(cfg: AppConfig) -> None:
         raise ValueError("baselines.n_runs 必须 ≥ 1")
     if cfg.baselines.few_shot_examples < 0:
         raise ValueError("baselines.few_shot_examples 必须 ≥ 0")
+    if cfg.baselines.direct_score_source not in VALID_DS_SOURCES:
+        raise ValueError(
+            f"baselines.direct_score_source 必须是 {VALID_DS_SOURCES}，"
+            f"得到 {cfg.baselines.direct_score_source!r}")
+    if cfg.baselines.direct_score_source == "a_borrow" and cfg.data.source != "real":
+        raise ValueError(
+            "baselines.direct_score_source=a_borrow 读取的迁移物"
+            "（direct_score_a.parquet）是真实数据工件，synthetic 数据没有对应产物，"
+            "请改用 own_run")
     if cfg.data.movie_limit is not None and cfg.data.movie_limit < 1:
         raise ValueError("data.movie_limit 为 None 或 ≥ 1")
     if not isinstance(cfg.model.extra_body, dict):

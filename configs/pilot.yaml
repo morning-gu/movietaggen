@@ -4,6 +4,7 @@ mock: false
 
 data:
   source: real
+  universe: three_modality    # 440 协议评测宇宙：three_modality | all
   movie_limit: 50
   seed: 42
   raw_dir: "../genometag-mllm/data/raw"
@@ -52,9 +53,12 @@ eval:
   coverage_tau: 0.7
 
 baselines:
-  run: [direct_score, genre_map, random, bert]
+  # 移除 direct_score：pilot 从 train 抽样的 50 部与 A 迁移预测的 88 部零交集，
+  # a_borrow 无行可读（own_run 则需 API 打分，试点不跑）
+  run: [genre_map, random, bert]
   n_runs: 3
   few_shot_examples: 2
+  direct_score_source: a_borrow   # direct_score 基线读 A 迁移评分（真实数据工件，仅 real）
 
 protocol:
   temporal_split_year: 2015

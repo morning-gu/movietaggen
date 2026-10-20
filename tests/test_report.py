@@ -54,7 +54,9 @@ def _paths_for(tmp_path, exp: str = "smoke") -> Paths:
         genome_scores=base / "processed" / "genome_scores.parquet",
         genome_tags=base / "processed" / "genome_tags.parquet",
         aligned=base / "interim" / "aligned.parquet",
-        baselines_dir=tmp_path / "results" / "baselines")
+        baselines_dir=tmp_path / "results" / "baselines",
+        eval_test=base / "processed" / "eval_test.txt",
+        direct_score_a=base / "processed" / "direct_score_a.parquet")
 
 
 @pytest.fixture()
@@ -84,7 +86,9 @@ def _second_exp(tmp_path):
         "generate:\n"
         "  n_runs: 2\n"
         "protocol:\n"
-        "  temporal_split_year: 2019\n", encoding="utf-8")
+        "  temporal_split_year: 2019\n"
+        "baselines:\n"
+        "  direct_score_source: own_run\n", encoding="utf-8")
     cfg2 = load_config(yaml2)
     paths2 = _paths_for(tmp_path, "smoke2")
     run_generation(cfg2, paths2, MockGenClient(), cache=None)

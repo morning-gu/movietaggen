@@ -65,7 +65,9 @@ def _paths_for(tmp_path) -> Paths:
         genome_scores=base / "processed" / "genome_scores.parquet",
         genome_tags=base / "processed" / "genome_tags.parquet",
         aligned=base / "interim" / "aligned.parquet",
-        baselines_dir=tmp_path / "results" / "baselines")
+        baselines_dir=tmp_path / "results" / "baselines",
+        eval_test=base / "processed" / "eval_test.txt",
+        direct_score_a=base / "processed" / "direct_score_a.parquet")
 
 
 @pytest.fixture()
@@ -133,7 +135,9 @@ def test_calibration_sample_capped_by_config(chain, tmp_path, monkeypatch):
         "audit:\n"
         "  calibration_sample: 1\n"
         "protocol:\n"
-        "  temporal_split_year: 2019\n", encoding="utf-8")
+        "  temporal_split_year: 2019\n"
+        "baselines:\n"
+        "  direct_score_source: own_run\n", encoding="utf-8")
     monkeypatch.setattr("movietaggen.config.project_root", lambda: tmp_path)
 
     assert run_audit_script.main(str(cap_cfg)) == 0

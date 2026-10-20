@@ -19,7 +19,10 @@ def _write(tmp_path: Path, data: dict) -> Path:
     return p
 
 
-MINIMAL = {"exp_name": "t", "data": {"source": "synthetic"}}
+# synthetic + schema 默认 direct_score_source=a_borrow 会被校验拦截（迁移物仅限
+# real）：封闭测试一律钉 own_run；默认值断言见 test_universe_and_direct_score_source_defaults。
+MINIMAL = {"exp_name": "t", "data": {"source": "synthetic"},
+           "baselines": {"direct_score_source": "own_run"}}
 
 
 def test_defaults(tmp_path):
@@ -121,6 +124,8 @@ def test_paths_synthetic_isolated(tmp_path):
     assert p.interim == p.root / "data" / "synthetic" / "interim"
     assert p.processed == p.root / "data" / "synthetic" / "processed"
     assert p.tag_groups == p.processed / "tag_groups.json"
+    assert p.eval_test == p.processed / "eval_test.txt"
+    assert p.direct_score_a == p.processed / "direct_score_a.parquet"
     assert p.results == p.root / "results" / "t"
     assert p.stage_gen == p.results / "stage-gen"
     assert p.stage_align == p.results / "stage-align"
@@ -139,6 +144,8 @@ def test_paths_real_default_raw_dir(tmp_path):
     assert p.movielens == raw / "movielens" / "ml-latest"
     assert p.interim == p.root / "data" / "interim"
     assert p.processed == p.root / "data" / "processed"
+    assert p.eval_test == p.processed / "eval_test.txt"
+    assert p.direct_score_a == p.processed / "direct_score_a.parquet"
 
 
 def test_raw_dir_override(tmp_path):
@@ -195,6 +202,36 @@ def test_align_top_k_validated(tmp_path):
     bad = {**MINIMAL, "align": {"top_k": 0}}
     with pytest.raises(ValueError, match="top_k"):
         load_config(_write(tmp_path, bad))
+
+
+def test_universe_validated(tmp_path):
+    """440 协议：data.universe 只收 three_modality | all。"""
+    bad = {**MINIMAL, "data": {"source": "synthetic", "universe": "bogus"}}
+    with pytest.raises(ValueError, match="universe"):
+        load_config(_write(tmp_path, bad))
+
+
+def test_direct_score_source_validated(tmp_path):
+    """direct_score 基线的分数来源只收 a_borrow | own_run。"""
+    bad = {**MINIMAL, "baselines": {"direct_score_source": "bogus"}}
+    with pytest.raises(ValueError, match="direct_score_source"):
+        load_config(_write(tmp_path, bad))
+
+
+def test_a_borrow_requires_real_source(tmp_path):
+    """a_borrow 读的是 A 迁移评分（direct_score_a.parquet）——迁移物是真实数据
+    工件，synthetic 数据没有对应产物，必须大声报错并指向 own_run。"""
+    bad = {**MINIMAL, "baselines": {"direct_score_source": "a_borrow"}}
+    with pytest.raises(ValueError, match="真实数据工件"):
+        load_config(_write(tmp_path, bad))
+
+
+def test_universe_and_direct_score_source_defaults(tmp_path):
+    """440 协议新字段默认值：universe=three_modality、direct_score_source=a_borrow
+    （real + a_borrow 合法：迁移物落在仓库 data/processed）。"""
+    cfg = load_config(_write(tmp_path, {"exp_name": "t", "data": {"source": "real"}}))
+    assert cfg.data.universe == "three_modality"
+    assert cfg.baselines.direct_score_source == "a_borrow"
 
 
 def test_mock_quoted_string_rejected(tmp_path):

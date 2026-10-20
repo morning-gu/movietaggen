@@ -52,7 +52,9 @@ def _paths_for(tmp_path) -> Paths:
         genome_scores=base / "processed" / "genome_scores.parquet",
         genome_tags=base / "processed" / "genome_tags.parquet",
         aligned=base / "interim" / "aligned.parquet",
-        baselines_dir=tmp_path / "results" / "baselines")
+        baselines_dir=tmp_path / "results" / "baselines",
+        eval_test=base / "processed" / "eval_test.txt",
+        direct_score_a=base / "processed" / "direct_score_a.parquet")
 
 
 # ---------------------------------------------------------------------------
@@ -261,7 +263,8 @@ def test_unknown_method_value_error(data_ready, tmp_path, monkeypatch):
         "data:\n"
         "  source: synthetic\n"
         "baselines:\n"
-        "  run: [random, nope]\n", encoding="utf-8")
+        "  run: [random, nope]\n"
+        "  direct_score_source: own_run\n", encoding="utf-8")
     monkeypatch.setattr("movietaggen.config.project_root", lambda: tmp_path)
     with pytest.raises(ValueError, match="未知基线方法"):
         run_baselines_script.main(str(bad))
@@ -292,7 +295,8 @@ def test_movie_limit_aligns_all_method_movie_sets(data_ready, tmp_path, monkeypa
         "protocol:\n"
         "  temporal_split_year: 2019\n"
         "baselines:\n"
-        "  run: [direct_score, genre_map, random]\n", encoding="utf-8")
+        "  run: [direct_score, genre_map, random]\n"
+        "  direct_score_source: own_run\n", encoding="utf-8")
     monkeypatch.setattr("movietaggen.config.project_root", lambda: tmp_path)
 
     assert run_baselines_script.main(str(cfg)) == 0

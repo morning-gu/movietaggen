@@ -26,7 +26,9 @@ def _paths_for(tmp_path, exp="x") -> Paths:
         genome_scores=tmp_path / "processed" / "genome_scores.parquet",
         genome_tags=tmp_path / "processed" / "genome_tags.parquet",
         aligned=tmp_path / "interim" / "aligned.parquet",
-        baselines_dir=tmp_path / "results" / "baselines")
+        baselines_dir=tmp_path / "results" / "baselines",
+        eval_test=tmp_path / "processed" / "eval_test.txt",
+        direct_score_a=tmp_path / "processed" / "direct_score_a.parquet")
 
 
 def test_load_stage_local_missing_raises(tmp_path):
