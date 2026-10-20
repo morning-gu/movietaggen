@@ -5,7 +5,7 @@ load_stage（input_exp 非空时跨实验物理借用 stage-gen，PROVENANCE 溯
 genome 标签与自由标签各嵌一次（embed_texts 逐文本磁盘缓存，cache_embed
 跨实验共享；per-experiment 缓存命中自动生效）→ map_free_tags top-k 余弦
 映射 → aggregate_scores 全量聚合 → 校准（scores_raw join genome_scores
-真值、内联过滤 year < protocol.temporal_split_year 的电影得训练对 →
+真值、fixed_split 按 processed/eval_test.txt 清单取训练侧电影得训练对 →
 fit_calibration → transform 全量）→ 五产物落盘：mappings.parquet /
 scores_raw.parquet / scores_calibrated.parquet / calibration.json /
 run_manifest.json，外加 results 根的 config.yaml 快照（结果目录自包含）。
@@ -13,13 +13,15 @@ run_manifest.json，外加 results 根的 config.yaml 快照（结果目录自�
 两条控制器裁定在此固化：
 - 聚合语义：scores_raw = aggregate_scores 对 mappings 全部行聚合，low_conf
   仅是旗标，本脚本任何环节不过滤（阈值筛选曲线是评估期 Task 18 的事）；
-- 训练对防泄露：校准拟合集只允许 year < temporal_split_year 的电影（内联
-  实现，与 T18 protocol.temporal_split 语义一致、独立保留不回改）。
+- 训练对防泄露：校准拟合集只允许 fixed_split 的训练侧电影（train =
+  dataset − test，测试侧由 processed/eval_test.txt 清单钉死——真实数据为
+  A 迁移的 88 部固定测试集；接线处 assert_no_leakage 收尾自检，出处
+  spec §2.2 固定测试分割）。
 
 空实验降级：无自由标签或空数据集 → 空 schema 产物 + 零输出 manifest，
 返回 0（合法空实验可表示，校准无从拟合故以 fitted:false 哨兵占位）；
-但数据非空而 year 过滤后训练对为空 → fit_calibration 的 ValueError 传播
-（配置问题，如 split 年份早于全部电影）。
+但数据非空而固定分割后训练对为空 → fit_calibration 的 ValueError 传播
+（配置问题，如清单覆盖全部电影、或产物只含测试清单电影）。
 """
 from __future__ import annotations
 
@@ -42,6 +44,7 @@ from movietaggen.align.mapping import (  # noqa: E402
     map_free_tags,
 )
 from movietaggen.config import AppConfig, Paths, load_config, paths_for  # noqa: E402
+from movietaggen.eval.protocol import assert_no_leakage, fixed_split  # noqa: E402
 from movietaggen.stages import load_stage, save_config_snapshot  # noqa: E402
 
 # processed 产物（02 产出）缺失时的空 schema 退化（列与 data.align.DATASET_COLUMNS 一致）
@@ -97,21 +100,23 @@ def run_alignment(config: AppConfig, paths: Paths, config_path: str | Path) -> P
 
         if len(scores_raw) > 0:
             # 4. 校准：scores_raw join genome 相关度真值得 (pred, truth) 对
+            #    （year 列不 join：其唯一消费者是已被固定分割替换的时序过滤）
             joined = scores_raw.merge(genome_scores, on=["movie_id", "tag_id"], how="inner")
-            joined = joined.merge(dataset[["movie_id", "year"]], on="movie_id", how="inner")
-            # 【防泄露契约】校准拟合集只允许 year < temporal_split_year 的电影：
-            # 测试分割（year ≥ split）的真值一旦进入拟合集，校准器等于"见过"测试
-            # 电影的 ground truth，评估期校准前后的对比会系统性虚高。year 缺失/
-            # 无法解析的电影按不可信处理，绝不进训练集。此处为内联过滤，与 T18
-            # protocol.temporal_split 语义一致、独立保留不回改。
-            year = pd.to_numeric(joined["year"], errors="coerce")
-            train = joined[year < config.protocol.temporal_split_year]
+            # 【防泄露契约】校准拟合集只允许固定分割的训练侧电影：测试侧由
+            # processed/eval_test.txt 清单钉死（真实数据为 A 迁移的 88 部固定
+            # 测试集），train = dataset − test。测试清单电影的真值一旦进入拟合
+            # 集，校准器等于"见过"测试电影的 ground truth，评估期校准前后的
+            # 对比会系统性虚高。清单缺失/坏行/越界由 fixed_split 大声失败；
+            # 接线以 assert_no_leakage 收尾自检（spec §2.2 固定测试分割）。
+            train_ids, test_ids = fixed_split(dataset, paths.eval_test)
+            assert_no_leakage(train_ids, test_ids)
+            train = joined[joined["movie_id"].isin(set(train_ids))]
             train_pairs = pd.DataFrame({"pred": train["score"].astype(float),
                                         "truth": train["relevance"].astype(float)})
             # 数据非空而训练对为空 → ValueError 传播（配置问题，不静默降级）
             calibrator = fit_calibration(train_pairs, config.align.calib_method)
             calib_dict = calibrator.to_dict()
-            # 5. transform 全量行（含测试分割电影；评估期才做分割内对比）
+            # 5. transform 全量行（含测试侧电影；评估期才做分割内对比）
             scores_calibrated = scores_raw.copy()
             scores_calibrated["score"] = calibrator.transform(
                 scores_raw["score"].to_numpy(dtype=float))

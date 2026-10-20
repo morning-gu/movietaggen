@@ -1,6 +1,6 @@
 """阶段二对齐脚本（05）：嵌入 → 映射 → 聚合 → 训练分割校准 的端到端接线测试。
 
-覆盖面（brief 三测试 + 控制器裁定钉）：
+覆盖面（brief 测试 + 控制器裁定钉）：
 - 端到端 mock 集成：00→02→04(mock)→05 全链在 tmp 树内封闭跑（复用
   test_pipeline.py / test_stages.py 的 fixture 模式），断言五产物、
   cosine/score 值域、scores_raw 与 mappings 聚合一致、防泄露的训练对数；
@@ -9,10 +9,13 @@
 - 阶段隔离：05 跑前后本实验 stage-gen 逐字节不变（spec 反目标 2/3）；
 - 空实验降级：无自由标签 / 空数据集 → 空 schema 产物 + 零输出 manifest，
   不崩（合法空实验可表示）；
-- 训练对为空：数据非空但 year 过滤后无训练对 → fit_calibration 的
-  ValueError 传播（配置问题，控制器裁定 6）；
-- smoke 配置钉：temporal_split_year: 2019（控制器裁定 2，合成电影
-  2018-2023 全 ≥ schema 默认 2015，不钉则训练分割恒空）。
+- 固定分割训练对：train_pairs 恰等于 scores_raw ⋈ genome_scores 后
+  movie_id ∈ fixed_split 训练侧（dataset − eval_test 清单）的行数（00
+  合成产出 processed/eval_test.txt，各测试按需覆写其内容）；
+- 训练对为空：数据非空但固定分割后无训练对（eval_test 清单覆盖全部电影）
+  → fit_calibration 的 ValueError 传播（配置问题，控制器裁定 6）；
+- smoke 配置钉：temporal_split_year: 2019（440 固定分割后已不参与 05 校准，
+  钉保护 report 描述性分桶视图的既有配置不被误改）。
 """
 import hashlib
 import importlib
@@ -81,7 +84,7 @@ def _snapshot(root: Path) -> dict:
 
 
 def test_align_end_to_end(chain):
-    """五产物齐全；值域契约；scores_raw = mappings 全量聚合；训练对只含训练分割电影。"""
+    """五产物齐全；值域契约；scores_raw = mappings 全量聚合；训练对只含固定分割训练侧电影。"""
     cfg, paths = chain
     out = run_alignment(cfg, paths, "configs/smoke.yaml")
     assert out == paths.stage_align
@@ -124,17 +127,56 @@ def test_align_end_to_end(chain):
     assert manifest["calib_method"] == cfg.align.calib_method
     assert manifest["embed_model"] == "mock"
 
-    # 防泄露：train_pairs 恰等于训练分割（year < split）电影的 (score, truth) 对数
+    # 防泄露：train_pairs 恰等于固定分割训练侧（dataset − eval_test 清单）
+    # 电影的 (score, truth) 对数（独立重算口径：解析清单文本，不经 fixed_split）
     dataset = pd.read_parquet(paths.dataset)
     scores = pd.read_parquet(paths.genome_scores)
-    train_movies = set(dataset.loc[
-        dataset["year"] < cfg.protocol.temporal_split_year, "movie_id"])
+    test_ids = {int(line) for line in
+                paths.eval_test.read_text(encoding="utf-8").splitlines() if line.strip()}
+    train_movies = set(dataset["movie_id"]) - test_ids
     expected_pairs = raw[raw["movie_id"].isin(train_movies)].merge(
         scores, on=["movie_id", "tag_id"])
     assert manifest["train_pairs"] == len(expected_pairs)
     assert len(expected_pairs) > 0
-    # 过滤确实发生：测试分割电影的分数行存在但不进训练对
+    # 过滤确实发生：测试清单电影的分数行存在但不进训练对
     assert set(raw["movie_id"]) - train_movies
+
+
+def test_train_pairs_from_fixed_split(chain):
+    """固定分割契约（brief Step 1a）：清单 2 部测试电影 → 校准拟合成功，且
+    manifest["train_pairs"] 恰等于 scores_raw ⋈ genome_scores 后 movie_id ∈
+    训练侧（dataset − 清单）的行数——测试清单电影的 truth 行数不入计。
+
+    计划文本的 "dataset 8 部" 为撰写时假设（SYNTHETIC_MOVIES 实为 5 部，
+    test_constants_shape 守卫）；语义等价物：dataset 5 部 + eval_test 2 部。
+    """
+    cfg, paths = chain
+    # 覆写 00 合成清单（默认 1 部）：钉 2 部测试电影 → 训练侧 3 部
+    paths.eval_test.write_text("1\n2\n", encoding="utf-8")
+
+    run_alignment(cfg, paths, "configs/smoke.yaml")
+
+    # 拟合成功：非降级哨兵（fitted:false 占位无拟合参数），且能重建校准器
+    # （哨兵缺参数键，from_dict 会 ValueError——能重建即已拟合）
+    d = json.loads((paths.stage_align / "calibration.json").read_text(encoding="utf-8"))
+    assert "fitted" not in d and d["method"] == cfg.align.calib_method
+    Calibrator.from_dict(d)
+    manifest = json.loads(
+        (paths.stage_align / "run_manifest.json").read_text(encoding="utf-8"))
+    dataset = pd.read_parquet(paths.dataset)
+    raw = pd.read_parquet(paths.stage_align / "scores_raw.parquet")
+    scores = pd.read_parquet(paths.genome_scores)
+    test_ids = {1, 2}
+    train_movies = set(dataset["movie_id"]) - test_ids
+    expected = raw[raw["movie_id"].isin(train_movies)].merge(
+        scores, on=["movie_id", "tag_id"])
+    assert manifest["train_pairs"] == len(expected)
+    assert len(expected) > 0
+    # 排除只发生在测试侧：raw 中有测试清单电影的行（不入计），且被排除的
+    # 电影恰为测试清单成员（无训练侧电影被误排）
+    excluded = set(raw["movie_id"]) - train_movies
+    assert excluded
+    assert excluded <= test_ids
 
 
 def test_borrow_does_not_touch_source(tmp_path):
@@ -227,15 +269,23 @@ def test_empty_dataset_writes_empty_artifacts(chain):
 
 
 def test_empty_train_pairs_propagates_value_error(chain):
-    """数据非空但 year 过滤后训练对为空 → fit_calibration 的 ValueError 传播（配置问题）。"""
+    """数据非空但固定分割后训练对为空 → fit_calibration 的 ValueError 传播
+    （配置问题，不静默降级，控制器裁定 6）。
+
+    固定分割下的触发形态：eval_test 清单覆盖全部电影 → 训练侧为空集
+    （另一等价形态是生成产物只含测试清单电影，joined 过滤后同样为空）。
+    """
     cfg, paths = chain
-    cfg.protocol.temporal_split_year = 2000     # 合成电影年份 2018-2023，全被过滤
+    dataset = pd.read_parquet(paths.dataset)
+    paths.eval_test.write_text(
+        "".join(f"{mid}\n" for mid in sorted(dataset["movie_id"])), encoding="utf-8")
     with pytest.raises(ValueError, match="校准对为空"):
         run_alignment(cfg, paths, "configs/smoke.yaml")
 
 
 def test_smoke_config_temporal_split_year_pinned():
-    """控制器裁定 2：smoke.yaml 钉 temporal_split_year: 2019（2018 的 Crimson Horizon
-    为训练侧）；default.yaml 维持 schema 默认 2015（真实数据）。"""
+    """temporal_split_year 配置钉：smoke.yaml 钉 2019、default.yaml 维持 schema
+    默认 2015。440 固定分割后该字段已不参与 05 校准（拟合面统一走 fixed_split），
+    仅 report 层描述性分桶视图（年代子集）仍消费——此钉防止视图年份被误改。"""
     assert load_config("configs/smoke.yaml").protocol.temporal_split_year == 2019
     assert load_config("configs/default.yaml").protocol.temporal_split_year == 2015
