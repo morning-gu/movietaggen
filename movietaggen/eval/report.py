@@ -15,9 +15,13 @@ metrics_table → 子集切片 → concat），差异：
   + judge 口径（judge_gen_quality.parquet 均值）；
 - 不复制 A 的模态×标签热力图（B 无此需求，YAGNI）。
 
-metrics.csv 行 = method × subset；subset 五视图（spec §7.3：描述性分桶，
+metrics.csv 行 = method × subset；subset 视图（spec §7.3：描述性分桶，
 不作协议）：全部 / 时序训练(<y) / 时序测试(≥y) / tag:content / tag:preference
-（冷启动是方法属性不是子集行）。多实验对比：第一个实验保持裸方法名，其余
+（冷启动是方法属性不是子集行）；eval_test_ids 给定时另加固定两行——
+固定测试(88)=论文主表口径（spec §2.4）：所有方法在同一 88 部上对比；
+固定训练(352) 为调试口径；全部/时序/tag:* 保留为描述性视图，n_pred 列
+诚实标注各方法实际预测数（direct_score 在 440 行 n_pred=88 属预期）。
+多实验对比：第一个实验保持裸方法名，其余
 实验以 `two-stage[raw|<实验目录名>]` 后缀消歧。
 
 嵌入口径的逐电影约定（spec §7.1「生成标签 ↔ 该电影真实用户标签」）：
@@ -250,18 +254,25 @@ def write_report(exp_dirs: list[Path], baseline_dir: Path | None, out_dir: Path,
                  cfg: AppConfig, dataset: pd.DataFrame,
                  truth: pd.DataFrame, tag_groups: pd.DataFrame | None,
                  user_tags: pd.DataFrame | None,
-                 cache_root: Path | None = None) -> Path:
+                 cache_root: Path | None = None,
+                 eval_test_ids: list[int] | None = None) -> Path:
     """汇总多实验 + 基线 → evaluation/ 目录（metrics.csv、report.md、
     gen_quality.json）。
 
     cache_root：嵌入磁盘缓存根（paths.cache_embed）；None = 不落缓存直嵌
     （测试路径）。baseline_dir 恒可传（baselines.parquet 未跑基线时不存在，
-    此处自行降级）。
+    此处自行降级）。eval_test_ids：固定测试清单的 movie_id 侧（08 恒传
+    fixed_split(dataset, paths.eval_test) 的 test 侧）；None = 不产固定行
+    （向后兼容，既有调用不变）。
 
     metrics.csv 的 subset 视图（spec §7.3：描述性分桶，不作协议）：
     - 全部 / 时序训练(<year) / 时序测试(≥year)：与各方法自身电影集取交
       （pred/truth 同步过滤即交集语义）——训练集上近记忆式复述、测试集上
       才见真泛化；
+    - 固定测试(88) / 固定训练(352)（eval_test_ids 给定时）：论文主表口径
+      （spec §2.4）——所有方法在同一 88 部固定测试集上对比（同集严格可比）；
+      固定训练(352) 为调试口径；全部/时序/tag:* 保留为描述性视图，n_pred
+      列诚实标注各方法实际预测数（direct_score 在 440 行 n_pred=88 属预期）；
     - tag:<类型>（有 tag_groups 时）：内容型 vs 偏好型标签的逐类型对比。
     """
     if not exp_dirs:
@@ -294,6 +305,20 @@ def write_report(exp_dirs: list[Path], baseline_dir: Path | None, out_dir: Path,
 
     sections: list[pd.DataFrame] = [
         metrics_table(predictions, truth, protocol).assign(subset="全部")]
+    # 固定子集行（440 协议，spec §2.4）：eval_test_ids 给定时所有方法在同一
+    # 固定测试集上对比——严格可比的论文主表口径；固定训练为补集侧（用
+    # dataset 的 movie_id 列推导，不动时序分割）调试口径。行序：紧跟"全部"、
+    # 时序行之前（主表口径紧邻全量视图）。
+    if eval_test_ids is not None:
+        eval_ids = list(eval_test_ids)
+        sections.append(metrics_table(predictions, truth, protocol,
+                                      movie_ids=eval_ids
+                                      ).assign(subset=f"固定测试({len(eval_ids)})"))
+        eval_id_set = set(eval_ids)
+        train_side = [m for m in dataset["movie_id"] if m not in eval_id_set]
+        sections.append(metrics_table(predictions, truth, protocol,
+                                      movie_ids=train_side
+                                      ).assign(subset=f"固定训练({len(dataset) - len(eval_ids)})"))
     sections.append(metrics_table(predictions, truth, protocol,
                                   movie_ids=list(train_ids)
                                   ).assign(subset=f"时序训练(<{y})"))

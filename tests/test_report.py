@@ -15,6 +15,7 @@ from movietaggen.data.align import build_dataset
 from movietaggen.data.grouping import load_tag_groups
 from movietaggen.data.movielens import load_user_tags
 from movietaggen.data.sample import make_synthetic_dataset
+from movietaggen.eval.protocol import fixed_split
 from movietaggen.eval.report import (
     gen_quality_summary,
     metrics_table,
@@ -431,3 +432,64 @@ def test_evaluate_kappa_flag_no_valid_pairs_skips(fake_exp_tree, tmp_path, capsy
     out = capsys.readouterr().out
     assert "无有效配对" in out
     assert not (paths.results / "evaluation" / "kappa.json").exists()
+
+
+# ---------------------------------------------------------------------------
+# 440 协议：report 固定子集行（spec §2.4 论文主表口径——同集严格可比）
+# ---------------------------------------------------------------------------
+
+
+def test_report_fixed_split_rows_same_set_comparability(fake_exp_tree, tmp_path):
+    """固定子集行的同集可比钉死（Task 9）：全宇宙型与仅测试集型两方法在
+    "固定测试"行 n_pred 相等且 = 测试电影数 × tag 数（同电影集同构——对照
+    "全部"行两方法 n_pred 不等，固定行才使方法同集可比）；"固定训练"行
+    movie 集为补集（全宇宙型在训练侧的预测数，仅测试集型按 I1 为空集行）；
+    固定两行位于"全部"之后、时序行之前；eval_test_ids=None 时无"固定"行
+    （向后兼容）。"""
+    cfg, paths, _ = fake_exp_tree
+    dataset = pd.read_parquet(paths.dataset)
+    truth = pd.read_parquet(paths.genome_scores)
+    tag_groups = load_tag_groups(paths.tag_groups)
+    _, test_ids = fixed_split(dataset, paths.eval_test)
+    n_tags = truth["tag_id"].nunique()
+    # 两方法经 baselines.parquet 注入（write_report 对 method 名透传）：
+    # 全宇宙型（dataset 全部电影 × 全部 tag）与仅测试集型（只 eval_test 电影）
+    full = truth.rename(columns={"relevance": "score"})[["movie_id", "tag_id", "score"]]
+    test_only = full[full["movie_id"].isin(set(test_ids.tolist()))]
+    baselines_dir = tmp_path / "results" / "baselines"
+    baselines_dir.mkdir(parents=True, exist_ok=True)
+    pd.concat([full.assign(method="full_universe"),
+               test_only.assign(method="test_only")]
+              ).to_parquet(baselines_dir / "baselines.parquet", index=False)
+
+    out = write_report([paths.results], paths.baselines_dir, tmp_path / "evaluation",
+                       cfg, dataset, truth, tag_groups, None,
+                       eval_test_ids=list(test_ids))
+    df = pd.read_csv(out / "metrics.csv")
+    label_test = f"固定测试({len(test_ids)})"
+    label_train = f"固定训练({len(dataset) - len(test_ids)})"
+    subsets = df["subset"].drop_duplicates().tolist()
+    # 行序：固定两行在"全部"之后、时序行之前（论文主表口径紧邻全量视图）
+    assert subsets.index("全部") < subsets.index(label_test) \
+        < subsets.index(label_train) < subsets.index("时序训练(<2019)")
+    # 同集可比钉死：固定测试行两方法 n_pred 相等 = 测试电影数 × tag 数
+    fixed = df[df["subset"] == label_test].set_index("method")
+    assert fixed.loc["full_universe", "n_pred"] == fixed.loc["test_only", "n_pred"]
+    assert fixed.loc["full_universe", "n_pred"] == len(test_ids) * n_tags
+    # 对照："全部"行（交集语义）两方法 n_pred 不等——全宇宙 / 仅测试集的
+    # 预测宇宙差异只在固定行被抹平
+    allrow = df[df["subset"] == "全部"].set_index("method")
+    assert allrow.loc["full_universe", "n_pred"] != allrow.loc["test_only", "n_pred"]
+    # 固定训练行 movie 集 = 补集：全宇宙型 n_pred = 训练电影数 × tag 数；
+    # 仅测试集型在训练侧无预测（I1 空集行 n_pred=0，不以 0.0 伪装满分）
+    trainrow = df[df["subset"] == label_train].set_index("method")
+    assert trainrow.loc["full_universe", "n_pred"] == \
+        (len(dataset) - len(test_ids)) * n_tags
+    assert trainrow.loc["test_only", "n_pred"] == 0
+
+    # eval_test_ids=None → 无"固定"行（向后兼容，既有用例口径不变）
+    out2 = write_report([paths.results], paths.baselines_dir,
+                        tmp_path / "evaluation_none", cfg, dataset, truth,
+                        tag_groups, None)
+    df2 = pd.read_csv(out2 / "metrics.csv")
+    assert not df2["subset"].str.startswith("固定").any()

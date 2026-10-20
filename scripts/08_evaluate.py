@@ -3,7 +3,9 @@
 管线（复用 Task 18 的 write_report，接线模式照 06 脚本）：
 load_config → paths_for → 读 dataset / truth（genome_scores）/ tag_groups
 （文件可缺 → None，tag:* 子集随之跳过）/ user_tags（tags.csv 可缺 → None，
-嵌入口径随之跳过）→ 实验目录集合 = 本实验 results 目录 + --extra 指定的
+嵌入口径随之跳过）→ fixed_split(dataset, paths.eval_test) 取固定测试侧恒传
+write_report（metrics.csv 另产固定测试/固定训练两行——论文主表口径，spec
+§2.4）→ 实验目录集合 = 本实验 results 目录 + --extra 指定的
 其它实验目录（保留含 stage-align/scores_raw.parquet 者）→ write_report 产出
 results/<exp_name>/evaluation/{metrics.csv, report.md, gen_quality.json}。
 
@@ -35,6 +37,7 @@ from movietaggen.config import load_config, paths_for  # noqa: E402
 from movietaggen.data.grouping import load_tag_groups  # noqa: E402
 from movietaggen.data.movielens import load_user_tags  # noqa: E402
 from movietaggen.eval.metrics import cohen_kappa  # noqa: E402
+from movietaggen.eval.protocol import fixed_split  # noqa: E402
 from movietaggen.eval.report import write_report  # noqa: E402
 
 
@@ -63,6 +66,9 @@ def main(config_path: str = "configs/default.yaml",
 
     dataset = pd.read_parquet(paths.dataset)
     truth = pd.read_parquet(paths.genome_scores)
+    # 440 协议（spec §2.4）：固定测试行恒产出——write_report 收到 eval_test
+    # 清单的 test 侧后，metrics.csv 另产固定测试/固定训练两行（论文主表口径）
+    _, test_ids = fixed_split(dataset, paths.eval_test)
     tag_groups = load_tag_groups(paths.tag_groups) if paths.tag_groups.exists() else None
     user_tags_path = paths.movielens / "tags.csv"
     user_tags = load_user_tags(user_tags_path) if user_tags_path.exists() else None
@@ -78,7 +84,8 @@ def main(config_path: str = "configs/default.yaml",
     exp_dirs = [e for e in exps if (e / "stage-align" / "scores_raw.parquet").exists()]
     out = write_report(exp_dirs, paths.baselines_dir, paths.results / "evaluation",
                        config, dataset, truth, tag_groups, user_tags,
-                       cache_root=paths.cache_embed)
+                       cache_root=paths.cache_embed,
+                       eval_test_ids=list(test_ids))
     # I7：人工校准回路出数口（--kappa 给定时）
     if kappa_csv:
         run_kappa(Path(kappa_csv), out)
