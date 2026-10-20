@@ -1,5 +1,6 @@
 """合成样本生成：结构、五维度分组、自由标签噪声、确定性。"""
 import json
+import random
 
 import pandas as pd
 
@@ -138,3 +139,20 @@ def test_make_synthetic_dataset_structure(tmp_path):
     tg = json.loads((tmp_path / "processed" / "tag_groups.json").read_text(encoding="utf-8"))
     assert len(tg) == 36
     assert {"tag_id", "tag", "group", "tag_type", "definition"} <= set(tg[0].keys())
+
+
+def test_synthetic_eval_test_txt(tmp_path):
+    """processed/eval_test.txt 副作用：Random(42) 按 k=max(1, len//5) 采样、
+    每行一个可解析 id（无空行）、幂等重跑同内容。"""
+    make_synthetic_dataset(tmp_path)
+    path = tmp_path / "processed" / "eval_test.txt"
+    assert path.exists()
+    lines = path.read_text(encoding="utf-8").splitlines()
+    ids = [int(line) for line in lines]           # 空行/非整数行在此报错
+    pool = sorted(m["movie_id"] for m in SYNTHETIC_MOVIES)
+    assert ids == random.Random(42).sample(pool, max(1, len(pool) // 5))
+    assert len(ids) == 1                          # 5 部 → k = max(1, 5//5) = 1
+    assert set(ids) <= set(pool)
+    before = path.read_text(encoding="utf-8")
+    make_synthetic_dataset(tmp_path)              # 幂等：重跑同内容
+    assert path.read_text(encoding="utf-8") == before

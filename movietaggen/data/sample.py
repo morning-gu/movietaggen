@@ -1,9 +1,11 @@
 """合成小样本：结构镜像真实原始数据格式，用于开发、测试与冒烟。
 
-产出三块：
+产出四块：
 - raw/movienet/   （镜像 MovieNet 假定格式）
 - raw/movielens/  （镜像 MovieLens ml-latest 格式）
 - processed/tag_groups.json（合成样本的分组是已知的，直接生成，不走 LLM）
+- processed/eval_test.txt（合成等价的固定测试清单，与真实 88 部清单同格式，
+  供 fixed_split / 冒烟消费；Random(42) 确定性采样，重跑幂等）
 
 相对 A（genometag）的扩展：
 - 标签组从 4 组扩到 6 组：新增叙事手法（narrative）与角色特征（character），
@@ -24,6 +26,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import random
 from pathlib import Path
 
 from PIL import Image, ImageDraw
@@ -284,3 +287,10 @@ def make_synthetic_dataset(out_root: Path) -> None:
     processed.mkdir(parents=True, exist_ok=True)
     (processed / "tag_groups.json").write_text(
         json.dumps(SYNTHETIC_TAGS, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    # processed：eval_test.txt（固定测试清单的合成等价物；k = max(1, len//5)，
+    # 5 部 → 1 部。与真实清单同格式：每行一个 id，fixed_split 直接可读）
+    ml_ids = sorted(m["movie_id"] for m in SYNTHETIC_MOVIES)
+    eval_ids = random.Random(42).sample(ml_ids, max(1, len(ml_ids) // 5))
+    (processed / "eval_test.txt").write_text(
+        "".join(f"{mid}\n" for mid in eval_ids), encoding="utf-8")
