@@ -5,9 +5,9 @@
 - 任务矩阵 movie × group × run（baselines.n_runs，run_id = run-{r}）；
 - prompt 组装 / 宽松解析 / 解析重试与 A 逐字一致（scoring_prompts.py 为
   A 的 prompts.py 原样复制，mock_scoring.py 为 A 的 mock.py 原样复制）；
-- few-shot 从时序分割的训练侧（year < protocol.temporal_split_year，即 A
-  fitting_pool_ids 的时序模式语义）选 top-k 分数和最高的电影，并以
-  assert_no_leakage 收尾自检（eval.protocol 的全框架防泄露约束）；
+- few-shot 从固定分割的训练侧（train = dataset − processed/eval_test.txt 清单，
+  440 协议；真实数据为 A 迁移的 88 部固定测试集）选 top-k 分数和最高的电影，
+  并以 assert_no_leakage 收尾自检（eval.protocol 的全框架防泄露约束）；
 - 缓存集成保留：键的 run 维度用 direct|{group}|{run_id} 命名空间；mock 模式
   不读不写缓存。
 
@@ -16,8 +16,6 @@
 管道的既定裁定——失败信封入缓存会让续跑永久复播失败）。
 """
 from __future__ import annotations
-
-import random
 
 import pandas as pd
 
@@ -29,7 +27,11 @@ from movietaggen.baselines.scoring_prompts import (
 )
 from movietaggen.config import AppConfig
 from movietaggen.data.grouping import load_tag_groups
-from movietaggen.eval.protocol import assert_no_leakage, temporal_split
+from movietaggen.eval.protocol import (
+    assert_no_leakage,
+    fixed_split,
+    sample_limited_movie_ids,
+)
 from movietaggen.generate.cache import ResponseCache, cache_key
 from movietaggen.generate.client import sampling_params
 from movietaggen.generate.content import available_modalities, to_multimodal
@@ -43,7 +45,8 @@ def select_few_shots(dataset: pd.DataFrame, genome_scores: pd.DataFrame,
                      tag_names: dict[int, str]) -> list[FewShot]:
     """从拟合池（pool_ids，防泄露约束）中选 top-k 分数和最高的 n 部。
 
-    池语义见 eval.protocol.fitting_pool_ids（movie_list 补集或分割年前）。
+    池语义由调用方给定（own_run 为 fixed_split 的训练侧；选取后由
+    assert_no_leakage 收尾自检）。
     tag_names: tag_id → tag 文本（来自 tag_groups；few-shot 展示 tag 名而非 id）。
     """
     if n <= 0:
@@ -81,6 +84,49 @@ def few_shot_movie_ids(dataset: pd.DataFrame, shots: list[FewShot]) -> set[int]:
     return {id_of[(s.title, int(s.year))] for s in shots}
 
 
+def load_direct_score_a(paths, dataset: pd.DataFrame) -> pd.DataFrame:
+    """读 A 的 direct_score 评分迁移物，聚合为稠密 (movie, tag) 分数表。
+
+    a_borrow 分支的数据入口（07 按配置分流；own_run 不经此函数）。输入
+    parquet 列 movie_id, tag_id, group, modality_set, run_id, score（逐轮
+    原始分）。守门与口径：
+    - 文件缺失 → ValueError 点名路径与成因（config 层已拦 synthetic+a_borrow，
+      但 direct 调用方也可能踩，此处再拦一道）；
+    - 电影全集校验（Review Focus 1）：迁移物 movie_id 必须 ⊆
+      dataset["movie_id"]，越界点名缺失电影并提示清单/数据集版本错配；
+    - modality_set 唯一值必须是 video|script|dialogue（A 的全模态默认），
+      其它值点名实际值集；
+    - 均值口径：groupby(["movie_id","tag_id"])["score"].mean()——pandas mean
+      默认 skipna，天然实现"仅计已解析轮均值、全空 → NaN"（B 既有裁定，
+      与 own_run 的逐轮累计-均值语义一致）；
+    - 返回列 movie_id, tag_id, score, method="direct_score"，与
+      run_direct_score 输出同构（07 落盘 baselines.parquet 无感知）。
+    """
+    if not paths.direct_score_a.is_file():
+        raise ValueError(
+            f"direct_score_a 迁移物不存在: {paths.direct_score_a}"
+            "（baselines.direct_score_source=a_borrow 需要 A 的评分迁移物；"
+            "synthetic 数据没有对应产物，请改用 own_run 或核对 processed 目录）")
+    raw = pd.read_parquet(paths.direct_score_a)
+
+    missing = sorted(set(raw["movie_id"]) - set(dataset["movie_id"]))
+    if missing:
+        raise ValueError(
+            f"direct_score_a 含数据集外的电影（前 {min(5, len(missing))} 个）: "
+            f"{missing[:5]}——迁移物清单与数据集版本错配，"
+            "请核对两者 movie_id 宇宙是否同批生成")
+    got_modalities = set(raw["modality_set"].unique())
+    expected_modalities = {"video|script|dialogue"}
+    if got_modalities != expected_modalities:
+        raise ValueError(
+            f"direct_score_a 的 modality_set 应只有 {sorted(expected_modalities)}，"
+            f"实际值集: {sorted(map(str, got_modalities))}")
+
+    agg = (raw.groupby(["movie_id", "tag_id"], as_index=False)["score"].mean())
+    agg["method"] = "direct_score"
+    return agg[["movie_id", "tag_id", "score", "method"]]
+
+
 def run_direct_score(config: AppConfig, paths, client,
                      cache: ResponseCache | None) -> pd.DataFrame:
     """跑完直接评分基线，返回稠密 (movie, tag) 分数表（列 movie_id, tag_id, score,
@@ -93,14 +139,16 @@ def run_direct_score(config: AppConfig, paths, client,
     genome_scores = pd.read_parquet(paths.genome_scores)
     tag_groups = load_tag_groups(paths.tag_groups)
 
-    movie_ids = sorted(dataset["movie_id"].tolist())
-    if config.data.movie_limit is not None and config.data.movie_limit < len(movie_ids):
-        movie_ids = random.Random(config.data.seed).sample(movie_ids, config.data.movie_limit)
+    # 受限跑抽样走 sample_limited_movie_ids（440 协议）：从固定分割训练侧
+    # 抽样，测试清单电影绝不入样；movie_limit=None → 全量升序（不读清单）
+    movie_ids = sample_limited_movie_ids(
+        dataset, config.data.movie_limit, config.data.seed, paths.eval_test)
 
-    # few-shot：只从时序分割的训练侧选取（A fitting_pool_ids 时序模式语义），
-    # 选取后以防泄露断言收尾自检（全框架约束）
+    # few-shot：只从固定分割的训练侧选取（train = dataset − eval_test 清单；
+    # 真实数据为 A 迁移的 88 部固定测试集），选取后以防泄露断言收尾自检
+    # （全框架约束）
     tag_names = dict(zip(tag_groups["tag_id"], tag_groups["tag"]))
-    train_ids, test_ids = temporal_split(dataset, config.protocol.temporal_split_year)
+    train_ids, test_ids = fixed_split(dataset, paths.eval_test)
     few_shots = select_few_shots(
         dataset, genome_scores, config.baselines.few_shot_examples,
         sorted(train_ids), config.protocol.top_k, tag_names)

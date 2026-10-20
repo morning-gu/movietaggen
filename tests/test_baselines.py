@@ -278,11 +278,17 @@ def test_smoke_config_baselines_run_offline_trio():
         ["direct_score", "genre_map", "random"]
 
 
-def test_movie_limit_aligns_all_method_movie_sets(data_ready, tmp_path, monkeypatch):
-    """I5：data.movie_limit 设置时全部基线方法在同一抽样电影集上产出（与生成
-    管道完全相同的代码路径：sorted ids + random.Random(data.seed).sample）——
-    试点规模下方法对比才有共同的电影轴口径。direct_score 内部抽样即同一路径。"""
+def test_movie_limit_direct_score_train_side_sampling(data_ready, tmp_path, monkeypatch):
+    """440 Task 6 过渡态钉：movie_limit 时 direct_score 走 sample_limited_movie_ids
+    （固定分割训练侧抽样，eval_test 清单电影不入样），genre_map / random 仍走
+    07 侧全集抽样（sorted ids + random.Random(seed).sample，未接线不变）。
+
+    旧 I5"三方法同一电影集"被 440 协议有意打破（pilot 语义：受限跑不接触测试
+    清单电影）；全方法统一到 sample_limited_movie_ids 的收拢在 Task 7（07
+    接线）完成，届时本测试并回单一 expected 的全方法对齐断言。"""
     import random
+
+    from movietaggen.eval.protocol import sample_limited_movie_ids
 
     paths = data_ready
     cfg = tmp_path / "limit.yaml"
@@ -302,11 +308,17 @@ def test_movie_limit_aligns_all_method_movie_sets(data_ready, tmp_path, monkeypa
     assert run_baselines_script.main(str(cfg)) == 0
 
     dataset = pd.read_parquet(paths.dataset)
-    expected = set(random.Random(42).sample(
-        sorted(dataset["movie_id"].astype(int).tolist()), 2))
     df = pd.read_parquet(paths.baselines_dir / "baselines.parquet")
     per_method = {m: set(s.astype(int))
                   for m, s in df.groupby("method")["movie_id"]}
     assert set(per_method) == {"direct_score", "genre_map", "random"}
-    for method, ids in per_method.items():
-        assert ids == expected, method                  # 三方法同一电影集
+
+    # direct_score（440）：训练池 = dataset − eval_test 清单，Random(seed) 抽样
+    assert per_method["direct_score"] == set(sample_limited_movie_ids(
+        dataset, 2, 42, paths.eval_test))
+
+    # genre_map / random（07 侧现状，Task 7 前维持全集抽样）
+    old_expected = set(random.Random(42).sample(
+        sorted(dataset["movie_id"].astype(int).tolist()), 2))
+    for method in ("genre_map", "random"):
+        assert per_method[method] == old_expected, method
