@@ -11,7 +11,9 @@ JSONL="${2:?用法: watchdog.sh <config路径> <jsonl路径> [卡死阈值秒=90
 STALL="${3:-900}"
 MAX_RESTARTS=30
 cd "$(dirname "$0")/.."
-PY=.venv/bin/python
+# 服务器部署用 conda env：server-env.sh export MTG_PYTHON=<conda>/bin/python；
+# 未设置时回退本地 .venv（开发机路径）
+PY="${MTG_PYTHON:-.venv/bin/python}"
 
 restarts=0
 while true; do
