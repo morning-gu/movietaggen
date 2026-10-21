@@ -49,7 +49,7 @@ audit:
 eval:
   embed_model: intfloat/multilingual-e5-base
   coverage_top_k: 10
-  coverage_tau: 0.7
+  coverage_tau: 0.85
 
 baselines:
   run: [direct_score, genre_map, random, bert]

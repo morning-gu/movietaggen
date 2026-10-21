@@ -25,7 +25,9 @@ generate:
   modalities: [video, script, dialogue]
   dimensions: [style, mood, theme, narrative, character]
   few_shot_examples: 0
-  workers: 1                  # 并行线程数（1=串行）
+  workers: 8                  # 并行线程数（1=串行）。主实验 8 并行——任务独立、
+                              # 结果与串行逐位等价（有测试钉死），A 在同服务器同
+                              # 账号 8 并行验证过 DashScope 限速
 
 align:
   embed_model: intfloat/multilingual-e5-base
@@ -50,7 +52,7 @@ audit:
 eval:
   embed_model: intfloat/multilingual-e5-base
   coverage_top_k: 10
-  coverage_tau: 0.7
+  coverage_tau: 0.85
 
 baselines:
   run: [direct_score, genre_map, random, bert]

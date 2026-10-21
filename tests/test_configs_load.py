@@ -21,7 +21,9 @@ def test_ablation_differs_as_intended():
     assert load("configs/ablation/dim-character.yaml").generate.dimensions == ["character"]
     assert load("configs/ablation/nruns-1.yaml").generate.n_runs == 1
     assert load("configs/ablation/topk-1.yaml").align.top_k == 1
-    assert load("configs/ablation/threshold-0.4.yaml").align.threshold == 0.4
+    assert load("configs/ablation/threshold-0.80.yaml").align.threshold == 0.80
+    assert load("configs/ablation/threshold-0.85.yaml").align.threshold == 0.85
+    assert load("configs/ablation/threshold-0.90.yaml").align.threshold == 0.90
     assert load("configs/ablation/agg-mean.yaml").align.agg == "mean"
     a = load("configs/ablation/audit-off.yaml")
     assert a.audit.apply_filter is False

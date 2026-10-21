@@ -81,7 +81,9 @@ class AuditConfig:
 class EvalConfig:
     embed_model: str = "intfloat/multilingual-e5-base"
     coverage_top_k: int = 10
-    coverage_tau: float = 0.7
+    # E5 余弦分布压缩偏高（映射对实测 0.80+），0.7 会让 coverage 平凡=1.0——
+    # pilot 2026-10-22 定标 0.85
+    coverage_tau: float = 0.85
 
 
 @dataclass

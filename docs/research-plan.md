@@ -61,7 +61,7 @@
 
 **子集视图**：**固定测试(88) = 论文主表口径**（所有方法同集可比）+ 固定训练(352) 调试口径；全部 · 时序训练/测试（描述性分桶）· tag:content · tag:preference；n_pred 诚实标注各方法实际预测数（direct_score 在全部(440) 行 n_pred=88 属预期，非对比口径）。
 
-**消融矩阵（九轴 + 候选臂，全部配置化——`configs/ablation/` 16 个配置即改即跑）**：模态（video/script/dialogue/title-only*）· 五维度子集 · 生成次数 1/2/3 · 嵌入模型 · top_k 1/3 · 阈值 0.4/0.5/0.6（threshold-filtered 变体直接产出过滤曲线）· 聚合 max/mean · 审计过滤 on/off · 两阶段 vs direct_score。
+**消融矩阵（九轴 + 候选臂，全部配置化——`configs/ablation/` 17 个配置即改即跑）**：模态（video/script/dialogue/title-only*）· 五维度子集 · 生成次数 1/2/3 · 嵌入模型 · top_k 1/3 · 阈值 0.80/0.85/0.90（E5 实测映射余弦 0.80-1.0，pilot 2026-10-22 定标；默认 0.5 为不过滤锚点，threshold-filtered 变体直接产出过滤曲线）· 聚合 max/mean · 审计过滤 on/off · 两阶段 vs direct_score。
 （*title-only 兼作记忆排查臂——B 以 tags.csv 为生成真值，记忆风险高于 A；mismatch 探针已留 `probes/` 扩展位，真实数据阶段再建。）
 
 **基线**：direct_score（A v3-full 实跑预测迁移 a_borrow：`data/processed/direct_score_a.parquet`，297,792 行 = 88×1,128×3 轮，PROVENANCE 溯源；own_run 复刻管道保留为逃生口）/ genre_map（拟合池统计，未见 genre 回退全局均值）/ random / 剧本 + BERT 多标签。

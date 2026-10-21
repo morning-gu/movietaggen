@@ -50,7 +50,7 @@ audit:
 eval:
   embed_model: intfloat/multilingual-e5-base
   coverage_top_k: 10
-  coverage_tau: 0.7
+  coverage_tau: 0.85
 
 baselines:
   # 移除 direct_score：a_borrow 恒产出 88 部测试电影，与 pilot 的训练侧抽样

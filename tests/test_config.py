@@ -32,7 +32,7 @@ def test_defaults(tmp_path):
     assert cfg.align.top_k == 3 and cfg.align.threshold == 0.5 and cfg.align.agg == "max"
     assert cfg.audit.judge_tasks == ["mapping", "gen_quality"]
     assert cfg.audit.judge_context == "pair+title" and cfg.audit.apply_filter is True
-    assert cfg.eval.coverage_top_k == 10 and cfg.eval.coverage_tau == 0.7
+    assert cfg.eval.coverage_top_k == 10 and cfg.eval.coverage_tau == 0.85
 
 
 def test_empty_modalities_legal(tmp_path):
