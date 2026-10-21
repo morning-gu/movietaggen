@@ -27,7 +27,8 @@ def verify_data(paths) -> list[str]:
         problems.append(f"缺少 MovieNet 元数据: {paths.movienet / 'movies.csv'}")
     if problems:
         return problems
-    # 年份分布（对齐可行性与时序分割点的关键输入）
+    # 年份分布（对齐可行性的参考信息；temporal_split_year 仅驱动 metrics.csv
+    # 的年代分桶描述性视图，协议分割已固定为 eval_test 清单，与此处无关）
     try:
         mn = pd.read_csv(paths.movienet / "movies.csv")
         if "year" in mn.columns:
@@ -37,7 +38,8 @@ def verify_data(paths) -> list[str]:
             print("...")
             print(dist.tail(10).to_string())
             latest = int(dist.index.max())
-            print(f"[01] 最新年份: {latest}（检查是否满足时序分割需要）")
+            print(f"[01] 最新年份: {latest}（描述性参考：协议分割已固定为"
+                  " eval_test 清单，不依赖该值）")
     except Exception as e:  # noqa: BLE001 —— 校验脚本要报告而非崩溃
         problems.append(f"MovieNet movies.csv 解析失败: {e}")
     return problems

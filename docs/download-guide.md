@@ -43,9 +43,10 @@
    └── subtitles/<id>.srt
    ```
 
-4. 校验：`01_verify_data.py` 会报告**年份分布**——MovieNet 可能不含较新
-   电影，届时需重新确定时序分割年份（改配置 `protocol.temporal_split_year`
-   一行；`configs/default.yaml` 与消融配置按"数据止于 2018"钉了 2015）。
+4. 校验：`01_verify_data.py` 会报告**年份分布**（对齐可行性的参考信息）。
+   MovieNet 可能不含较新电影——这只影响 metrics.csv 的年代分桶视图
+   （`protocol.temporal_split_year` 仅驱动该描述性视图）；协议分割已固定为
+   `data/processed/eval_test.txt` 清单（440 协议），无需随数据年份重定分割。
 
 ## A 迁移物（已提交入 git，正常使用无需自行获取）
 

@@ -53,8 +53,8 @@ eval:
   coverage_tau: 0.7
 
 baselines:
-  # 移除 direct_score：pilot 从 train 抽样的 50 部与 A 迁移预测的 88 部零交集，
-  # a_borrow 无行可读（own_run 则需 API 打分，试点不跑）
+  # 移除 direct_score：a_borrow 恒产出 88 部测试电影，与 pilot 的训练侧抽样
+  # 零交集，故 pilot 期对比无意义而移除（own_run 则需 API 打分，试点不跑）
   run: [genre_map, random, bert]
   n_runs: 3
   few_shot_examples: 2

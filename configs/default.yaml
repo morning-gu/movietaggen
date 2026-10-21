@@ -59,7 +59,7 @@ baselines:
   direct_score_source: a_borrow   # direct_score 基线读 A 迁移评分（真实数据工件，仅 real）
 
 protocol:
-  temporal_split_year: 2015   # 数据止于 2018：≥2015 测试视图非空，<2015 为训练参考池
+  temporal_split_year: 2015   # 仅描述性分桶视图；拟合面已固定为 eval_test 清单训练侧
   relevance_threshold: 0.5
   top_k: 10
   cold_start_max_tags: 0

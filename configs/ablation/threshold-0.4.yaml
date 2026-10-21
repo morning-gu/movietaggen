@@ -57,7 +57,7 @@ baselines:
   few_shot_examples: 2
 
 protocol:
-  temporal_split_year: 2015   # 数据止于 2018：≥2015 测试视图非空，<2015 为训练参考池
+  temporal_split_year: 2015   # 仅描述性分桶视图；拟合面已固定为 eval_test 清单训练侧
   relevance_threshold: 0.5
   top_k: 10
   cold_start_max_tags: 0
