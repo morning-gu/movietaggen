@@ -6,7 +6,8 @@ Review Focus 5（计划头）的测试钉在本文件：few-shot 只能取自测
 
 440 协议接线（440 计划 Task 6）：
 - a_borrow 加载器（test_load_direct_score_a_*）：逐对均值口径（缺轮不计入、
-  全空 → NaN）、迁移物缺失/电影越界/modality_set 混值大声失败；
+  全空 → NaN）、迁移物缺失/电影越界/测试清单错配/网格残缺/modality_set
+  混值大声失败（终审修复波 I1：补测试集相等与网格完整两道运行时守门）；
 - own_run 改接（test_own_run_*）：few-shot 池走 fixed_split 训练侧、movie_limit
   走 sample_limited_movie_ids——测试清单电影绝不入池/入样。
 """
@@ -229,12 +230,21 @@ def _a_borrow_frame(movie_ids=(101, 102),
                                        "modality_set", "run_id", "score"])
 
 
+def _write_eval_test(paths, movie_ids) -> None:
+    """落一份 eval_test 清单（fixture 对齐约定：清单电影集须与 fixture parquet
+    电影集相等——加载器的测试集相等守门以"恰覆盖"为准）。"""
+    paths.eval_test.parent.mkdir(parents=True, exist_ok=True)
+    paths.eval_test.write_text("".join(f"{m}\n" for m in movie_ids),
+                               encoding="utf-8")
+
+
 def test_load_direct_score_a_pair_mean_semantics(tmp_path):
     """均值口径逐对断言：仅 2 轮有分 → 两轮均值；全 NaN 轮 → NaN 保留；
     输出与 run_direct_score 同构（列序 + method="direct_score"）。"""
     paths = _paths_for(tmp_path)
     paths.direct_score_a.parent.mkdir(parents=True, exist_ok=True)
     _a_borrow_frame().to_parquet(paths.direct_score_a)
+    _write_eval_test(paths, (101, 102))          # 清单 == parquet 电影集
     dataset = pd.DataFrame({"movie_id": [101, 102, 103]})  # ⊇ parquet 电影集
 
     out = load_direct_score_a(paths, dataset)
@@ -280,11 +290,47 @@ def test_load_direct_score_a_bad_modality_set(tmp_path):
     df = _a_borrow_frame()
     df.loc[df["run_id"] == "run-0", "modality_set"] = "video|script"
     df.to_parquet(paths.direct_score_a)
+    _write_eval_test(paths, (101, 102))          # 清单 == parquet 电影集
 
     with pytest.raises(ValueError) as ei:
         load_direct_score_a(paths, pd.DataFrame({"movie_id": [101, 102]}))
     # 带引号断言以区别于合法值 video|script|dialogue 的子串
     assert "'video|script'" in str(ei.value)
+
+
+def test_load_direct_score_a_movie_set_must_equal_eval_test_list(tmp_path):
+    """终审 I1 · 测试集相等守门：迁移物电影集 ≠ eval_test 清单 → ValueError，
+    点名两侧差集并提示工件与清单版本错配（⊆dataset 只拦越界，恰等才拦
+    "少覆盖"——fixture 故意做成"多一部 + 少一部"的双侧错配形态）。"""
+    paths = _paths_for(tmp_path)
+    paths.direct_score_a.parent.mkdir(parents=True, exist_ok=True)
+    _a_borrow_frame().to_parquet(paths.direct_score_a)      # 电影集 {101, 102}
+    _write_eval_test(paths, (102, 103))                     # 清单 {102, 103}
+    dataset = pd.DataFrame({"movie_id": [101, 102, 103]})   # ⊇ 两侧并集
+
+    with pytest.raises(ValueError) as ei:
+        load_direct_score_a(paths, dataset)
+    assert "错配" in str(ei.value)
+    assert "101" in str(ei.value)                # 仅迁移物有 → 点名工件侧差集
+    assert "103" in str(ei.value)                # 仅清单有 → 点名清单侧差集
+
+
+def test_load_direct_score_a_incomplete_grid(tmp_path):
+    """终审 I1 · 网格完整守门：每电影 × 每 tag 恰有一组行——整组缺行 →
+    ValueError 点名缺失 (movie, tag) 对（稠密均值表的前置，静默缺行会让
+    评估侧对不齐）。"""
+    paths = _paths_for(tmp_path)
+    paths.direct_score_a.parent.mkdir(parents=True, exist_ok=True)
+    df = _a_borrow_frame()                       # 2 电影 × 3 tag 完整网格
+    df = df[~((df["movie_id"] == 102) & (df["tag_id"] == 33))]   # 整组抽走
+    df.to_parquet(paths.direct_score_a)
+    _write_eval_test(paths, (101, 102))          # 电影集仍相等（网格守门前置通过）
+    dataset = pd.DataFrame({"movie_id": [101, 102, 103]})
+
+    with pytest.raises(ValueError) as ei:
+        load_direct_score_a(paths, dataset)
+    assert "网格残缺" in str(ei.value)
+    assert "(102, 33)" in str(ei.value)          # 缺失对逐个点名
 
 
 def test_own_run_few_shot_excludes_fixed_test_movies(fake_setup):

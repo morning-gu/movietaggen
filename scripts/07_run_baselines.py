@@ -30,7 +30,11 @@ bert 懒导入（torch/transformers 在训练函数内部导入）：模块自�
 
 产物（baselines_dir 固定 results/baselines，不随 exp_name）：baselines.parquet
 （列 movie_id, tag_id, score, method）+ run_manifest.json（{"methods": 实际
-产出方法的有序列表, "rows": 总行数}）+ config.yaml 快照（结果目录自包含）。
+产出方法的有序列表, "rows": 总行数}；a_borrow 的 direct_score 另附
+direct_score_provenance 键——A 迁移物溯源引用：provenance JSON 的
+source_repo 与 direct_score_a_sha256 两字段，文件缺失记
+{"file": 路径, "missing": true} 不崩，溯源引用不是守门）+ config.yaml 快照
+（结果目录自包含）。
 """
 from __future__ import annotations
 
@@ -88,6 +92,22 @@ def make_scoring_client(config: AppConfig):
         extra_body=config.model.extra_body)
 
 
+def load_direct_score_provenance(processed_dir) -> dict:
+    """A 迁移物的 PROVENANCE 溯源引用（spec §2.3，终审修复波 M2）。
+
+    读 processed/direct_score_a.provenance.json，嵌入 source_repo 与
+    direct_score_a_sha256 两字段进 run_manifest——a_borrow 产物可追溯到 A 的
+    源仓库与文件校验和。溯源是引用不是守门：文件缺失不崩，键值降级为
+    {"file": 路径, "missing": true} 留痕（守门在 load_direct_score_a 内部）。
+    """
+    prov_path = Path(processed_dir) / "direct_score_a.provenance.json"
+    if not prov_path.is_file():
+        return {"file": str(prov_path), "missing": True}
+    prov = json.loads(prov_path.read_text(encoding="utf-8"))
+    return {"source_repo": prov.get("source_repo"),
+            "direct_score_a_sha256": prov.get("direct_score_a_sha256")}
+
+
 def main(config_path: str = "configs/default.yaml") -> int:
     config = load_config(config_path)
     paths = paths_for(config)
@@ -119,13 +139,19 @@ def main(config_path: str = "configs/default.yaml") -> int:
 
     frames = []
     methods = []
+    # a_borrow 跑 direct_score 时的溯源引用（spec §2.3；own_run / 未跑
+    # direct_score 时为 None，manifest 不带该键）
+    direct_score_provenance = None
     for name in config.baselines.run:
         if name == "direct_score":
             if config.baselines.direct_score_source == "a_borrow":
                 # a_borrow：读 A 的评分迁移物（固定工件恒 88 部）——不建
-                # client / cache、不受 movie_limit；电影宇宙与 modality_set
-                # 守门在 load_direct_score_a 内部
+                # client / cache、不受 movie_limit；电影宇宙 / 测试集相等 /
+                # 网格完整 / modality_set 守门在 load_direct_score_a 内部。
+                # 另取 PROVENANCE 溯源引用进 manifest（spec §2.3）
                 frames.append(load_direct_score_a(paths, dataset))
+                direct_score_provenance = load_direct_score_provenance(
+                    paths.processed)
             else:
                 client = make_scoring_client(config)
                 cache = None if config.mock else ResponseCache(paths.cache_llm)
@@ -160,6 +186,10 @@ def main(config_path: str = "configs/default.yaml") -> int:
     paths.baselines_dir.mkdir(parents=True, exist_ok=True)
     out.to_parquet(paths.baselines_dir / "baselines.parquet", index=False)
     manifest = {"methods": methods, "rows": int(len(out))}
+    if direct_score_provenance is not None:
+        # a_borrow 的 direct_score 附溯源引用（spec §2.3）：产物可追溯到 A 的
+        # 源仓库与迁移物 sha256（provenance 文件缺失时为 missing 标记留痕）
+        manifest["direct_score_provenance"] = direct_score_provenance
     (paths.baselines_dir / "run_manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
     # 配置快照随结果落盘（结果目录自包含、可复现）。save_config_snapshot 的

@@ -13,7 +13,10 @@
   端到端读迁移物、不建 client、不受 movie_limit）；拟合面固定分割（eval_test
   清单电影不入 train_scores 的泄露探针）；movie_limit 时全部受限方法的电影集
   == sample_limited_movie_ids 输出（统一断言，T6 过渡态钉并回）。
+- 终审修复波：a_borrow fixture 的 eval_test 清单对齐迁移物电影集（I1 测试集
+  相等守门）；run_manifest 附 direct_score_provenance 溯源引用（M2）。
 """
+import hashlib
 import importlib
 import json
 import os
@@ -322,8 +325,11 @@ def test_run_baselines_a_borrow_branch(tmp_path, monkeypatch):
 
     a_borrow × synthetic 组合被 config 校验拦截，故走 real 分支：raw_dir 指
     tmp fixture 目录、tmp processed 下自建小 parquet（不读仓库真实迁移物）。
-    movie_limit=1 而产出电影集仍是迁移物全体 3 部——钉住"不受 movie_limit"；
-    make_scoring_client 打桩为即炸——钉住"不建 client"。"""
+    eval_test 清单与迁移物电影集对齐成一致（终审 I1：加载器的测试集相等
+    守门以"恰覆盖"为准；104 是训练侧电影）。movie_limit=1 而产出电影集仍是
+    迁移物全体 3 部——钉住"不受 movie_limit"；make_scoring_client 打桩为
+    即炸——钉住"不建 client"。终审 M2：manifest 附 direct_score_provenance
+    溯源引用，sha 与 provenance 落盘值一致；provenance 缺失不崩（missing 标记）。"""
     raw_dir = tmp_path / "rawroot"
     raw_dir.mkdir()
     processed = tmp_path / "data" / "processed"    # real 分支的 processed 布局
@@ -338,7 +344,7 @@ def test_run_baselines_a_borrow_branch(tmp_path, monkeypatch):
                   "relevance": [0.5, 0.6, 0.7]}).to_parquet(
         processed / "genome_scores.parquet")
     pd.DataFrame({"tag_id": [11, 22]}).to_parquet(processed / "genome_tags.parquet")
-    (processed / "eval_test.txt").write_text("104\n", encoding="utf-8")
+    (processed / "eval_test.txt").write_text("101\n102\n103\n", encoding="utf-8")
 
     # 自建迁移物 fixture：3 电影 × 2 tag × 2 run；(101, 22) 两轮 0.2/0.6 →
     # 逐对均值 0.4（均值口径经 07 落盘保持的探针）
@@ -353,6 +359,15 @@ def test_run_baselines_a_borrow_branch(tmp_path, monkeypatch):
     a_raw = pd.DataFrame(rows, columns=["movie_id", "tag_id", "group",
                                         "modality_set", "run_id", "score"])
     a_raw.to_parquet(processed / "direct_score_a.parquet")
+
+    # 溯源 fixture（终审 M2）：sha 取 fixture parquet 现算真值——manifest 键与
+    # provenance 落盘值一致经此钉住
+    prov_sha = hashlib.sha256(
+        (processed / "direct_score_a.parquet").read_bytes()).hexdigest()
+    prov_path = processed / "direct_score_a.provenance.json"
+    prov_payload = {"source_repo": "fixture-repo results/v3-full/",
+                    "direct_score_a_sha256": prov_sha}
+    prov_path.write_text(json.dumps(prov_payload), encoding="utf-8")
 
     cfg = tmp_path / "a_borrow.yaml"
     cfg.write_text(
@@ -386,7 +401,21 @@ def test_run_baselines_a_borrow_branch(tmp_path, monkeypatch):
     assert got[(101, 22)] == pytest.approx(0.4)        # 逐对均值口径保持
     manifest = json.loads(
         (out_dir / "run_manifest.json").read_text(encoding="utf-8"))
-    assert manifest == {"methods": ["direct_score"], "rows": len(df)}
+    assert manifest["methods"] == ["direct_score"]
+    assert manifest["rows"] == len(df)
+    # 终审 M2：溯源引用键存在，source_repo / sha 与 provenance 落盘值一致
+    assert set(manifest) == {"methods", "rows", "direct_score_provenance"}
+    assert manifest["direct_score_provenance"] == {
+        "source_repo": prov_payload["source_repo"],
+        "direct_score_a_sha256": prov_sha}
+
+    # 溯源引用不是守门：provenance 文件缺失 → 重跑不崩，键值降级为 missing 标记
+    prov_path.unlink()
+    assert run_baselines_script.main(str(cfg)) == 0
+    manifest2 = json.loads(
+        (out_dir / "run_manifest.json").read_text(encoding="utf-8"))
+    assert manifest2["direct_score_provenance"] == {
+        "file": str(prov_path), "missing": True}
 
 
 def test_run_baselines_fit_set_excludes_eval_test_movie(data_ready, tmp_path, monkeypatch):

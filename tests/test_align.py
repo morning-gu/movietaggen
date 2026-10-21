@@ -184,3 +184,14 @@ def test_build_dataset_universe_all_keeps_incomplete(tmp_path):
     assert stats == {"movies": 4, "genome_rows": 4 * 36,
                      "universe": "all", "filtered_out": 0}
     assert set(pd.read_parquet(paths.dataset)["movie_id"]) == {1, 2, 3, 4}
+
+
+def test_build_dataset_unknown_universe_raises(tmp_path):
+    """终审 T4②：universe 非法值大声失败——config 层已拦（VALID_UNIVERSES），
+    直接调用方传错不再静默得 all 行为（否则残缺模态电影被悄悄放进数据集）。"""
+    from movietaggen.data.align import build_dataset
+    from movietaggen.data.sample import make_synthetic_dataset
+    make_synthetic_dataset(tmp_path)
+    paths = _synthetic_paths(tmp_path)
+    with pytest.raises(ValueError, match="未知评测宇宙.*bogus"):
+        build_dataset(paths, universe="bogus")

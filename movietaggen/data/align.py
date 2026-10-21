@@ -11,7 +11,7 @@ from dataclasses import dataclass
 
 import pandas as pd
 
-from movietaggen.config import Paths
+from movietaggen.config import VALID_UNIVERSES, Paths
 from movietaggen.data.movielens import (load_genome_scores, load_genome_tags,
                                         load_links, load_movies)
 from movietaggen.data.movienet import MovieMultimodal, load_movienet
@@ -117,7 +117,8 @@ def build_dataset(paths: Paths, universe: str = "three_modality") -> dict[str, i
     """读 raw → 对齐 → 写 interim/processed，返回统计。02 脚本与测试 fixture 复用。
 
     universe：评测宇宙（440 协议）——"three_modality" 仅保留三模态齐全的电影，
-    "all" 不过滤；合法性校验在 config 层（VALID_UNIVERSES）。
+    "all" 不过滤；合法值由 config 层（VALID_UNIVERSES）先行校验，直接调用方
+    传非法值在宇宙分支大声失败（不静默等同 all）。
     """
     movies_ml = load_movies(paths.movielens / "movies.csv")
     links = load_links(paths.movielens / "links.csv")
@@ -164,8 +165,14 @@ def build_dataset(paths: Paths, universe: str = "three_modality") -> dict[str, i
         ).astype(bool)
         filtered_out = int(len(dataset) - keep.sum())
         dataset = dataset[keep]
-    else:
+    elif universe == "all":
         filtered_out = 0
+    else:
+        # 非合法宇宙值大声失败（终审 T4②）：config 层已拦，但直接调用方
+        # （测试 fixture、未来脚本）传错不再静默得 all 行为——那会把残缺
+        # 模态电影悄悄放进数据集
+        raise ValueError(
+            f"未知评测宇宙: {universe!r}（合法值: {VALID_UNIVERSES}）")
     dataset.to_parquet(paths.dataset, index=False)
 
     scores = scores[scores["movie_id"].isin(set(dataset["movie_id"]))]

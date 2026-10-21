@@ -89,11 +89,19 @@ def load_direct_score_a(paths, dataset: pd.DataFrame) -> pd.DataFrame:
 
     a_borrow 分支的数据入口（07 按配置分流；own_run 不经此函数）。输入
     parquet 列 movie_id, tag_id, group, modality_set, run_id, score（逐轮
-    原始分）。守门与口径：
+    原始分）。文件缺失守门 + 四道数据守门，与口径：
     - 文件缺失 → ValueError 点名路径与成因（config 层已拦 synthetic+a_borrow，
       但 direct 调用方也可能踩，此处再拦一道）；
-    - 电影全集校验（Review Focus 1）：迁移物 movie_id 必须 ⊆
-      dataset["movie_id"]，越界点名缺失电影并提示清单/数据集版本错配；
+    - 电影全集校验：迁移物 movie_id 必须 ⊆ dataset["movie_id"]，越界点名
+      缺失电影并提示清单/数据集版本错配；
+    - 测试集相等（spec §2.3/§2.5 点名的运行时覆盖断言）：迁移物 movie_id
+      必须恰等于 fixed_split 的测试侧（eval_test 清单命中行）——a_borrow 是
+      A 在固定测试集上的实跑预测（真实数据即 88 部），清单多一部说明工件
+      偏新、少一部说明工件偏旧，均属工件与清单版本错配；⊆dataset 只拦
+      越界，恰等才拦"少覆盖"。错配点名两侧差集；
+    - 网格完整：每电影 × 每 tag 恰有一组行（groupby 组数 == 电影数 ×
+      tag 数），残缺点名缺失 (movie, tag) 对——稠密均值表的前置，静默缺行
+      会让评估侧对不齐；
     - modality_set 唯一值必须是 video|script|dialogue（A 的全模态默认），
       其它值点名实际值集；
     - 均值口径：groupby(["movie_id","tag_id"])["score"].mean()——pandas mean
@@ -115,12 +123,51 @@ def load_direct_score_a(paths, dataset: pd.DataFrame) -> pd.DataFrame:
             f"direct_score_a 含数据集外的电影（前 {min(5, len(missing))} 个）: "
             f"{missing[:5]}——迁移物清单与数据集版本错配，"
             "请核对两者 movie_id 宇宙是否同批生成")
+
+    # 测试集相等（运行时覆盖断言）：迁移物必须恰覆盖 eval_test 清单电影。
+    # ⊆dataset 在上一道已拦"工件越界"，本道拦"工件少覆盖"（清单电影未被
+    # 迁移物覆盖 → a_borrow 在该测试电影上无预测，评估对比缺行）。两侧差集
+    # 都点名，便于定位错在工件侧还是清单侧。
+    _, test_side = fixed_split(dataset, paths.eval_test)
+    only_artifact = sorted(set(raw["movie_id"]) - set(test_side))
+    only_list = sorted(set(test_side) - set(raw["movie_id"]))
+    if only_artifact or only_list:
+        sides = []
+        if only_artifact:
+            sides.append(f"仅迁移物有（前 {min(5, len(only_artifact))} 个）: "
+                         f"{only_artifact[:5]}")
+        if only_list:
+            sides.append(f"仅清单有（前 {min(5, len(only_list))} 个）: "
+                         f"{only_list[:5]}")
+        raise ValueError(
+            "direct_score_a 的电影集与 eval_test 测试清单不相等（"
+            + "；".join(sides)
+            + "）——工件与清单版本错配，请核对两者是否同批生成")
+
     got_modalities = set(raw["modality_set"].unique())
     expected_modalities = {"video|script|dialogue"}
     if got_modalities != expected_modalities:
         raise ValueError(
             f"direct_score_a 的 modality_set 应只有 {sorted(expected_modalities)}，"
             f"实际值集: {sorted(map(str, got_modalities))}")
+
+    # 网格完整（稠密口径前置）：每电影 × 每 tag 恰有一组行。组数少于
+    # 电影数 × tag 数说明有 (movie, tag) 对整组缺行——均值表会静默缺行、
+    # 评估侧对不齐，点名缺失对大声失败
+    n_groups = int(raw.groupby(["movie_id", "tag_id"]).ngroups)
+    movie_universe, tag_universe = sorted(set(raw["movie_id"])), sorted(set(raw["tag_id"]))
+    expected_groups = len(movie_universe) * len(tag_universe)
+    if n_groups != expected_groups:
+        present = set(map(tuple, raw[["movie_id", "tag_id"]]
+                          .drop_duplicates().to_numpy()))
+        absent = [(int(m), int(t)) for m in movie_universe for t in tag_universe
+                  if (m, t) not in present]
+        raise ValueError(
+            f"direct_score_a 网格残缺：每电影 × 每 tag 应恰有一组行，"
+            f"实测 {n_groups} 组 ≠ {len(movie_universe)} 部电影 × "
+            f"{len(tag_universe)} 个 tag"
+            f"（缺失对（前 {min(5, len(absent))} 个）: {absent[:5]}）——"
+            "迁移物不完整，请核对 A 侧导出是否截断")
 
     agg = (raw.groupby(["movie_id", "tag_id"], as_index=False)["score"].mean())
     agg["method"] = "direct_score"
