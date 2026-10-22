@@ -48,6 +48,7 @@ audit:
   apply_filter: true
   calibration_sample: 500
   seed: 42
+  workers: 8                  # judge 并行线程数（1=串行）；全量 ~58k 审计 8 并行 ≈ 2-4h
 
 eval:
   embed_model: intfloat/multilingual-e5-base

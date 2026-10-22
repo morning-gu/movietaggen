@@ -243,3 +243,12 @@ def test_mock_quoted_string_rejected(tmp_path):
                      encoding="utf-8")
         with pytest.raises(ValueError, match="mock"):
             load_config(p)
+
+
+def test_audit_workers_default_and_validation(tmp_path):
+    """audit.workers 默认 1（串行，向后兼容）；<1 大声失败。"""
+    cfg = load_config(_write(tmp_path, MINIMAL))
+    assert cfg.audit.workers == 1
+    bad = {**MINIMAL, "audit": {"workers": 0}}
+    with pytest.raises(ValueError, match="audit.workers"):
+        load_config(_write(tmp_path, bad))

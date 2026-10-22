@@ -31,6 +31,8 @@ import json
 import math
 import random
 import re
+import threading
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import pandas as pd
@@ -285,11 +287,22 @@ def run_audit(config, paths, client, cache: ResponseCache | None,
         k = min(n, math.ceil(cfg.sample_rate * n))
         chosen = sorted(random.Random(cfg.seed).sample(range(n), k))
         print(f"[audit] 映射判定 {k}/{n} 条"
-              f"（sample_rate={cfg.sample_rate}, context={cfg.judge_context}）",
-              flush=True)
+              f"（sample_rate={cfg.sample_rate}, context={cfg.judge_context}, "
+              f"workers={cfg.workers}）", flush=True)
 
+        # pair+full 节选池外预读：并行池内惰性读文件会竞态共享 dict，预读
+        # 既是并行前提也顺带保住"逐电影只读一次"的原语义
         excerpts: dict[int, tuple[str | None, str | None]] = {}
-        for i in chosen:
+        if cfg.judge_context == "pair+full":
+            for mid in {int(ordered.iloc[i]["movie_id"]) for i in chosen}:
+                excerpts[mid] = _read_excerpts(movie_rows[mid], paths.movienet)
+
+        lock = threading.Lock()
+        done = 0
+
+        def judge_mapping_one(i: int) -> dict:
+            """单条映射评审（独立任务，串行/并行同一闭包）。"""
+            nonlocal done
             row = ordered.iloc[i]
             mid = int(row["movie_id"])
             if mid not in movie_rows:
@@ -303,8 +316,6 @@ def run_audit(config, paths, client, cache: ResponseCache | None,
                     "（输入产物不一致，疑似 stage-align 与 02 产物错配）")
             script = subtitles = None
             if cfg.judge_context == "pair+full":
-                if mid not in excerpts:      # 逐电影只读一次文件
-                    excerpts[mid] = _read_excerpts(movie_rows[mid], paths.movienet)
                 script, subtitles = excerpts[mid]
             messages = build_mapping_messages(
                 str(movie_rows[mid]["title"]), str(row["tag"]),
@@ -317,17 +328,28 @@ def run_audit(config, paths, client, cache: ResponseCache | None,
             parsed = parse_mapping_verdict(content)
             if parsed is None:
                 verdict, reason = VERDICT_PARSE_FAILED, ""
-                n_parse_failed += 1
             else:
                 verdict, reason = parsed["verdict"], parsed["reason"]
-                if verdict == "accept":
-                    n_accept += 1
-                else:
-                    n_reject += 1
-            judge_rows.append({
+            with lock:
+                done += 1
+                if done % 500 == 0 or done == k:
+                    print(f"[audit] 映射判定进度 {done}/{k}", flush=True)
+            return {
                 "movie_id": mid, "tag": str(row["tag"]), "tag_id": tid,
                 "cosine": float(row["cosine"]), "verdict": verdict,
-                "reason": reason, "judge_model": cfg.judge_model})
+                "reason": reason, "judge_model": cfg.judge_model}
+
+        # pool.map 保序：输出与串行逐位一致（parquet 写前另有排序，双保险）
+        if cfg.workers > 1:
+            with ThreadPoolExecutor(max_workers=cfg.workers) as pool:
+                judge_rows = list(pool.map(judge_mapping_one, chosen))
+        else:
+            judge_rows = [judge_mapping_one(i) for i in chosen]
+        # 计数从结果事后统计（池内累加计数器需加锁，事后统计免锁且两路径同源）
+        n_accept = sum(1 for r in judge_rows if r["verdict"] == "accept")
+        n_reject = sum(1 for r in judge_rows if r["verdict"] == "reject")
+        n_parse_failed = sum(1 for r in judge_rows
+                             if r["verdict"] == VERDICT_PARSE_FAILED)
 
     if do_gen:
         gen_dir = load_stage(paths, "stage-gen", cfg.input_exp)
@@ -347,7 +369,9 @@ def run_audit(config, paths, client, cache: ResponseCache | None,
         if skipped:
             print(f"[audit] 生成质量判定跳过 {skipped} 部无用户标签的电影",
                   flush=True)
-        for mid in candidates:
+
+        def judge_gen_one(mid: int) -> dict | None:
+            """单电影生成质量评审（不可解析返回 None，调用方过滤计数）。"""
             if mid not in movie_rows:
                 raise ValueError(
                     f"movie_id {mid} 不在 dataset 中（输入产物不一致，"
@@ -363,10 +387,18 @@ def run_audit(config, paths, client, cache: ResponseCache | None,
             if parsed is None:
                 # gen_quality 无 verdict 列可记录，缺失行不进产物；计数可见
                 print(f"[audit] 警告: 电影 {mid} 的生成质量输出不可解析，已跳过")
-                continue
-            gen_rows.append({"movie_id": mid, "relevance": parsed["relevance"],
-                             "coverage": parsed["coverage"],
-                             "judge_model": cfg.judge_model})
+                return None
+            return {"movie_id": mid, "relevance": parsed["relevance"],
+                    "coverage": parsed["coverage"],
+                    "judge_model": cfg.judge_model}
+
+        if cfg.workers > 1:
+            with ThreadPoolExecutor(max_workers=cfg.workers) as pool:
+                gen_rows = [r for r in pool.map(judge_gen_one, candidates)
+                            if r is not None]
+        else:
+            gen_rows = [r for r in (judge_gen_one(m) for m in candidates)
+                        if r is not None]
 
     scores_filtered: pd.DataFrame | None = None
     if cfg.apply_filter:

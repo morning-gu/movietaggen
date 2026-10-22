@@ -75,6 +75,7 @@ class AuditConfig:
     apply_filter: bool = True
     calibration_sample: int = 500
     seed: int = 42
+    workers: int = 1                   # judge 并行线程数（1=串行）；04 同款线程池模式
 
 
 @dataclass
@@ -228,6 +229,8 @@ def validate_config(cfg: AppConfig) -> None:
         raise ValueError(f"audit.judge_context 必须是 {VALID_JUDGE_CONTEXTS}，得到 {cfg.audit.judge_context!r}")
     if not 0.0 < cfg.audit.sample_rate <= 1.0:
         raise ValueError("audit.sample_rate 必须在 (0,1] 区间")
+    if cfg.audit.workers < 1:
+        raise ValueError("audit.workers 必须 ≥ 1（1=串行）")
     if cfg.baselines.n_runs < 1:
         raise ValueError("baselines.n_runs 必须 ≥ 1")
     if cfg.baselines.few_shot_examples < 0:

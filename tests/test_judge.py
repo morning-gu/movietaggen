@@ -536,3 +536,32 @@ def test_judge_cache_key_extra_body_sensitivity():
                      "judge-mapping") != \
         cache_key(msgs, "m", _sampling_params(0.0, {"enable_thinking": False}),
                   "judge-gen")
+
+
+# ---------------------------------------------------------------------------
+# workers 并行（06 全量审计的吞吐改造；04 同款 ThreadPoolExecutor 模式）
+# ---------------------------------------------------------------------------
+
+def test_workers_parallel_equivalence(fake_stage_align):
+    """workers=4 与串行逐产物一致：mock 确定性下并行完成序不影响输出
+    （parquet 写前本就排序；计数从结果事后统计）。覆盖 pair+full 的
+    节选池外预读路径（合成电影有剧本/字幕文件）。"""
+    cfg, paths = fake_stage_align
+    cfg.audit.judge_context = "pair+full"
+    assert cfg.audit.workers == 1
+    out = run_audit(cfg, paths, MockJudgeClient(), cache=None)
+    m1 = pd.read_parquet(out / "judge_mapping.parquet")
+    g1 = pd.read_parquet(out / "judge_gen_quality.parquet")
+    f1 = pd.read_parquet(out / "scores_filtered.parquet")
+    man1 = json.loads((out / "run_manifest.json").read_text(encoding="utf-8"))
+
+    cfg.audit.workers = 4
+    out2 = run_audit(cfg, paths, MockJudgeClient(), cache=None)
+    pd.testing.assert_frame_equal(
+        m1, pd.read_parquet(out2 / "judge_mapping.parquet"))
+    pd.testing.assert_frame_equal(
+        g1, pd.read_parquet(out2 / "judge_gen_quality.parquet"))
+    pd.testing.assert_frame_equal(
+        f1, pd.read_parquet(out2 / "scores_filtered.parquet"))
+    assert man1 == json.loads(
+        (out2 / "run_manifest.json").read_text(encoding="utf-8"))
