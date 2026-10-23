@@ -98,3 +98,16 @@ def test_raw_dir_override(tmp_path, monkeypatch):
     assert movies.loc[0, "year"] == 2020
     mn_movies = load_movienet(p.movienet)
     assert [m.movienet_id for m in mn_movies] == ["mnX1"]
+
+
+def test_load_user_tags_drops_nan_tags(tmp_path):
+    """真实 tags.csv 的 tag 列含 NaN（用户提交过空标签）——加载层剔除：
+    pandas3 string dtype 下 astype(str) 不转化 NaN，下游 sorted/set 的
+    float/str 混型会炸（06 gen_quality 真实数据实测触发）。"""
+    p = _write(tmp_path, "tags.csv",
+               [(1, 6, "awesome", 1700000000), (2, 6, None, 1700000001),
+                (3, 50, "dark", 1700000002)],
+               ["userId", "movieId", "tag", "timestamp"])
+    df = load_user_tags(p)
+    assert list(df["tag"]) == ["awesome", "dark"]
+    assert list(df["movie_id"]) == [6, 50]

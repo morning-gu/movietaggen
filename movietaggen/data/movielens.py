@@ -54,5 +54,10 @@ def load_links(path: str | Path) -> pd.DataFrame:
 
 def load_user_tags(path: str | Path) -> pd.DataFrame:
     df = pd.read_csv(path)
-    return df.rename(columns={"userId": "user_id", "movieId": "movie_id"})[
+    df = df.rename(columns={"userId": "user_id", "movieId": "movie_id"})[
         ["user_id", "movie_id", "tag", "timestamp"]]
+    # 真实 tags.csv 的 tag 列含 NaN（用户提交过空标签）——pandas3 string dtype
+    # 下 astype(str) 不转化 NaN，下游 sorted/set 的 float/str 混型会炸
+    # （06 gen_quality 真实数据实测触发）。空标签不是标签，加载层统一剔除，
+    # 对 03 分析 / 06 审计 / 08 评估三个消费者一致。
+    return df[df["tag"].notna()].reset_index(drop=True)
