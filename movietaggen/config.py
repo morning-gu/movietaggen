@@ -18,6 +18,7 @@ VALID_AGG = ("max", "mean")
 VALID_CALIB_METHODS = ("isotonic", "linear")
 VALID_JUDGE_TASKS = ("mapping", "gen_quality")
 VALID_JUDGE_CONTEXTS = ("pair", "pair+title", "pair+full")
+VALID_MAPPERS = ("embed", "llm")
 
 
 @dataclass
@@ -62,6 +63,11 @@ class AlignConfig:
     agg: str = "max"                # max | mean：top-k 相似度聚合方式
     input_exp: str | None = None    # None = 用本配置的 generate 产物；字符串 = 复用其它实验
     calib_method: str = "isotonic"  # isotonic | linear：分数校准
+    # 映射器：embed = 余弦 top-k（原语义）；llm = 嵌入召回 top-mapper_candidates
+    # 候选 → MLLM 语义选择（B②：上下文无关 tag↔tag，0=无匹配，去重跨电影同串）
+    mapper: str = "embed"
+    mapper_candidates: int = 10     # llm 模式候选池大小（嵌入召回 K）
+    mapper_workers: int = 1         # llc 映射并行线程数（1=串行）
 
 
 @dataclass
@@ -222,6 +228,17 @@ def validate_config(cfg: AppConfig) -> None:
         raise ValueError("align.threshold 必须在 (0,1) 开区间")
     if cfg.align.calib_method not in VALID_CALIB_METHODS:
         raise ValueError(f"align.calib_method 必须是 {VALID_CALIB_METHODS}，得到 {cfg.align.calib_method!r}")
+    if cfg.align.mapper not in VALID_MAPPERS:
+        raise ValueError(f"align.mapper 必须是 {VALID_MAPPERS}，得到 {cfg.align.mapper!r}")
+    if cfg.align.mapper_candidates < 1:
+        raise ValueError("align.mapper_candidates 必须 ≥ 1（llm 模式的候选池）")
+    if cfg.align.mapper_workers < 1:
+        raise ValueError("align.mapper_workers 必须 ≥ 1（1=串行）")
+    if cfg.align.mapper == "llm" and cfg.mock:
+        raise ValueError(
+            "align.mapper: llm 与 mock: true 不兼容——Mock 客户端无选择语义，"
+            "会静默产出全 parse_failed 的空映射。测试 llm 映射请注入 fake 客户端"
+            "（不经 load_config），或用真实客户端。")
     bad = [t for t in cfg.audit.judge_tasks if t not in VALID_JUDGE_TASKS]
     if bad:
         raise ValueError(f"audit.judge_tasks 含未知任务 {bad}，可选 {VALID_JUDGE_TASKS}")

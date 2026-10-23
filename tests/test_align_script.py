@@ -289,3 +289,38 @@ def test_smoke_config_temporal_split_year_pinned():
     仅 report 层描述性分桶视图（年代子集）仍消费——此钉防止视图年份被误改。"""
     assert load_config("configs/smoke.yaml").protocol.temporal_split_year == 2019
     assert load_config("configs/default.yaml").protocol.temporal_split_year == 2015
+
+
+def test_llm_mapper_end_to_end(chain):
+    """B② 集成：mapper=llm（fake 客户端恒选 choice 1）→ 单电影单标签单候选行、
+    校准拟合、五产物齐；embed 模式（默认）不触 client 的契约由其它用例钉。"""
+    from types import SimpleNamespace
+    import json as _json
+
+    cfg, paths = chain
+    cfg.align.mapper = "llm"
+    cfg.align.mapper_candidates = 3
+
+    class AlwaysFirst:
+        def __init__(self):
+            self.calls = 0
+
+        def complete(self, messages, run_id="llm-mapper"):
+            self.calls += 1
+            content = '{"choice": 1}'
+            return SimpleNamespace(ok=True, content=content,
+                                   raw={"choices": [{"message": {"content": content}}]},
+                                   usage={})
+
+    fake = AlwaysFirst()
+    out = run_alignment(cfg, paths, "configs/smoke.yaml", client=fake, cache=None)
+    mappings = pd.read_parquet(out / "mappings.parquet")
+    manifest = json.loads((out / "run_manifest.json").read_text(encoding="utf-8"))
+    # 每个唯一 (movie, tag) 行恰好一个候选（choice 1）且发生过真实调用
+    assert len(mappings) > 0
+    assert mappings.groupby(["movie_id", "tag"]).size().max() == 1
+    assert fake.calls > 0
+    assert manifest["n_mappings"] == len(mappings)
+    # 校准真实拟合（非哨兵）
+    calib = json.loads((out / "calibration.json").read_text(encoding="utf-8"))
+    assert "fitted" not in calib and calib["method"] == "isotonic"

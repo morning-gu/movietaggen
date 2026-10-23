@@ -37,6 +37,7 @@ import pandas as pd  # noqa: E402
 
 from movietaggen.align.calibrate import fit_calibration  # noqa: E402
 from movietaggen.align.embedding import embed_texts, make_embedder  # noqa: E402
+from movietaggen.align.llm_mapper import llm_select_mappings  # noqa: E402
 from movietaggen.align.mapping import (  # noqa: E402
     MAPPING_COLUMNS,
     SCORE_COLUMNS,
@@ -61,11 +62,17 @@ def _read_or_empty(path: Path, columns: list[str], label: str) -> pd.DataFrame:
     return pd.read_parquet(path)
 
 
-def run_alignment(config: AppConfig, paths: Paths, config_path: str | Path) -> Path:
+def run_alignment(config: AppConfig, paths: Paths, config_path: str | Path,
+                  client=None, cache=None) -> Path:
     """跑完阶段二对齐，返回 stage-align 目录（五产物 + 配置快照）。
 
     config.mock=true 时嵌入走 MockEmbedder（零网络零依赖）；config_path
     仅用于配置快照落盘（save_config_snapshot 源不存在时静默跳过）。
+
+    config.align.mapper == "llm" 时（B②）：嵌入召回 top-mapper_candidates
+    候选 → client 逐唯一标签语义选择（cache 缓存优先，run_id=llm-mapper）；
+    client 必须非 None（05 脚本接线 make_client；mock+llm 已被 config 层
+    拒绝）。embed 模式（默认）不触 client——纯本地余弦 top-k。
     """
     # 1. 装载/借用阶段一生成产物（借用时本实验 stage-gen/ 带 PROVENANCE.json）
     gen_dir = load_stage(paths, "stage-gen", config.align.input_exp)
@@ -93,9 +100,32 @@ def run_alignment(config: AppConfig, paths: Paths, config_path: str | Path) -> P
         free_matrix = embed_texts(embedder, free_tags["tag"].tolist(), paths.cache_embed)
         genome_matrix = embed_texts(embedder, genome_tags["tag"].tolist(), paths.cache_embed)
 
-        # 3. 映射 + 聚合：top-k 余弦候选；聚合作用于全部行（low_conf 仅旗标不过滤）
-        mappings = map_free_tags(free_tags, genome_tags, free_matrix, genome_matrix,
-                                 config.align.top_k, config.align.threshold)
+        # 3. 映射 + 聚合：embed = 余弦 top-k；llm = 嵌入召回 top-K 候选池
+        #    → MLLM 逐唯一标签语义选择（B②；low_conf 仅旗标不过滤）
+        if config.align.mapper == "llm":
+            if client is None:
+                raise ValueError(
+                    "align.mapper: llm 需要 LLM 客户端（05 脚本接线 make_client；"
+                    "库调用须显式传入 client）")
+            cand_pool = map_free_tags(
+                free_tags, genome_tags, free_matrix, genome_matrix,
+                config.align.mapper_candidates, config.align.threshold)
+            genome_text = dict(zip(genome_tags["tag_id"].astype(int),
+                                   genome_tags["tag"]))
+            tag_defs: dict[int, str] = {}
+            if paths.tag_groups.exists():
+                from movietaggen.data.grouping import load_tag_groups
+                tg = load_tag_groups(paths.tag_groups)
+                tag_defs = dict(zip(tg["tag_id"].astype(int), tg["definition"]))
+            mappings = llm_select_mappings(
+                cand_pool, genome_text, tag_defs, client,
+                cache if not config.mock else None,
+                config.model.model, config.model.extra_body,
+                config.align.mapper_workers)
+        else:
+            mappings = map_free_tags(free_tags, genome_tags, free_matrix,
+                                     genome_matrix, config.align.top_k,
+                                     config.align.threshold)
         scores_raw = aggregate_scores(mappings, config.align.agg)
 
         if len(scores_raw) > 0:
@@ -147,7 +177,15 @@ def run_alignment(config: AppConfig, paths: Paths, config_path: str | Path) -> P
 def main(config_path: str = "configs/default.yaml") -> int:
     config = load_config(config_path)
     paths = paths_for(config)
-    out = run_alignment(config, paths, config_path)
+    # llm 映射器需要客户端（与 04 同一主模型；mock+llm 已被 config 层拒绝）
+    client = None
+    cache = None
+    if config.align.mapper == "llm":
+        from movietaggen.generate.cache import ResponseCache
+        from movietaggen.generate.client import make_client
+        client = make_client(config)
+        cache = None if config.mock else ResponseCache(paths.cache_llm)
+    out = run_alignment(config, paths, config_path, client=client, cache=cache)
     manifest = json.loads((out / "run_manifest.json").read_text(encoding="utf-8"))
     print(f"[05] 对齐完成 → {out}（mappings={manifest['n_mappings']}, "
           f"scores={manifest['n_scores']}, train_pairs={manifest['train_pairs']}）")

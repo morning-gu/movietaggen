@@ -252,3 +252,22 @@ def test_audit_workers_default_and_validation(tmp_path):
     bad = {**MINIMAL, "audit": {"workers": 0}}
     with pytest.raises(ValueError, match="audit.workers"):
         load_config(_write(tmp_path, bad))
+
+
+def test_align_mapper_config(tmp_path):
+    """align.mapper 默认 embed；非法值/mock+llm 组合/越界参数大声失败。"""
+    cfg = load_config(_write(tmp_path, MINIMAL))
+    assert cfg.align.mapper == "embed" and cfg.align.mapper_candidates == 10
+    assert cfg.align.mapper_workers == 1
+    bad = {**MINIMAL, "align": {"mapper": "rerank"}}
+    with pytest.raises(ValueError, match="align.mapper"):
+        load_config(_write(tmp_path, bad))
+    bad = {**MINIMAL, "align": {"mapper": "llm"}, "mock": True}
+    with pytest.raises(ValueError, match="llm"):
+        load_config(_write(tmp_path, bad))
+    bad = {**MINIMAL, "align": {"mapper": "llm", "mapper_candidates": 0}}
+    with pytest.raises(ValueError, match="mapper_candidates"):
+        load_config(_write(tmp_path, bad))
+    bad = {**MINIMAL, "align": {"mapper": "llm", "mapper_workers": 0}}
+    with pytest.raises(ValueError, match="mapper_workers"):
+        load_config(_write(tmp_path, bad))
